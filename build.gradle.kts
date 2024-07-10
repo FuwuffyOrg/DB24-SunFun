@@ -33,6 +33,9 @@ val supportedPlatforms = listOf("linux", "mac", "win")
 dependencies {
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.3")
 
+    implementation("com.formdev:flatlaf:3.4.1")
+    implementation("com.formdev:flatlaf-extras:3.4.1")
+
     val jUnitVersion = "5.10.3"
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
