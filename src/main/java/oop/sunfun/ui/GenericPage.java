@@ -1,7 +1,6 @@
 package oop.sunfun.ui;
 
 import javax.swing.*;
-import java.awt.event.ComponentAdapter;
 
 public abstract class GenericPage extends JFrame {
 
