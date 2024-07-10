@@ -1,5 +1,6 @@
 package oop.sunfun.ui;
 
+import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
 import javax.swing.JFrame;

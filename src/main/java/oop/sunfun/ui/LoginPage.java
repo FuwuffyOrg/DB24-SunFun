@@ -1,5 +1,7 @@
 package oop.sunfun.ui;
 
+import oop.sunfun.ui.layout.GridBagConstraintBuilder;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -21,7 +23,8 @@ public class LoginPage extends GenericPage {
         this.addPanelComponent(textfield_email, 0, 1);
         this.addPanelComponent(label_password, 1, 0);
         this.addPanelComponent(textfield_password, 1, 1);
-        this.addPanelComponent(button_confirm, 2, 0, 1.0d, 1.0d);
+        this.addPanelComponent(button_confirm, 2, 0,
+                GridBagConstraintBuilder.BASE_WEIGHT, 1.0d);
         // Finish the window.
         this.buildWindow();
     }
