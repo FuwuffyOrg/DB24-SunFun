@@ -1,77 +1,102 @@
 package oop.sunfun.ui.layout;
 
-import java.awt.*;
+import oop.sunfun.util.Pair;
+
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public final class GridBagConstraintBuilder implements IGridBagConstraintBuilder {
-    private int row;
-    private int column;
+    /**
+     * The base weight all elements will have.
+     */
+    public static final double BASE_WEIGHT = 0.05d;
 
-    private double weightRow;
-    private double weightColumn;
+    /**
+     * Holds the position (in the grid) of the element.
+     */
+    private Pair<Integer, Integer> position;
 
-    private int width;
-    private int height;
+    /**
+     * Holds the weight of the position of the element.
+     */
+    private Pair<Double, Double> weights;
 
-    private int padColumn;
-    private int padRow;
+    /**
+     * Holds the dimensions of the element in grid cells.
+     */
+    private Pair<Integer, Integer> dimensions;
 
+    /**
+     * Holds the padding value within the element itself.
+     */
+    private Pair<Integer, Integer> padding;
+
+    /**
+     * Flag to check whether the element will take up all the space, and how.
+     */
     private int fill;
+
+    /**
+     * Where the base element will be connected to.
+     */
     private Anchors anchor;
 
+    /**
+     * Provides the margin from the other elements.
+     */
     private final Insets inset;
 
+    /**
+     * Constructs a new builder with base values.
+     */
     public GridBagConstraintBuilder() {
-        this.row = 0;
-        this.column = 0;
-        this.width = 1;
-        this.height = 1;
-        this.weightRow = 0.05d;
-        this.weightColumn = 0.05d;
-        this.padColumn = 0;
-        this.padRow = 0;
+        this.position = new Pair<>(0, 0);
+        this.dimensions = new Pair<>(1, 1);
+        this.weights = new Pair<>(BASE_WEIGHT, BASE_WEIGHT);
+        this.padding = new Pair<>(0, 0);
         this.anchor = Anchors.CENTER;
         this.inset = new Insets(0, 0, 0, 0);
     }
 
     @Override
     public IGridBagConstraintBuilder setRow(final int row) {
-        this.row = row;
+        this.position = new Pair<>(this.position.x(), row);
         return this;
     }
 
     @Override
     public IGridBagConstraintBuilder setColumn(final int column) {
-        this.column = column;
+        this.position = new Pair<>(column, this.position.y());
         return this;
     }
 
     @Override
     public IGridBagConstraintBuilder setWeightRow(final double weight) {
-        this.weightRow = weight;
+        this.weights = new Pair<>(weight, this.weights.y());
         return this;
     }
 
     @Override
     public IGridBagConstraintBuilder setWeightColumn(final double weight) {
-        this.weightColumn = weight;
+        this.weights = new Pair<>(this.weights.x(), weight);
         return this;
     }
 
     @Override
     public IGridBagConstraintBuilder setWidth(final int width) {
-        this.width = width;
+        this.dimensions = new Pair<>(width, this.dimensions.y());
         return this;
     }
 
     @Override
     public IGridBagConstraintBuilder setHeight(final int height) {
-        this.height = height;
+        this.dimensions = new Pair<>(this.dimensions.x(), height);
         return this;
     }
 
     @Override
-    public IGridBagConstraintBuilder setAnchor(final Anchors anchor) {
-        this.anchor = anchor;
+    public IGridBagConstraintBuilder setAnchor(final Anchors anchorIn) {
+        this.anchor = anchorIn;
         return this;
     }
 
@@ -125,7 +150,8 @@ public final class GridBagConstraintBuilder implements IGridBagConstraintBuilder
     }
 
     @Override
-    public IGridBagConstraintBuilder setMarginAll(final int padTop, final int padBottom, final int padLeft, final int padRight) {
+    public IGridBagConstraintBuilder setMarginAll(final int padTop, final int padBottom,
+                                                  final int padLeft, final int padRight) {
         return this.setMarginHorizontal(padLeft, padRight).setMarginVertical(padTop, padBottom);
     }
 
@@ -155,13 +181,13 @@ public final class GridBagConstraintBuilder implements IGridBagConstraintBuilder
 
     @Override
     public IGridBagConstraintBuilder setPadHorizontal(final int pad) {
-        this.padColumn = pad;
+        this.padding = new Pair<>(pad, this.padding.y());
         return this;
     }
 
     @Override
     public IGridBagConstraintBuilder setPadVertical(final int pad) {
-        this.padRow = pad;
+        this.padding = new Pair<>(this.padding.x(), pad);
         return this;
     }
 
@@ -178,9 +204,8 @@ public final class GridBagConstraintBuilder implements IGridBagConstraintBuilder
     @Override
     public GridBagConstraints build() {
         return new GridBagConstraints(
-                this.column, this.row, this.width,
-                this.height, this.weightColumn, this.weightRow,
-                this.anchor.getAnchorValue(), this.fill, this.inset,
-                this.padColumn, this.padRow);
+                this.position.x(), this.position.y(), this.dimensions.x(), this.dimensions.y(),
+                this.weights.x(), this.weights.y(), this.anchor.getAnchorValue(), this.fill, this.inset,
+                this.padding.x(), this.padding.y());
     }
 }
