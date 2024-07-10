@@ -1,8 +1,7 @@
 package oop.sunfun;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-
-import oop.sunfun.ui.LandingPage;
+import oop.sunfun.ui.LoginPage;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -24,6 +23,6 @@ public final class Main {
         } catch (final UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        final JFrame landingPage = new LandingPage();
+        final JFrame loginPage = new LoginPage();
     }
 }
