@@ -10,33 +10,19 @@ public class LoginPage extends GenericPage {
 
     public LoginPage() {
         super(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
-        // Add two labels and text boxes for inputting username and password
+        // Add two labels and text boxes for inputting username and password.
         final Component label_email = new JLabel("Email: ");
         final Component label_password = new JLabel("Password: ");
         final Component textfield_email = new JTextField();
         final Component textfield_password = new JPasswordField();
         final Component button_confirm = new JButton("Login");
-
-        final GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 0.01;
-        gbc.weighty = 0.01;
-        this.addPanelComponent(label_email, gbc);
-        gbc.gridx = 1;
-        this.addPanelComponent(textfield_email, gbc);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        this.addPanelComponent(label_password, gbc);
-        gbc.gridx = 1;
-        this.addPanelComponent(textfield_password, gbc);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.gridwidth = 2;
-        this.addPanelComponent(button_confirm, gbc);
-        // Display the window
-        this.setVisible(true);
+        // Add all the components.
+        this.addPanelComponent(label_email, 0, 0);
+        this.addPanelComponent(textfield_email, 0, 1);
+        this.addPanelComponent(label_password, 1, 0);
+        this.addPanelComponent(textfield_password, 1, 1);
+        this.addPanelComponent(button_confirm, 2, 0, 1.0d, 1.0d);
+        // Finish the window.
+        this.buildWindow();
     }
 }
