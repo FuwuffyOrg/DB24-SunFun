@@ -5,11 +5,13 @@ import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public final class RegisterPage extends GenericPage {
 
@@ -66,13 +68,10 @@ public final class RegisterPage extends GenericPage {
                         .build()
         );
         // Add events
-        btnLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
-                loginPage.setVisible(true);
-                RegisterPage.this.dispose();
-            }
+        btnLogin.addActionListener(e -> {
+            final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
+            loginPage.setVisible(true);
+            RegisterPage.this.dispose();
         });
         // Finish the window.
         this.buildWindow();

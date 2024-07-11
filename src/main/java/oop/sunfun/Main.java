@@ -1,7 +1,6 @@
 package oop.sunfun;
 
 import oop.sunfun.ui.LoginPage;
-import oop.sunfun.ui.RegisterPage;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
 
