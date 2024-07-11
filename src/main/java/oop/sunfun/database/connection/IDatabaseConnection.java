@@ -1,8 +1,8 @@
 package oop.sunfun.database.connection;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Interface to determine how a database connection
@@ -29,7 +29,7 @@ public interface IDatabaseConnection {
      * @return The set of the results of the query.
      * @throws SQLException If the query couldn't run successfully.
      */
-    ResultSet getQueryData(String query, Object... parameters) throws SQLException;
+    List<Map<String, Object>> getQueryData(String query, Object... parameters) throws SQLException;
 
     /**
      * Method to run a INSERT query on the database.

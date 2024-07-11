@@ -1,6 +1,10 @@
 package oop.sunfun.database.connection;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
@@ -58,20 +62,41 @@ public final class DatabaseConnection implements IDatabaseConnection {
         }
     }
 
+    private PreparedStatement prepareStatement(final String query, final Object... parameters) throws SQLException {
+        final PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+        for (int i = 0; i < parameters.length; ++i) {
+            preparedStatement.setObject(i + 1, parameters[i]);
+        }
+        return preparedStatement;
+    }
+
     @Override
-    public ResultSet getQueryData(final String query, final Object... parameters) throws SQLException {
+    public List<Map<String, Object>> getQueryData(final String query, final Object... parameters) throws SQLException {
         if (!this.isConnectionValid()) {
             throw new SQLException("You need to establish a connection to the server before running a query.");
         }
-        final PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-        IntStream.range(0, parameters.length).forEach(i -> {
-            try {
-                preparedStatement.setObject(i + 1, parameters[i]);
-            } catch (final SQLException e) {
-                throw new RuntimeException(e);
+        try (final PreparedStatement preparedStatement = this.prepareStatement(query, parameters)) {
+            // Create the empty map to fill
+            final List<Map<String, Object>> resultList = new ArrayList<>();
+            // Execute the query
+            final ResultSet results = preparedStatement.executeQuery();
+            // Get the data from the query
+            final ResultSetMetaData metaData = results.getMetaData();
+            // While there's still data
+            while (results.next()) {
+                // Add it to the map
+                final Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= metaData.getColumnCount(); ++i) {
+                    final String columnName = metaData.getColumnName(i);
+                    final Object columnValue = results.getObject(i);
+                    row.put(columnName, columnValue);
+                }
+                resultList.add(row);
             }
-        });
-        return preparedStatement.executeQuery(query);
+            // Finish the query
+            results.close();
+            return resultList;
+        }
     }
 
     @Override
@@ -79,15 +104,8 @@ public final class DatabaseConnection implements IDatabaseConnection {
         if (!this.isConnectionValid()) {
             throw new SQLException("You need to establish a connection to the server before running a query.");
         }
-        final PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-        IntStream.range(0, parameters.length).forEach(i -> {
-            try {
-                preparedStatement.setObject(i + 1, parameters[i]);
-            } catch (final SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+        try (final PreparedStatement preparedStatement = this.prepareStatement(query, parameters)) {
+            preparedStatement.executeUpdate();
+        }
     }
 }
