@@ -1,4 +1,4 @@
-package oop.sunfun.ui;
+package oop.sunfun.ui.layout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +10,11 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 
 public abstract class GenericPage extends JFrame {
+    /**
+     * The screen display's dimensions.
+     */
+    private static final Dimension SCREEN_DIMENSIONS = Toolkit.getDefaultToolkit().getScreenSize();
+
     /**
      * The main panel of the window, used to display everything.
      */
@@ -36,9 +41,8 @@ public abstract class GenericPage extends JFrame {
      * Finalizes the window and displays it after having added all the components to it.
      */
     public final void buildWindow() {
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        final double ratio = screenSize.getWidth() / screenSize.getHeight();
-        final double scaleAmount = 2.0d * (screenSize.getWidth() / 1920.0d);
+        final double ratio = SCREEN_DIMENSIONS.getWidth() / SCREEN_DIMENSIONS.getHeight();
+        final double scaleAmount = 2.0d * (SCREEN_DIMENSIONS.getWidth() / 1920.0d);
         // Pack the window to little size
         this.pack();
         // Set the minimum size as the packed size
