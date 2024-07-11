@@ -35,7 +35,7 @@ Welcome to the Summer Camp Application! This application is designed to streamli
 ## Usage
 
 ### Accessing the Application
-- Open your web browser and go to `http://localhost:5000`.
+- Open the java application and the database server (XAMPP).
 - Register as a user to access reviews and the forum.
 - Educators can log in with their credentials to access the admin panel.
 
