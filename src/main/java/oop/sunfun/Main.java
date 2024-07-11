@@ -19,9 +19,7 @@ public final class Main {
     public static void main(final String[] args) {
         GenericPage.setupTheme();
 
-        final JFrame loginPage = new LoginPage("Login", CloseEvents.DISPOSE);
+        final JFrame loginPage = new LoginPage("Login", CloseEvents.EXIT_PROGRAM);
         loginPage.setVisible(true);
-        final JFrame registerPage = new RegisterPage("Register", CloseEvents.DISPOSE);
-        registerPage.setVisible(true);
     }
 }

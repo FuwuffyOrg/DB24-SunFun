@@ -66,8 +66,6 @@ public abstract class GenericPage extends JFrame {
         this.setDefaultCloseOperation(closeEvent.getEventValue());
         // Set the window title
         this.setTitle(title);
-        // Center the window to the screen
-        this.setLocationRelativeTo(null);
         // Set a basic JPanel as default view
         this.contentPanel = new JPanel();
         this.contentPanel.setLayout(new GridBagLayout());
@@ -91,6 +89,8 @@ public abstract class GenericPage extends JFrame {
                 (int) (dimensions.getWidth() * scaleAmount * ratio),
                 (int) (dimensions.getHeight() * scaleAmount))
         );
+        // Center the window to the screen
+        this.setLocationRelativeTo(null);
         // Display the window
         this.validate();
     }

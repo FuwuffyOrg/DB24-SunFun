@@ -5,11 +5,10 @@ import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public final class LoginPage extends GenericPage {
 
@@ -20,8 +19,8 @@ public final class LoginPage extends GenericPage {
         final Component lblPassword = new JLabel("Password: ");
         final Component txtEmail = new JTextField();
         final Component txtPassword = new JPasswordField();
-        final Component btnLogin = new JButton("Login");
-        final Component btnRegister = new JButton("Register");
+        final JButton btnLogin = new JButton("Login");
+        final JButton btnRegister = new JButton("Goto Register");
         // Add all the components.
         this.addPanelComponent(lblEmail,
                 new GridBagConstraintBuilder()
@@ -65,6 +64,15 @@ public final class LoginPage extends GenericPage {
                         .setFillAll()
                         .build()
         );
+        // Add events
+        btnRegister.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final JFrame registerPage = new RegisterPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
+                registerPage.setVisible(true);
+                LoginPage.this.dispose();
+            }
+        });
         // Finish the window.
         this.buildWindow();
     }

@@ -5,12 +5,11 @@ import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public final class RegisterPage extends GenericPage {
 
@@ -21,7 +20,8 @@ public final class RegisterPage extends GenericPage {
         final Component lblPassword = new JLabel("Password: ");
         final Component txtEmail = new JTextField();
         final Component txtPassword = new JPasswordField();
-        final Component btnRegister = new JButton("Register");
+        final JButton btnRegister = new JButton("Register");
+        final JButton btnLogin = new JButton("Goto Login");
         // Add all the components.
         this.addPanelComponent(lblEmail,
                 new GridBagConstraintBuilder()
@@ -54,11 +54,26 @@ public final class RegisterPage extends GenericPage {
         this.addPanelComponent(btnRegister,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(0)
-                        .setWidth(2)
                         .setAnchor(Anchors.BOTTOM_RIGHT)
                         .setFillAll()
                         .build()
         );
+        this.addPanelComponent(btnLogin,
+                new GridBagConstraintBuilder()
+                        .setRow(2).setColumn(1)
+                        .setAnchor(Anchors.BOTTOM_RIGHT)
+                        .setFillAll()
+                        .build()
+        );
+        // Add events
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
+                loginPage.setVisible(true);
+                RegisterPage.this.dispose();
+            }
+        });
         // Finish the window.
         this.buildWindow();
     }
