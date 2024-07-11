@@ -72,13 +72,13 @@ public final class GridBagConstraintBuilder implements IGridBagConstraintBuilder
 
     @Override
     public IGridBagConstraintBuilder setWeightRow(final double weight) {
-        this.weights = new Pair<>(weight, this.weights.y());
+        this.weights = new Pair<>(this.weights.x(), weight);
         return this;
     }
 
     @Override
     public IGridBagConstraintBuilder setWeightColumn(final double weight) {
-        this.weights = new Pair<>(this.weights.x(), weight);
+        this.weights = new Pair<>(weight, this.weights.y());
         return this;
     }
 

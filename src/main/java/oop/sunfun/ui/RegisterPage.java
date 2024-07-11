@@ -8,12 +8,11 @@ import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
@@ -21,7 +20,6 @@ import java.awt.Component;
 import java.sql.SQLException;
 import java.util.EnumSet;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public final class RegisterPage extends GenericPage {
     private final JTextComponent txtCodiceFiscale;
@@ -31,7 +29,7 @@ public final class RegisterPage extends GenericPage {
     private final JTextComponent txtEmail;
     private final JTextComponent txtPassword;
     private final JTextComponent txtPasswordConfirm;
-    private final ButtonGroup radParentTypeGroup;
+    private final JComboBox<String> comboParentType;
 
     public RegisterPage(final String title, final CloseEvents closeEvent) {
         super(title, closeEvent);
@@ -43,6 +41,7 @@ public final class RegisterPage extends GenericPage {
         final Component lblEmail = new JLabel("Email: ");
         final Component lblPassword = new JLabel("Password: ");
         final Component lblPasswordConfirm = new JLabel("Conferma Password: ");
+        final Component lblParentType = new JLabel("Grado di Parentela: ");
         this.txtCodiceFiscale = new JTextField();
         this.txtName = new JTextField();
         this.txtSurname = new JTextField();
@@ -50,134 +49,135 @@ public final class RegisterPage extends GenericPage {
         this.txtEmail = new JTextField();
         this.txtPassword = new JPasswordField();
         this.txtPasswordConfirm = new JPasswordField();
-        this.radParentTypeGroup = new ButtonGroup();
+        this.comboParentType = new JComboBox<>();
+        EnumSet.allOf(ParentType.class).forEach(p -> comboParentType.addItem(p.getTextValue()));
         final AbstractButton btnRegister = new JButton("Register");
         final AbstractButton btnLogin = new JButton("Goto Login");
         // Add all the components.
         this.addPanelComponent(lblCodiceFiscale,
                 new GridBagConstraintBuilder()
                         .setRow(0).setColumn(0)
-                        .setWidth(3)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(txtCodiceFiscale,
                 new GridBagConstraintBuilder()
-                        .setRow(0).setColumn(3)
-                        .setWidth(3)
+                        .setRow(0).setColumn(1)
+                        .setWeightColumn(0.1d)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(lblName,
                 new GridBagConstraintBuilder()
                         .setRow(1).setColumn(0)
-                        .setWidth(3)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(txtName,
                 new GridBagConstraintBuilder()
-                        .setRow(1).setColumn(3)
-                        .setWidth(3)
+                        .setRow(1).setColumn(1)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(lblSurname,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(0)
-                        .setWidth(3)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(txtSurname,
                 new GridBagConstraintBuilder()
-                        .setRow(2).setColumn(3)
-                        .setWidth(3)
+                        .setRow(2).setColumn(1)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(lblPhone,
                 new GridBagConstraintBuilder()
                         .setRow(3).setColumn(0)
-                        .setWidth(3)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(txtPhone,
                 new GridBagConstraintBuilder()
-                        .setRow(3).setColumn(3)
-                        .setWidth(3)
+                        .setRow(3).setColumn(1)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(lblEmail,
                 new GridBagConstraintBuilder()
                         .setRow(4).setColumn(0)
-                        .setWidth(3)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(txtEmail,
                 new GridBagConstraintBuilder()
-                        .setRow(4).setColumn(3)
-                        .setWidth(3)
+                        .setRow(4).setColumn(1)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(lblPassword,
                 new GridBagConstraintBuilder()
                         .setRow(5).setColumn(0)
-                        .setWidth(3)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(txtPassword,
                 new GridBagConstraintBuilder()
-                        .setRow(5).setColumn(3)
-                        .setWidth(3)
+                        .setRow(5).setColumn(1)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(lblPasswordConfirm,
                 new GridBagConstraintBuilder()
                         .setRow(6).setColumn(0)
-                        .setWidth(3)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(txtPasswordConfirm,
                 new GridBagConstraintBuilder()
-                        .setRow(6).setColumn(3)
-                        .setWidth(3)
+                        .setRow(6).setColumn(1)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        // Add the parent type radio buttons
-        AtomicInteger index = new AtomicInteger(0);
-        EnumSet.allOf(ParentType.class).forEach(p -> {
-            final AbstractButton radio = new JRadioButton(p.getTextValue());
-            radio.setActionCommand(p.getTextValue());
-            radio.setSelected(true);
-            this.radParentTypeGroup.add(radio);
-            this.addPanelComponent(radio,
-                    new GridBagConstraintBuilder()
-                            .setRow(7).setColumn(index.get())
-                            .setFillAll()
-                            .build()
-            );
-            index.addAndGet(1);
-        });
+        this.addPanelComponent(lblParentType,
+                new GridBagConstraintBuilder()
+                        .setRow(7).setColumn(0)
+                        .setWidth(1)
+                        .setFillAll()
+                        .build()
+        );
+        this.addPanelComponent(comboParentType,
+                new GridBagConstraintBuilder()
+                        .setRow(7).setColumn(1)
+                        .setWidth(1)
+                        .setFillAll()
+                        .build()
+        );
         this.addPanelComponent(btnRegister,
                 new GridBagConstraintBuilder()
                         .setRow(8).setColumn(0)
-                        .setWidth(3)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(btnLogin,
                 new GridBagConstraintBuilder()
-                        .setRow(8).setColumn(3)
-                        .setWidth(3)
+                        .setRow(8).setColumn(1)
+                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
@@ -199,10 +199,10 @@ public final class RegisterPage extends GenericPage {
                         "jdbc:mysql://localhost", "root", "");
                 try {
                     database.openConnection();
-                    database.setQueryData(accountQuery, txtEmail.getText(), txtPassword.getText());
-                    database.setQueryData(parenteQuery, txtCodiceFiscale.getText(),
-                            txtEmail.getText(), txtName.getText(), txtSurname.getText(), txtPhone.getText(),
-                            this.radParentTypeGroup.getSelection().getActionCommand());
+                    database.setQueryData(accountQuery, this.txtEmail.getText(), this.txtPassword.getText());
+                    database.setQueryData(parenteQuery, this.txtCodiceFiscale.getText(), this.txtEmail.getText(),
+                            this.txtName.getText(), this.txtSurname.getText(), this.txtPhone.getText(),
+                            this.comboParentType.getSelectedItem());
                     database.closeConnection();
                 } catch (final SQLException err) {
                     err.printStackTrace();
