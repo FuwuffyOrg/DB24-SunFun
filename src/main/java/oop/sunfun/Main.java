@@ -1,6 +1,6 @@
 package oop.sunfun;
 
-import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import oop.sunfun.ui.LoginPage;
 
 import javax.swing.JFrame;
@@ -17,12 +17,7 @@ public final class Main {
      * @param args The default arguments of any application.
      */
     public static void main(final String[] args) {
-        try {
-            // Use FlatDarkLaf for dark theme, or FlatLightLaf for light theme
-            UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (final UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
+        FlatNordIJTheme.setup();
         final JFrame loginPage = new LoginPage();
     }
 }

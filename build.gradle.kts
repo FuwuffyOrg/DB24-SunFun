@@ -40,6 +40,7 @@ dependencies {
     // Stuff for better UI
     implementation("com.formdev:flatlaf:3.4.1")
     implementation("com.formdev:flatlaf-extras:3.4.1")
+    implementation("com.formdev:flatlaf-intellij-themes:3.4.1")
 }
 
 val main: String by project
