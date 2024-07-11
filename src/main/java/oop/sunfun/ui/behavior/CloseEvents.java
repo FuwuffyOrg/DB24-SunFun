@@ -1,6 +1,7 @@
 package oop.sunfun.ui.behavior;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+
 import java.util.EnumMap;
 import java.util.Map;
 

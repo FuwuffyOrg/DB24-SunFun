@@ -59,10 +59,10 @@ public abstract class GenericPage extends JFrame {
     /**
      * Basic constructor for a generic window in the project.
      * @param title The title of the window.
+     * @param closeEvent Describes what happens when the window closes.
      */
     public GenericPage(final String title, final CloseEvents closeEvent) {
         // Add a close operation
-        // TODO: Not good for all windows sadly
         this.setDefaultCloseOperation(closeEvent.getEventValue());
         // Set the window title
         this.setTitle(title);

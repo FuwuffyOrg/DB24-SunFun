@@ -13,10 +13,9 @@ import javax.swing.JTextField;
 import java.awt.Component;
 
 public final class RegisterPage extends GenericPage {
-    private static final String WINDOW_TITLE = "SunFun Register";
 
-    public RegisterPage() {
-        super(WINDOW_TITLE, CloseEvents.EXIT_PROGRAM);
+    public RegisterPage(final String title, final CloseEvents closeEvent) {
+        super(title, closeEvent);
         // Add two labels and text boxes for inputting username and password.
         final Component lblEmail = new JLabel("Email: ");
         final Component lblPassword = new JLabel("Password: ");
