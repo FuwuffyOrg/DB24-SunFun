@@ -8,11 +8,20 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.text.JTextComponent;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 
 public abstract class GenericPage extends JFrame {
-    private static final Color HIGHLIGHT_COLOR = Color.YELLOW;
+    /**
+     * The color used for error highlighting.
+     */
+    private static final Color HIGHLIGHT_COLOR = new Color(255, 0, 0, 100);
 
     /**
      * The screen display's dimensions.
