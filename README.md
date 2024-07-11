@@ -6,10 +6,8 @@ Welcome to the Summer Camp Application! This application is designed to streamli
 
 1. [Features](#features)
 2. [Installation](#installation)
-3. [Configuration](#configuration)
-4. [Usage](#usage)
-5. [Database Schema](#database-schema)
-6. [License](#license)
+3. [Usage](#usage)
+4. [License](#license)
 
 ## Features
 
