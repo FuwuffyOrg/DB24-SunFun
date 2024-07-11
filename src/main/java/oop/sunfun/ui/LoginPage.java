@@ -7,11 +7,9 @@ import java.awt.*;
 
 public class LoginPage extends GenericPage {
     private static final String WINDOW_TITLE = "SunFun Login";
-    private static final int WINDOW_WIDTH = 300;
-    private static final int WINDOW_HEIGHT = 100;
 
     public LoginPage() {
-        super(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
+        super(WINDOW_TITLE);
         // Add two labels and text boxes for inputting username and password.
         final Component label_email = new JLabel("Email: ");
         final Component label_password = new JLabel("Password: ");
