@@ -1,70 +1,60 @@
 package oop.sunfun.ui.layout;
 
 import java.awt.GridBagConstraints;
-import java.util.EnumMap;
-import java.util.Map;
 
 public enum Anchors {
     /**
      * Anchors at the top left side of the screen.
      */
-    TOP_LEFT,
+    TOP_LEFT(GridBagConstraints.FIRST_LINE_START),
 
     /**
      * Anchors at the top center side of the screen.
      */
-    TOP,
+    TOP(GridBagConstraints.PAGE_START),
 
     /**
      * Anchors at the top right side of the screen.
      */
-    TOP_RIGHT,
+    TOP_RIGHT(GridBagConstraints.FIRST_LINE_END),
 
     /**
      * Anchors at the center left side of the screen.
      */
-    CENTER_LEFT,
+    CENTER_LEFT(GridBagConstraints.LINE_START),
 
     /**
      * Anchors at the center side of the screen.
      */
-    CENTER,
+    CENTER(GridBagConstraints.CENTER),
 
     /**
      * Anchors at the center right side of the screen.
      */
-    CENTER_RIGHT,
+    CENTER_RIGHT(GridBagConstraints.LINE_END),
 
     /**
      * Anchors at the bottom left side of the screen.
      */
-    BOTTOM_LEFT,
+    BOTTOM_LEFT(GridBagConstraints.LAST_LINE_START),
 
     /**
      * Anchors at the bottom center side of the screen.
      */
-    BOTTOM,
+    BOTTOM(GridBagConstraints.PAGE_END),
 
     /**
      * Anchors at the bottom right side of the screen.
      */
-    BOTTOM_RIGHT;
+    BOTTOM_RIGHT(GridBagConstraints.LAST_LINE_END);
 
     /**
-     * Map for quick lookup from Anchors enum to value in GridBagConstraints.
+     * The anchor value from the GridBagConstraints class.
      */
-    private static final Map<Anchors, Integer> ANCHOR_VALUES = new EnumMap<>(Anchors.class);
+    private final int anchorValue;
 
-    static {
-        ANCHOR_VALUES.put(TOP_LEFT, GridBagConstraints.FIRST_LINE_START);
-        ANCHOR_VALUES.put(TOP, GridBagConstraints.PAGE_START);
-        ANCHOR_VALUES.put(TOP_RIGHT, GridBagConstraints.FIRST_LINE_END);
-        ANCHOR_VALUES.put(CENTER_LEFT, GridBagConstraints.LINE_START);
-        ANCHOR_VALUES.put(CENTER, GridBagConstraints.CENTER);
-        ANCHOR_VALUES.put(CENTER_RIGHT, GridBagConstraints.LINE_END);
-        ANCHOR_VALUES.put(BOTTOM_LEFT, GridBagConstraints.LAST_LINE_START);
-        ANCHOR_VALUES.put(BOTTOM, GridBagConstraints.PAGE_END);
-        ANCHOR_VALUES.put(BOTTOM_RIGHT, GridBagConstraints.LAST_LINE_END);
+    Anchors(final int value) {
+        this.anchorValue = value;
     }
 
     /**
@@ -72,10 +62,6 @@ public enum Anchors {
      * @return The value from the GridBagConstraints class.
      */
     public int getAnchorValue() {
-        final Integer value = ANCHOR_VALUES.get(this);
-        if (value == null) {
-            throw new IllegalStateException("Anchor value does not exist.");
-        }
-        return value;
+        return  this.anchorValue;
     }
 }
