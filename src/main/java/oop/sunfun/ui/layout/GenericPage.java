@@ -96,6 +96,9 @@ public abstract class GenericPage extends JFrame {
         this.validate();
     }
 
+    /**
+     * Closes the window as if you pressed the X button, running the proper event.
+     */
     public final void close() {
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }

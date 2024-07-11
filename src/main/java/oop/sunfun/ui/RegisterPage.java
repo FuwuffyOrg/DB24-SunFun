@@ -1,5 +1,6 @@
 package oop.sunfun.ui;
 
+import oop.sunfun.database.enums.ParentType;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
@@ -7,8 +8,17 @@ import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 import javax.swing.*;
 
 import java.awt.Component;
+import java.util.EnumSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class RegisterPage extends GenericPage {
+    final Component txtName;
+    final Component txtSurname;
+    final Component txtPhone;
+    final Component txtEmail;
+    final Component txtPassword;
+    final Component txtPasswordConfirm;
+    final ButtonGroup radParentTypeGroup;
 
     public RegisterPage(final String title, final CloseEvents closeEvent) {
         super(title, closeEvent);
@@ -19,33 +29,15 @@ public final class RegisterPage extends GenericPage {
         final Component lblEmail = new JLabel("Email: ");
         final Component lblPassword = new JLabel("Password: ");
         final Component lblPasswordConfirm = new JLabel("Conferma Password: ");
-        final Component txtName = new JTextField();
-        final Component txtSurname = new JTextField();
-        final Component txtPhone = new JTextField();
-        final Component txtEmail = new JTextField();
-        final Component txtPassword = new JPasswordField();
-        final Component txtPasswordConfirm = new JPasswordField();
+        this.txtName = new JTextField();
+        this.txtSurname = new JTextField();
+        this.txtPhone = new JTextField();
+        this.txtEmail = new JTextField();
+        this.txtPassword = new JPasswordField();
+        this.txtPasswordConfirm = new JPasswordField();
+        this.radParentTypeGroup = new ButtonGroup();
         final AbstractButton btnRegister = new JButton("Register");
         final AbstractButton btnLogin = new JButton("Goto Login");
-        // Add the parent type radio buttons
-        final ButtonGroup parentTypeGroup = new ButtonGroup();
-        final AbstractButton radPadre = new JRadioButton("Padre");
-        radPadre.setSelected(true);
-        final AbstractButton radMadre = new JRadioButton("Madre");
-        final AbstractButton radNonno = new JRadioButton("Nonno");
-        final AbstractButton radNonna = new JRadioButton("Nonna");
-        final AbstractButton radZio = new JRadioButton("Zio");
-        final AbstractButton radZia = new JRadioButton("Zia");
-        final AbstractButton radFratello = new JRadioButton("Fratello");
-        final AbstractButton radSorella = new JRadioButton("Sorella");
-        parentTypeGroup.add(radPadre);
-        parentTypeGroup.add(radMadre);
-        parentTypeGroup.add(radNonno);
-        parentTypeGroup.add(radNonna);
-        parentTypeGroup.add(radZio);
-        parentTypeGroup.add(radZia);
-        parentTypeGroup.add(radFratello);
-        parentTypeGroup.add(radSorella);
         // Add all the components.
         this.addPanelComponent(lblName,
                 new GridBagConstraintBuilder()
@@ -131,54 +123,20 @@ public final class RegisterPage extends GenericPage {
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(radPadre,
-                new GridBagConstraintBuilder()
-                        .setRow(6).setColumn(0)
-                        .setFillAll()
-                        .build()
-        );
-        this.addPanelComponent(radMadre,
-                new GridBagConstraintBuilder()
-                        .setRow(6).setColumn(1)
-                        .setFillAll()
-                        .build()
-        );
-        this.addPanelComponent(radNonno,
-                new GridBagConstraintBuilder()
-                        .setRow(6).setColumn(2)
-                        .setFillAll()
-                        .build()
-        );
-        this.addPanelComponent(radNonna,
-                new GridBagConstraintBuilder()
-                        .setRow(6).setColumn(3)
-                        .setFillAll()
-                        .build()
-        );
-        this.addPanelComponent(radZio,
-                new GridBagConstraintBuilder()
-                        .setRow(6).setColumn(4)
-                        .setFillAll()
-                        .build()
-        );
-        this.addPanelComponent(radZia,
-                new GridBagConstraintBuilder()
-                        .setRow(6).setColumn(5)
-                        .setFillAll()
-                        .build()
-        );
-        this.addPanelComponent(radFratello,
-                new GridBagConstraintBuilder()
-                        .setRow(6).setColumn(6)
-                        .setFillAll()
-                        .build()
-        );
-        this.addPanelComponent(radSorella,
-                new GridBagConstraintBuilder()
-                        .setRow(6).setColumn(7)
-                        .setFillAll()
-                        .build()
-        );
+        // Add the parent type radio buttons
+        AtomicInteger index = new AtomicInteger(0);
+        EnumSet.allOf(ParentType.class).forEach(p -> {
+            final AbstractButton radio = new JRadioButton(p.getTextValue());
+            radio.setSelected(true);
+            this.radParentTypeGroup.add(radio);
+            this.addPanelComponent(radio,
+                    new GridBagConstraintBuilder()
+                            .setRow(6).setColumn(index.get())
+                            .setFillAll()
+                            .build()
+            );
+            index.addAndGet(1);
+        });
         this.addPanelComponent(btnRegister,
                 new GridBagConstraintBuilder()
                         .setRow(7).setColumn(0)
@@ -200,11 +158,17 @@ public final class RegisterPage extends GenericPage {
             RegisterPage.this.dispose();
         });
         btnRegister.addActionListener(e -> {
-            final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
-            loginPage.setVisible(true);
-            RegisterPage.this.dispose();
+            if (RegisterPage.this.isDataValid()) {
+                final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
+                loginPage.setVisible(true);
+                RegisterPage.this.dispose();
+            }
         });
         // Finish the window.
         this.buildWindow();
+    }
+
+    private boolean isDataValid() {
+        return false;
     }
 }
