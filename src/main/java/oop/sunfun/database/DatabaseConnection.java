@@ -37,8 +37,7 @@ public final class DatabaseConnection implements IDatabaseConnection {
      * @param dbUser The username to log in to the database.
      * @param dbPassword The password to log in to the database.
      */
-    public DatabaseConnection(final String dbName, final String dbUrl,
-                              final String dbUser, final String dbPassword) {
+    public DatabaseConnection(final String dbName, final String dbUrl, final String dbUser, final String dbPassword) {
         this.url = dbUrl + "/" + dbName;
         this.user = dbUser;
         this.password = dbPassword;
@@ -51,8 +50,7 @@ public final class DatabaseConnection implements IDatabaseConnection {
     @Override
     public Connection getConnection() throws SQLException {
         if (!this.isConnectionValid()) {
-            connection = DriverManager.getConnection(this.url,
-                    this.user, this.password);
+            connection = DriverManager.getConnection(this.url, this.user, this.password);
         }
         return connection;
     }
@@ -67,8 +65,7 @@ public final class DatabaseConnection implements IDatabaseConnection {
     @Override
     public ResultSet executeQuery(final String query) throws SQLException {
         if (!this.isConnectionValid()) {
-            throw new SQLException("You need to establish a connection "
-                    + "to the server before running a query.");
+            throw new SQLException("You need to establish a connection to the server before running a query.");
         }
         final Statement statement = this.connection.createStatement();
         return statement.executeQuery(query);

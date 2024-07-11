@@ -26,13 +26,14 @@ public abstract class GenericPage extends JFrame {
     }
 
     public final void buildWindow() {
-        final Dimension currentDim = this.getSize();
+        final Dimension originalDim = this.getSize();
         // Pack the window to little size
         this.pack();
         // Set the minimum size as the packed size
-        this.setMinimumSize(this.getSize());
+        final Dimension minimumDim = this.getSize();
+        this.setMinimumSize(minimumDim);
         // Return the dimensions to the original ones
-        this.setSize(currentDim);
+        this.setSize(originalDim);
         // Display the window
         this.setVisible(true);
     }
