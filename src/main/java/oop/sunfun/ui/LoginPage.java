@@ -6,10 +6,14 @@ import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -72,12 +76,13 @@ public final class LoginPage extends GenericPage {
         });
         btnLogin.addActionListener(e -> {
             if (LoginPage.this.isDataValid()) {
-                final String accountQuery = "SELECT * FROM `account` WHERE `email` = '%s' AND password = '%s'";
+                final String accountQuery = "SELECT * FROM `account` WHERE `email` = ? AND password = ?";
                 final IDatabaseConnection database = new DatabaseConnection("sunfun",
                         "jdbc:mysql://localhost", "root", "");
                 try {
                     database.openConnection();
-                    final List<Map<String, Object>> results = database.getQueryData(String.format(accountQuery, txtEmail.getText(), txtPassword.getText()));
+                    final List<Map<String, Object>> results = database.getQueryData(accountQuery,
+                            txtEmail.getText(), txtPassword.getText());
                     // TODO: Make actual login happen!
                     database.closeConnection();
                 } catch (final SQLException err) {
@@ -94,9 +99,11 @@ public final class LoginPage extends GenericPage {
     private boolean isDataValid() {
         final int passwordLengthLimit = 24;
         final int emailLengthLimit = 256;
-        if (this.txtPassword.getText().length() > passwordLengthLimit || this.txtPassword.getText().length() < 2) {
+        final int minSize = 4;
+        if (this.txtPassword.getText().length() > passwordLengthLimit
+                || this.txtPassword.getText().length() < minSize) {
             return false;
         }
-        return this.txtEmail.getText().length() <= emailLengthLimit && this.txtEmail.getText().length() >= 6;
+        return this.txtEmail.getText().length() <= emailLengthLimit && this.txtEmail.getText().length() >= minSize;
     }
 }

@@ -1,11 +1,16 @@
 package oop.sunfun.database.connection;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 /**
  * Implementation of the IDatabaseConnection interface.
@@ -75,7 +80,7 @@ public final class DatabaseConnection implements IDatabaseConnection {
         if (!this.isConnectionValid()) {
             throw new SQLException("You need to establish a connection to the server before running a query.");
         }
-        try (final PreparedStatement preparedStatement = this.prepareStatement(query, parameters)) {
+        try (PreparedStatement preparedStatement = this.prepareStatement(query, parameters)) {
             // Create the empty map to fill
             final List<Map<String, Object>> resultList = new ArrayList<>();
             // Execute the query
@@ -104,7 +109,7 @@ public final class DatabaseConnection implements IDatabaseConnection {
         if (!this.isConnectionValid()) {
             throw new SQLException("You need to establish a connection to the server before running a query.");
         }
-        try (final PreparedStatement preparedStatement = this.prepareStatement(query, parameters)) {
+        try (PreparedStatement preparedStatement = this.prepareStatement(query, parameters)) {
             preparedStatement.executeUpdate();
         }
     }

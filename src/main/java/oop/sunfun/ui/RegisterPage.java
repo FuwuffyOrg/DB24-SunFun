@@ -189,11 +189,11 @@ public final class RegisterPage extends GenericPage {
         });
         btnRegister.addActionListener(e -> {
             if (RegisterPage.this.isDataValid()) {
-                final String accountQuery = "INSERT INTO `account`(`email`, `password`, `tipologia`) " +
-                        "VALUES (?,?,'Parente')";
+                final String accountQuery = "INSERT INTO `account`(`email`, `password`, `tipologia`) "
+                        + "VALUES (?,?,'Parente')";
 
-                final String parenteQuery = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, " +
-                        "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
+                final String parenteQuery = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
+                        + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
 
                 final IDatabaseConnection database = new DatabaseConnection("sunfun",
                         "jdbc:mysql://localhost", "root", "");
@@ -207,7 +207,7 @@ public final class RegisterPage extends GenericPage {
                 } catch (final SQLException err) {
                     err.printStackTrace();
                     this.close();
-                };
+                }
                 final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
                 loginPage.setVisible(true);
                 RegisterPage.this.dispose();
@@ -218,6 +218,7 @@ public final class RegisterPage extends GenericPage {
     }
 
     private boolean isDataValid() {
+        final int minSize = 4;
         final int nameLengthLimit = 36;
         final int passwordLengthLimit = 24;
         final int emailLengthLimit = 256;
@@ -226,19 +227,20 @@ public final class RegisterPage extends GenericPage {
         if (this.txtCodiceFiscale.getText().length() != codiceFiscaleLength) {
             return false;
         }
-        if (this.txtName.getText().length() > nameLengthLimit || this.txtName.getText().length() < 2) {
+        if (this.txtName.getText().length() > nameLengthLimit || this.txtName.getText().length() < minSize) {
             return false;
         }
-        if (this.txtSurname.getText().length() > nameLengthLimit || this.txtSurname.getText().length() < 2) {
+        if (this.txtSurname.getText().length() > nameLengthLimit || this.txtSurname.getText().length() < minSize) {
             return false;
         }
-        if (this.txtPassword.getText().length() > passwordLengthLimit || this.txtPassword.getText().length() < 2) {
+        if (this.txtPassword.getText().length() > passwordLengthLimit
+                || this.txtPassword.getText().length() < minSize) {
             return false;
         }
         if (!Objects.equals(this.txtPassword.getText(), this.txtPasswordConfirm.getText())) {
             return false;
         }
-        if (this.txtEmail.getText().length() > emailLengthLimit || this.txtEmail.getText().length() < 6) {
+        if (this.txtEmail.getText().length() > emailLengthLimit || this.txtEmail.getText().length() < minSize) {
             return false;
         }
         return this.txtPhone.getText().length() == phoneNumberLength;
