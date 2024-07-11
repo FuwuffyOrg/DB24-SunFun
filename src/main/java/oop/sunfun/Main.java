@@ -4,8 +4,6 @@ import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import oop.sunfun.ui.LoginPage;
 
 import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public final class Main {
     private Main() {
