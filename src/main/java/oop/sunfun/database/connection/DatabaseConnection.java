@@ -48,11 +48,10 @@ public final class DatabaseConnection implements IDatabaseConnection {
     }
 
     @Override
-    public Connection getConnection() throws SQLException {
+    public void openConnection() throws SQLException {
         if (!this.isConnectionValid()) {
             connection = DriverManager.getConnection(this.url, this.user, this.password);
         }
-        return connection;
     }
 
     @Override
@@ -63,11 +62,20 @@ public final class DatabaseConnection implements IDatabaseConnection {
     }
 
     @Override
-    public ResultSet executeQuery(final String query) throws SQLException {
+    public ResultSet getQueryData(final String query) throws SQLException {
         if (!this.isConnectionValid()) {
             throw new SQLException("You need to establish a connection to the server before running a query.");
         }
         final Statement statement = this.connection.createStatement();
         return statement.executeQuery(query);
+    }
+
+    @Override
+    public void setQueryData(final String query) throws SQLException {
+        if (!this.isConnectionValid()) {
+            throw new SQLException("You need to establish a connection to the server before running a query.");
+        }
+        final Statement statement = this.connection.createStatement();
+        statement.executeUpdate(query);
     }
 }

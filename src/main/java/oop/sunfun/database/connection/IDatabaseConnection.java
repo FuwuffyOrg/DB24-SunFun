@@ -12,10 +12,9 @@ public interface IDatabaseConnection {
 
     /**
      * Method to attempt the connection to a server.
-     * @return The singleton instance of the connection.
      * @throws SQLException If the connection can't be made.
      */
-    Connection getConnection() throws SQLException;
+    void openConnection() throws SQLException;
 
     /**
      * Method to close the connection to the database.
@@ -24,10 +23,17 @@ public interface IDatabaseConnection {
     void closeConnection() throws SQLException;
 
     /**
-     * Method to run a query on the database.
+     * Method to run a GET query on the database.
      * @param query The query to execute on the server.
      * @return The set of the results of the query.
      * @throws SQLException If the query couldn't run successfully.
      */
-    ResultSet executeQuery(String query) throws SQLException;
+    ResultSet getQueryData(String query) throws SQLException;
+
+    /**
+     * Method to run a POST query on the database.
+     * @param query The query to execute on the server.
+     * @throws SQLException If the query couldn't run successfully.
+     */
+    void setQueryData(String query) throws SQLException;
 }
