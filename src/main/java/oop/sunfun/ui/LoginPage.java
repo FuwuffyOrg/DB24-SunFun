@@ -5,17 +5,21 @@ import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.Component;
+import java.util.Objects;
 
 public final class LoginPage extends GenericPage {
+    private final JTextComponent txtEmail;
+    private final JTextComponent txtPassword;
 
     public LoginPage(final String title, final CloseEvents closeEvent) {
         super(title, closeEvent);
         // Add two labels and text boxes for inputting username and password.
         final Component lblEmail = new JLabel("Email: ");
         final Component lblPassword = new JLabel("Password: ");
-        final Component txtEmail = new JTextField();
-        final Component txtPassword = new JPasswordField();
+        this.txtEmail = new JTextField();
+        this.txtPassword = new JPasswordField();
         final AbstractButton btnLogin = new JButton("Login");
         final AbstractButton btnRegister = new JButton("Goto Register");
         // Add all the components.
@@ -61,8 +65,22 @@ public final class LoginPage extends GenericPage {
             registerPage.setVisible(true);
             LoginPage.this.dispose();
         });
-        // TODO: Make actual login happen!
+        btnLogin.addActionListener(e -> {
+            if (LoginPage.this.isDataValid()) {
+                LoginPage.this.close();
+                // TODO: Make actual login happen!
+            }
+        });
         // Finish the window.
         this.buildWindow();
+    }
+
+    private boolean isDataValid() {
+        final int passwordLengthLimit = 24;
+        final int emailLengthLimit = 256;
+        if (this.txtPassword.getText().length() > passwordLengthLimit || this.txtPassword.getText().length() < 2) {
+            return false;
+        }
+        return this.txtEmail.getText().length() <= emailLengthLimit && this.txtEmail.getText().length() >= 6;
     }
 }

@@ -24,14 +24,14 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class RegisterPage extends GenericPage {
-    final JTextComponent txtCodiceFiscale;
-    final JTextComponent txtName;
-    final JTextComponent txtSurname;
-    final JTextComponent txtPhone;
-    final JTextComponent txtEmail;
-    final JTextComponent txtPassword;
-    final JTextComponent txtPasswordConfirm;
-    final ButtonGroup radParentTypeGroup;
+    private final JTextComponent txtCodiceFiscale;
+    private final JTextComponent txtName;
+    private final JTextComponent txtSurname;
+    private final JTextComponent txtPhone;
+    private final JTextComponent txtEmail;
+    private final JTextComponent txtPassword;
+    private final JTextComponent txtPasswordConfirm;
+    private final ButtonGroup radParentTypeGroup;
 
     public RegisterPage(final String title, final CloseEvents closeEvent) {
         super(title, closeEvent);
