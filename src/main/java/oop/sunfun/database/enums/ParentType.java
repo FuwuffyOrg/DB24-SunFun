@@ -22,16 +22,6 @@ public enum ParentType {
     NONNA("Nonna"),
 
     /**
-     * The Zio type within the database connection.
-     */
-    ZIO("Zio"),
-
-    /**
-     * The Zia type within the database connection.
-     */
-    ZIA("Zia"),
-
-    /**
      * The Fratello type within the database connection.
      */
     FRATELLO("Fratello"),
