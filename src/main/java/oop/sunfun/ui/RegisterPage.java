@@ -190,19 +190,19 @@ public final class RegisterPage extends GenericPage {
         btnRegister.addActionListener(e -> {
             if (RegisterPage.this.isDataValid()) {
                 final String accountQuery = "INSERT INTO `account`(`email`, `password`, `tipologia`) " +
-                        "VALUES ('%s','%s','Parente')";
+                        "VALUES (?,?,'Parente')";
 
                 final String parenteQuery = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, " +
-                        "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES ('%s','%s','%s','%s','%s','%s')";
+                        "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
 
                 final IDatabaseConnection database = new DatabaseConnection("sunfun",
                         "jdbc:mysql://localhost", "root", "");
                 try {
                     database.openConnection();
-                    database.setQueryData(String.format(accountQuery, txtEmail.getText(), txtPassword.getText()));
-                    database.setQueryData(String.format(parenteQuery, txtCodiceFiscale.getText(),
+                    database.setQueryData(accountQuery, txtEmail.getText(), txtPassword.getText());
+                    database.setQueryData(parenteQuery, txtCodiceFiscale.getText(),
                             txtEmail.getText(), txtName.getText(), txtSurname.getText(), txtPhone.getText(),
-                            this.radParentTypeGroup.getSelection().getActionCommand()));
+                            this.radParentTypeGroup.getSelection().getActionCommand());
                     database.closeConnection();
                 } catch (final SQLException err) {
                     err.printStackTrace();
