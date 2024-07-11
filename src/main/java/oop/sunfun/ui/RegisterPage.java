@@ -9,19 +9,19 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
 import java.awt.Component;
 
-public final class LoginPage extends GenericPage {
-    private static final String WINDOW_TITLE = "SunFun Login";
+public final class RegisterPage extends GenericPage {
+    private static final String WINDOW_TITLE = "SunFun Register";
 
-    public LoginPage() {
+    public RegisterPage() {
         super(WINDOW_TITLE, CloseEvents.EXIT_PROGRAM);
         // Add two labels and text boxes for inputting username and password.
         final Component lblEmail = new JLabel("Email: ");
         final Component lblPassword = new JLabel("Password: ");
         final Component txtEmail = new JTextField();
         final Component txtPassword = new JPasswordField();
-        final Component btnLogin = new JButton("Login");
         final Component btnRegister = new JButton("Register");
         // Add all the components.
         this.addPanelComponent(lblEmail,
@@ -52,16 +52,10 @@ public final class LoginPage extends GenericPage {
                         .setAnchor(Anchors.CENTER_RIGHT)
                         .build()
         );
-        this.addPanelComponent(btnLogin,
-                new GridBagConstraintBuilder()
-                        .setRow(2).setColumn(0)
-                        .setAnchor(Anchors.BOTTOM_LEFT)
-                        .setFillAll()
-                        .build()
-        );
         this.addPanelComponent(btnRegister,
                 new GridBagConstraintBuilder()
-                        .setRow(2).setColumn(1)
+                        .setRow(2).setColumn(0)
+                        .setWidth(2)
                         .setAnchor(Anchors.BOTTOM_RIGHT)
                         .setFillAll()
                         .build()

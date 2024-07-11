@@ -1,6 +1,7 @@
 package oop.sunfun.ui.layout;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import oop.sunfun.ui.behavior.CloseEvents;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -59,9 +60,10 @@ public abstract class GenericPage extends JFrame {
      * Basic constructor for a generic window in the project.
      * @param title The title of the window.
      */
-    public GenericPage(final String title) {
+    public GenericPage(final String title, final CloseEvents closeEvent) {
         // Add a close operation
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // TODO: Not good for all windows sadly
+        this.setDefaultCloseOperation(closeEvent.getEventValue());
         // Set the window title
         this.setTitle(title);
         // Center the window to the screen
@@ -91,7 +93,6 @@ public abstract class GenericPage extends JFrame {
         );
         // Display the window
         this.validate();
-        this.setVisible(true);
     }
 
     /**
