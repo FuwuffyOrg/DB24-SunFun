@@ -151,7 +151,7 @@ CREATE TABLE `parente` (
   `nome` varchar(36) NOT NULL COMMENT 'Nome del parente.',
   `cognome` varchar(36) NOT NULL COMMENT 'Cognome del parente.',
   `cellulare` varchar(10) NOT NULL COMMENT 'Numero telefonico del parente.',
-  `grado_di_parentela` enum('Padre','Madre','Nonno','Nonna','Zio','Zia','Fratello','Sorella') NOT NULL COMMENT 'Grado di parentela del parente.'
+  `grado_di_parentela` enum('Padre','Madre','Nonno','Nonna','Fratello','Sorella') NOT NULL COMMENT 'Grado di parentela del parente.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
