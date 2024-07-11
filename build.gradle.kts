@@ -3,7 +3,6 @@ plugins {
     application
     checkstyle
     pmd
-    id("com.github.spotbugs") version "6.0.18"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
@@ -17,10 +16,6 @@ pmd {
     ruleSets = listOf("category/java/bestpractices.xml", "category/java/design.xml")
 }
 
-spotbugs {
-    toolVersion = "6.0.18"
-}
-
 group = "oop.sunfun"
 version = "1.0"
 
@@ -31,9 +26,6 @@ repositories {
 val supportedPlatforms = listOf("linux", "mac", "win")
 
 dependencies {
-    // Spotbugs annotation to skip warnings
-    compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.3")
-
     // Connection to sql
     implementation("com.mysql:mysql-connector-j:9.0.0")
 
