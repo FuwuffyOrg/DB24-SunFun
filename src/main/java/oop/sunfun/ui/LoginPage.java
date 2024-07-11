@@ -1,15 +1,10 @@
 package oop.sunfun.ui;
 
 import oop.sunfun.ui.behavior.CloseEvents;
-import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Component;
 
 public final class LoginPage extends GenericPage {
@@ -21,48 +16,42 @@ public final class LoginPage extends GenericPage {
         final Component lblPassword = new JLabel("Password: ");
         final Component txtEmail = new JTextField();
         final Component txtPassword = new JPasswordField();
-        final JButton btnLogin = new JButton("Login");
-        final JButton btnRegister = new JButton("Goto Register");
+        final AbstractButton btnLogin = new JButton("Login");
+        final AbstractButton btnRegister = new JButton("Goto Register");
         // Add all the components.
         this.addPanelComponent(lblEmail,
                 new GridBagConstraintBuilder()
                         .setRow(0).setColumn(0)
                         .setFillAll()
-                        .setAnchor(Anchors.TOP_LEFT)
                         .build()
         );
         this.addPanelComponent(txtEmail,
                 new GridBagConstraintBuilder()
                         .setRow(0).setColumn(1)
                         .setFillAll()
-                        .setAnchor(Anchors.TOP_RIGHT)
                         .build()
         );
         this.addPanelComponent(lblPassword,
                 new GridBagConstraintBuilder()
                         .setRow(1).setColumn(0)
                         .setFillAll()
-                        .setAnchor(Anchors.CENTER_LEFT)
                         .build()
         );
         this.addPanelComponent(txtPassword,
                 new GridBagConstraintBuilder()
                         .setRow(1).setColumn(1)
                         .setFillAll()
-                        .setAnchor(Anchors.CENTER_RIGHT)
                         .build()
         );
         this.addPanelComponent(btnLogin,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(0)
-                        .setAnchor(Anchors.BOTTOM_LEFT)
                         .setFillAll()
                         .build()
         );
         this.addPanelComponent(btnRegister,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(1)
-                        .setAnchor(Anchors.BOTTOM_RIGHT)
                         .setFillAll()
                         .build()
         );
@@ -72,6 +61,7 @@ public final class LoginPage extends GenericPage {
             registerPage.setVisible(true);
             LoginPage.this.dispose();
         });
+        // TODO: Make actual login happen!
         // Finish the window.
         this.buildWindow();
     }

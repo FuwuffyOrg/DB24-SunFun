@@ -13,6 +13,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 
 public abstract class GenericPage extends JFrame {
     /**
@@ -77,7 +78,7 @@ public abstract class GenericPage extends JFrame {
      */
     public final void buildWindow() {
         final double ratio = SCREEN_DIMENSIONS.getWidth() / SCREEN_DIMENSIONS.getHeight();
-        final double scaleAmount = 2.0d * (SCREEN_DIMENSIONS.getWidth() / 1920.0d);
+        final double scaleAmount = 1.25d * (SCREEN_DIMENSIONS.getWidth() / 1920.0d);
         // Pack the window to little size
         this.pack();
         // Set the minimum size as the packed size
@@ -93,6 +94,10 @@ public abstract class GenericPage extends JFrame {
         this.setLocationRelativeTo(null);
         // Display the window
         this.validate();
+    }
+
+    public final void close() {
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
     /**
