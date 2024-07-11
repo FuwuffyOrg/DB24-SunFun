@@ -1,4 +1,4 @@
-package oop.sunfun.database;
+package oop.sunfun.database.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
