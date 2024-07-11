@@ -100,10 +100,16 @@ public final class LoginPage extends GenericPage {
         final int passwordLengthLimit = 24;
         final int emailLengthLimit = 256;
         final int minSize = 4;
-        if (this.txtPassword.getText().length() > passwordLengthLimit
-                || this.txtPassword.getText().length() < minSize) {
+        this.resetHighlights();
+        if (this.txtEmail.getText().length() > emailLengthLimit && this.txtEmail.getText().length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtEmail);
             return false;
         }
-        return this.txtEmail.getText().length() <= emailLengthLimit && this.txtEmail.getText().length() >= minSize;
+        if (this.txtPassword.getText().length() > passwordLengthLimit
+                || this.txtPassword.getText().length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtPassword);
+            return false;
+        }
+        return true;
     }
 }

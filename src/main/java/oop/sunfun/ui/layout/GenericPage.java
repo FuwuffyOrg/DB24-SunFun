@@ -6,16 +6,14 @@ import oop.sunfun.ui.behavior.CloseEvents;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.text.JTextComponent;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 
 public abstract class GenericPage extends JFrame {
+    private static final Color HIGHLIGHT_COLOR = Color.YELLOW;
+
     /**
      * The screen display's dimensions.
      */
@@ -94,6 +92,23 @@ public abstract class GenericPage extends JFrame {
         this.setLocationRelativeTo(null);
         // Display the window
         this.validate();
+    }
+
+    /**
+     * Method to highlight an item in the page (mostly used for error highlighting).
+     * @param textField The text field to highlight.
+     */
+    protected static void highlightTextComponent(final JTextComponent textField) {
+        textField.setBackground(HIGHLIGHT_COLOR);
+    }
+
+    /**
+     * Method to reset all highlighted items in the page.
+     */
+    protected void resetHighlights() {
+        for (final Component c : this.contentPanel.getComponents()) {
+            c.setBackground(UIManager.getColor("TextField.background"));
+        }
     }
 
     /**

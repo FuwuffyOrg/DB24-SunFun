@@ -16,7 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
-import java.awt.Component;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.EnumSet;
 import java.util.Objects;
@@ -224,25 +224,38 @@ public final class RegisterPage extends GenericPage {
         final int emailLengthLimit = 256;
         final int codiceFiscaleLength = 16;
         final int phoneNumberLength = 10;
+        this.resetHighlights();
         if (this.txtCodiceFiscale.getText().length() != codiceFiscaleLength) {
+            GenericPage.highlightTextComponent(this.txtCodiceFiscale);
             return false;
         }
         if (this.txtName.getText().length() > nameLengthLimit || this.txtName.getText().length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtName);
             return false;
         }
         if (this.txtSurname.getText().length() > nameLengthLimit || this.txtSurname.getText().length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtSurname);
+            return false;
+        }
+        if (this.txtPhone.getText().length() != phoneNumberLength) {
+            GenericPage.highlightTextComponent(this.txtPhone);
+            return false;
+        }
+        if (this.txtEmail.getText().length() > emailLengthLimit || this.txtEmail.getText().length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtEmail);
             return false;
         }
         if (this.txtPassword.getText().length() > passwordLengthLimit
                 || this.txtPassword.getText().length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtPassword);
+            GenericPage.highlightTextComponent(this.txtPasswordConfirm);
             return false;
         }
         if (!Objects.equals(this.txtPassword.getText(), this.txtPasswordConfirm.getText())) {
+            GenericPage.highlightTextComponent(this.txtPassword);
+            GenericPage.highlightTextComponent(this.txtPasswordConfirm);
             return false;
         }
-        if (this.txtEmail.getText().length() > emailLengthLimit || this.txtEmail.getText().length() < minSize) {
-            return false;
-        }
-        return this.txtPhone.getText().length() == phoneNumberLength;
+        return true;
     }
 }
