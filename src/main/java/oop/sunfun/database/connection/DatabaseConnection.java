@@ -1,10 +1,7 @@
 package oop.sunfun.database.connection;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.stream.IntStream;
 
 /**
  * Implementation of the IDatabaseConnection interface.
@@ -62,20 +59,35 @@ public final class DatabaseConnection implements IDatabaseConnection {
     }
 
     @Override
-    public ResultSet getQueryData(final String query) throws SQLException {
+    public ResultSet getQueryData(final String query, final Object... parameters) throws SQLException {
         if (!this.isConnectionValid()) {
             throw new SQLException("You need to establish a connection to the server before running a query.");
         }
-        final Statement statement = this.connection.createStatement();
-        return statement.executeQuery(query);
+        final PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+        IntStream.range(0, parameters.length).forEach(i -> {
+            try {
+                preparedStatement.setObject(i + 1, parameters[i]);
+            } catch (final SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return preparedStatement.executeQuery(query);
     }
 
     @Override
-    public void setQueryData(final String query) throws SQLException {
+    public void setQueryData(final String query, final Object... parameters) throws SQLException {
         if (!this.isConnectionValid()) {
             throw new SQLException("You need to establish a connection to the server before running a query.");
         }
-        final Statement statement = this.connection.createStatement();
-        statement.executeUpdate(query);
+        final PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+        IntStream.range(0, parameters.length).forEach(i -> {
+            try {
+                preparedStatement.setObject(i + 1, parameters[i]);
+            } catch (final SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 }
