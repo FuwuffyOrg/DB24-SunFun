@@ -1,5 +1,9 @@
 package oop.sunfun.database.data.enums;
 
+import java.util.EnumSet;
+import java.util.Objects;
+import java.util.Optional;
+
 public enum AccountType {
     /**
      * The Parente type within the database connection.
@@ -36,5 +40,20 @@ public enum AccountType {
      */
     public String getTextValue() {
         return this.textValue;
+    }
+
+    /**
+     * Gets the string to use in database queries.
+     * @return The textual value of this enum.
+     */
+    public static AccountType getFromString(final String type) {
+        final Optional<AccountType> accType = EnumSet.allOf(AccountType.class)
+                .stream()
+                .filter(p -> Objects.equals(p.getTextValue(), type))
+                .findFirst();
+        if (accType.isEmpty()) {
+            throw new IllegalStateException("The inserted account type is not valid!");
+        }
+        return accType.get();
     }
 }
