@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class CommentData {
+public final class CommentData {
     private static final String NUM_RESPONSE_SQL = "num_risposta";
     private static final String RESPONSE_SQL = "testo";
     private static final String NAME_SQL = "nome";

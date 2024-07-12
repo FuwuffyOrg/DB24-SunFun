@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class DiscussionData {
+public final class DiscussionData {
     private static final String NUM_DISCUSSION_SQL = "num_discussione";
     private static final String EMAIL_SQL = "email";
     private static final String TITLE_SQL = "titolo";

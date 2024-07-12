@@ -1,5 +1,6 @@
 package oop.sunfun.database.dao;
 
+import oop.sunfun.database.data.enums.AccountType;
 import oop.sunfun.database.data.login.AccountData;
 
 import java.sql.SQLException;
@@ -16,10 +17,10 @@ public final class AccountDAO extends AbstractDAO {
             + "AND password = ?";
 
     private static final String CREATE_ACCOUNT_BY_EMAIL_PASSOWRD = "INSERT INTO `account`(`email`, `password`, "
-            + "`tipologia`) VALUES (?,?,'Parente')";
+            + "`tipologia`) VALUES (?,?,?)";
 
     private AccountDAO() {
-        // Empty constructor
+        super();
     }
 
     public static Optional<AccountData> getAccount(final String email, final String password) {
@@ -39,10 +40,10 @@ public final class AccountDAO extends AbstractDAO {
         return Optional.empty();
     }
 
-    public static void createAccount(final String email, final String password) {
+    public static void createAccount(final String email, final String password, final AccountType accountType) {
         try {
             DB_CONNECTION.openConnection();
-            DB_CONNECTION.setQueryData(CREATE_ACCOUNT_BY_EMAIL_PASSOWRD, email, password);
+            DB_CONNECTION.setQueryData(CREATE_ACCOUNT_BY_EMAIL_PASSOWRD, email, password, accountType.getTextValue());
         } catch (final SQLException err) {
             LOGGER.log(Level.SEVERE, "Couldn't fetch the categories", err);
             DB_CONNECTION.closeConnection();

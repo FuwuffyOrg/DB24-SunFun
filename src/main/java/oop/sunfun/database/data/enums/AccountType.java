@@ -44,6 +44,7 @@ public enum AccountType {
 
     /**
      * Gets the string to use in database queries.
+     * @param type The type of the account in string type.
      * @return The textual value of this enum.
      */
     public static AccountType getFromString(final String type) {

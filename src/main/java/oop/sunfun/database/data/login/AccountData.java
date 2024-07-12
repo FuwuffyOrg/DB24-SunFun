@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class AccountData {
+public final class AccountData {
 
     private static final String EMAIL_SQL = "email";
     private static final String TIPOLOGIA_SQL = "tipologia";

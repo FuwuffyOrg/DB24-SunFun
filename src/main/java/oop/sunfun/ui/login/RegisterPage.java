@@ -4,6 +4,7 @@ import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
 import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.dao.PersonDAO;
+import oop.sunfun.database.data.enums.AccountType;
 import oop.sunfun.database.data.enums.ParentType;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
@@ -197,10 +198,10 @@ public final class RegisterPage extends GenericPage {
                 final IDatabaseConnection database = SunFunDatabase.getDatabaseInstance();
                 try {
                     database.openConnection();
-                    AccountDAO.createAccount(this.txtEmail.getText(), this.txtPassword.getText());
+                    AccountDAO.createAccount(this.txtEmail.getText(), this.txtPassword.getText(), AccountType.PARENTE);
                     PersonDAO.createParent(this.txtCodiceFiscale.getText(), this.txtEmail.getText(),
                             this.txtName.getText(), this.txtSurname.getText(), this.txtPhone.getText(),
-                            (String) this.comboParentType.getSelectedItem());
+                            ParentType.getFromString((String) this.comboParentType.getSelectedItem()));
                 } catch (final SQLException err) {
                     LOGGER.log(Level.SEVERE, "Couldn't register the account data", err);
                     database.closeConnection();

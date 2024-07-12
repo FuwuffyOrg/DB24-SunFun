@@ -16,7 +16,7 @@ public final class ForumDAO extends AbstractDAO {
     private static final String FIND_ALL_CATEGORIES = "SELECT * FROM `categoria`";
 
     private ForumDAO() {
-        // Useless constructor
+        super();
     }
 
     public static Set<CategoryData> getAllCategories() {
