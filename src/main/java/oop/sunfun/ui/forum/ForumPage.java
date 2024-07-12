@@ -5,6 +5,8 @@ import oop.sunfun.database.connection.SunFunDatabase;
 import oop.sunfun.database.dao.ForumDAO;
 import oop.sunfun.database.data.forum.CategoryData;
 import oop.sunfun.database.data.forum.DiscussionData;
+import oop.sunfun.database.data.login.AccountData;
+import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GenericPage;
@@ -32,24 +34,34 @@ public class ForumPage extends GenericPage {
 
     private static final String PAGE_NAME = "Forums";
 
-    public ForumPage(final CloseEvents closeEvent) {
+    private final AccountData accountData;
+
+    public ForumPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
+        this.accountData = account;
         // Create the tabs with all the posts
         final JTabbedPane pane = this.createTabs();
         // Add them to the page
         this.add(pane, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
+                .setWidth(2)
                 .setAnchor(Anchors.TOP)
                 .setFillAll()
                 .build()
         );
         // Add a button to create a new post
         final AbstractButton btnNewPost = new JButton("Crea un nuovo post");
+        final AbstractButton btnDashboard = new JButton("Torna alla dashboard");
         this.add(btnNewPost, new GridBagConstraintBuilder()
                 .setRow(1).setColumn(0)
                 .setFillAll()
                 .build());
-        btnNewPost.addActionListener(e -> this.switchPage(new CreateForumPage(CloseEvents.EXIT_PROGRAM)));
+        this.add(btnDashboard, new GridBagConstraintBuilder()
+                .setRow(1).setColumn(1)
+                .setFillAll()
+                .build());
+        btnNewPost.addActionListener(e -> this.switchPage(new CreateForumPage(CloseEvents.EXIT_PROGRAM, this.accountData)));
+        btnDashboard.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, this.accountData)));
         // Finalize the window
         this.buildWindow();
     }
@@ -121,7 +133,8 @@ public class ForumPage extends GenericPage {
                 .setPadAll(2)
                 .setFillHorizontal()
                 .build());
-        btnEnterDiscussion.addActionListener(e -> this.switchPage(new ForumPostPage(discussion, CloseEvents.EXIT_PROGRAM)));
+        btnEnterDiscussion.addActionListener(e -> this.switchPage(new ForumPostPage(discussion, CloseEvents.EXIT_PROGRAM,
+                this.accountData)));
         return discussionHeader;
     }
 }

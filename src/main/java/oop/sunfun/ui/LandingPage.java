@@ -19,13 +19,16 @@ public class LandingPage extends GenericPage {
 
     private static final String PAGE_NAME = "Landing Page";
 
+    private final AccountData accountData;
+
     public LandingPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
+        this.accountData = account;
         // Set to contain all the pages reachable by that user.
         final Map<String, Supplier<GenericPage>> reachablePages = new HashMap<>();
         // Add the pages that need to be shownp
         // TODO: Add constraints depending on the account type
-        reachablePages.put("Forum", () -> new ForumPage(CloseEvents.EXIT_PROGRAM));
+        reachablePages.put("Forum", () -> new ForumPage(CloseEvents.EXIT_PROGRAM, this.accountData));
         // Calculate the sides of a rectangle for the button layout
         final double side = Math.sqrt(reachablePages.size());
         final int rows = (int) Math.floor(side);

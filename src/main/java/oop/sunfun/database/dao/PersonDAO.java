@@ -27,6 +27,4 @@ public final class PersonDAO extends AbstractDAO {
             DB_CONNECTION.closeConnection();
         }
     }
-
-    // TODO: add other people types in here
 }

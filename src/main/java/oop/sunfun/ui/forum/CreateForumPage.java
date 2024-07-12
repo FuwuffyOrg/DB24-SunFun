@@ -1,14 +1,86 @@
 package oop.sunfun.ui.forum;
 
+import oop.sunfun.database.dao.ForumDAO;
+import oop.sunfun.database.data.forum.CategoryData;
+import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
+import oop.sunfun.ui.layout.GridBagConstraintBuilder;
+
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
+import java.awt.*;
+import java.util.EnumSet;
 
 public class CreateForumPage extends GenericPage {
 
     private static final String PAGE_NAME = "Create A Post";
 
-    public CreateForumPage(final CloseEvents closeEvent) {
+    private final AccountData accountData;
+
+    private final JTextComponent txtTitle;
+
+    private final JComboBox<String> comboCategoryType;
+
+    private final JTextComponent txtDescription;
+
+    public CreateForumPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
+        this.accountData = account;
+        // Create the components needed for the page
+        final Component lblTitle = new JLabel("Titolo: ");
+        final Component lblCategoria = new JLabel("Categoria: ");
+        this.txtTitle = new JTextField();
+        this.txtDescription = new JTextArea();
+        this.comboCategoryType = new JComboBox<>();
+        final AbstractButton btnCreatePost = new JButton("Crea il post");
+        final AbstractButton btnForum = new JButton("Torna al forum");
+        // Add the categories
+        ForumDAO.getAllCategories().forEach(c -> {
+            this.comboCategoryType.addItem(c.name());
+        });
+        // Add the components
+        this.add(lblTitle, new GridBagConstraintBuilder()
+                .setRow(0).setColumn(0)
+                .setFillAll()
+                .build()
+        );
+        this.add(txtTitle, new GridBagConstraintBuilder()
+                .setRow(0).setColumn(1)
+                .setFillAll()
+                .build()
+        );
+        this.add(lblCategoria, new GridBagConstraintBuilder()
+                .setRow(1).setColumn(0)
+                .setFillAll()
+                .build()
+        );
+        this.add(comboCategoryType, new GridBagConstraintBuilder()
+                .setRow(1).setColumn(1)
+                .setFillAll()
+                .build()
+        );
+        this.add(txtDescription, new GridBagConstraintBuilder()
+                .setRow(2).setColumn(0)
+                .setWidth(2).setHeight(2)
+                .setFillAll()
+                .build()
+        );
+        this.add(btnCreatePost, new GridBagConstraintBuilder()
+                .setRow(4).setColumn(0)
+                .setFillAll()
+                .build()
+        );
+        this.add(btnForum, new GridBagConstraintBuilder()
+                .setRow(4).setColumn(1)
+                .setFillAll()
+                .build()
+        );
+        // Handle the events
+        btnForum.addActionListener(e -> this.switchPage(new ForumPage(CloseEvents.EXIT_PROGRAM, this.accountData)));
+        btnCreatePost.addActionListener(e -> {
+            // TODO: Create the post
+        });
         // Finalize the window
         this.buildWindow();
     }
