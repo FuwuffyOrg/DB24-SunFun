@@ -1,7 +1,7 @@
 package oop.sunfun.ui;
 
-import oop.sunfun.database.connection.DatabaseConnection;
 import oop.sunfun.database.connection.IDatabaseConnection;
+import oop.sunfun.database.connection.SunFunDatabase;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
@@ -17,8 +17,12 @@ import java.awt.Component;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class LoginPage extends GenericPage {
+    private static final Logger logger = Logger.getLogger(LoginPage.class.getName());
+
     private final JTextComponent txtEmail;
     private final JTextComponent txtPassword;
 
@@ -77,8 +81,7 @@ public final class LoginPage extends GenericPage {
         btnLogin.addActionListener(e -> {
             if (LoginPage.this.isDataValid()) {
                 final String accountQuery = "SELECT * FROM `account` WHERE `email` = ? AND password = ?";
-                final IDatabaseConnection database = new DatabaseConnection("sunfun",
-                        "jdbc:mysql://localhost", "root", "");
+                final IDatabaseConnection database = SunFunDatabase.getDatabaseInstance();
                 try {
                     database.openConnection();
                     final List<Map<String, Object>> results = database.getQueryData(accountQuery,
@@ -86,7 +89,7 @@ public final class LoginPage extends GenericPage {
                     // TODO: Make actual login happen!
                     database.closeConnection();
                 } catch (final SQLException err) {
-                    err.printStackTrace();
+                    logger.log(Level.SEVERE, "Couldn't fetch the account data", err);
                     this.close();
                 }
                 LoginPage.this.close();

@@ -1,7 +1,7 @@
 package oop.sunfun.ui;
 
-import oop.sunfun.database.connection.DatabaseConnection;
 import oop.sunfun.database.connection.IDatabaseConnection;
+import oop.sunfun.database.connection.SunFunDatabase;
 import oop.sunfun.database.enums.ParentType;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
@@ -16,12 +16,16 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
-import java.awt.*;
+import java.awt.Component;
 import java.sql.SQLException;
 import java.util.EnumSet;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class RegisterPage extends GenericPage {
+    private static final Logger logger = Logger.getLogger(RegisterPage.class.getName());
+
     private final JTextComponent txtCodiceFiscale;
     private final JTextComponent txtName;
     private final JTextComponent txtSurname;
@@ -195,8 +199,7 @@ public final class RegisterPage extends GenericPage {
                 final String parenteQuery = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
                         + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
 
-                final IDatabaseConnection database = new DatabaseConnection("sunfun",
-                        "jdbc:mysql://localhost", "root", "");
+                final IDatabaseConnection database = SunFunDatabase.getDatabaseInstance();
                 try {
                     database.openConnection();
                     database.setQueryData(accountQuery, this.txtEmail.getText(), this.txtPassword.getText());
@@ -205,7 +208,7 @@ public final class RegisterPage extends GenericPage {
                             this.comboParentType.getSelectedItem());
                     database.closeConnection();
                 } catch (final SQLException err) {
-                    err.printStackTrace();
+                    logger.log(Level.SEVERE, "Couldn't register the account data", err);
                     this.close();
                 }
                 final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
