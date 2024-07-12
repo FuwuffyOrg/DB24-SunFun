@@ -87,9 +87,9 @@ public final class LoginPage extends GenericPage {
                     final List<Map<String, Object>> results = database.getQueryData(accountQuery,
                             txtEmail.getText(), txtPassword.getText());
                     // TODO: Make actual login happen!
-                    database.closeConnection();
                 } catch (final SQLException err) {
                     logger.log(Level.SEVERE, "Couldn't fetch the account data", err);
+                    database.closeConnection();
                     this.close();
                 }
                 LoginPage.this.close();

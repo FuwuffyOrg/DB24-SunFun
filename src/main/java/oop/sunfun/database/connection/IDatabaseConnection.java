@@ -18,9 +18,8 @@ public interface IDatabaseConnection {
 
     /**
      * Method to close the connection to the database.
-     * @throws SQLException If the connection can't be closed.
      */
-    void closeConnection() throws SQLException;
+    void closeConnection();
 
     /**
      * Method to check if a database's connection is still up.

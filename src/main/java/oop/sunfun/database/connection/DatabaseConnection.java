@@ -1,5 +1,7 @@
 package oop.sunfun.database.connection;
 
+import oop.sunfun.ui.LoginPage;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,11 +13,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementation of the IDatabaseConnection interface.
  */
 public class DatabaseConnection implements IDatabaseConnection {
+    /**
+     * Logger to help show errors in try catches.
+     */
+    private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
+
     /**
      * The url location of the db.
      */
@@ -57,9 +66,13 @@ public class DatabaseConnection implements IDatabaseConnection {
     }
 
     @Override
-    public final void closeConnection() throws SQLException {
-        if (this.isConnectionOpen()) {
-            this.connection.close();
+    public final void closeConnection() {
+        try {
+            if (this.isConnectionOpen()) {
+                this.connection.close();
+            }
+        } catch (final SQLException e) {
+            logger.log(Level.SEVERE, "Could not close the connection of the database!", e);
         }
     }
 

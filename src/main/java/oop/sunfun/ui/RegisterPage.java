@@ -206,9 +206,9 @@ public final class RegisterPage extends GenericPage {
                     database.setQueryData(parenteQuery, this.txtCodiceFiscale.getText(), this.txtEmail.getText(),
                             this.txtName.getText(), this.txtSurname.getText(), this.txtPhone.getText(),
                             this.comboParentType.getSelectedItem());
-                    database.closeConnection();
                 } catch (final SQLException err) {
                     logger.log(Level.SEVERE, "Couldn't register the account data", err);
+                    database.closeConnection();
                     this.close();
                 }
                 final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
