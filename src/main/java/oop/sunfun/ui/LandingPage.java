@@ -6,9 +6,9 @@ import oop.sunfun.ui.layout.GenericPage;
 
 public class LandingPage extends GenericPage {
 
-    public LandingPage(final String title, final CloseEvents closeEvent, final AccountData account) {
-        super(title, closeEvent);
+    private static final String PAGE_NAME = "SunFun Hub";
+
+    public LandingPage(final CloseEvents closeEvent, final AccountData account) {
+        super(PAGE_NAME, closeEvent);
     }
-
-
 }

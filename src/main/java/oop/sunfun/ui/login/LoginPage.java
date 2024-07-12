@@ -1,8 +1,9 @@
-package oop.sunfun.ui;
+package oop.sunfun.ui.login;
 
 import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
 import oop.sunfun.database.data.AccountData;
+import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
@@ -23,11 +24,13 @@ import java.util.logging.Logger;
 public final class LoginPage extends GenericPage {
     private static final Logger LOGGER = Logger.getLogger(LoginPage.class.getName());
 
+    private static final String PAGE_NAME = "SunFun Login";
+
     private final JTextComponent txtEmail;
     private final JTextComponent txtPassword;
 
-    public LoginPage(final String title, final CloseEvents closeEvent) {
-        super(title, closeEvent);
+    public LoginPage(final CloseEvents closeEvent) {
+        super(PAGE_NAME, closeEvent);
         // Add two labels and text boxes for inputting username and password.
         final Component lblEmail = new JLabel("Email: ");
         final Component lblPassword = new JLabel("Password: ");
@@ -76,7 +79,7 @@ public final class LoginPage extends GenericPage {
         // Event to go to the register page
         btnRegister.addActionListener(e -> {
             // Go to register page
-            this.switchPage(new RegisterPage("SunFun Register", CloseEvents.EXIT_PROGRAM));
+            this.switchPage(new RegisterPage(CloseEvents.EXIT_PROGRAM));
         });
         // Event to log into the application
         btnLogin.addActionListener(e -> {
@@ -91,7 +94,7 @@ public final class LoginPage extends GenericPage {
                     // Get the account
                     final AccountData account = getAccountData(results);
                     // Go to landing page
-                    this.switchPage(new LandingPage("SunFun Hub", CloseEvents.EXIT_PROGRAM, account));
+                    this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account));
                 } catch (final SQLException err) {
                     LOGGER.log(Level.SEVERE, "Couldn't fetch the account data", err);
                     database.closeConnection();

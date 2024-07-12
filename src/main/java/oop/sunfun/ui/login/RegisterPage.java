@@ -1,4 +1,4 @@
-package oop.sunfun.ui;
+package oop.sunfun.ui.login;
 
 import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
@@ -25,6 +25,8 @@ import java.util.logging.Logger;
 public final class RegisterPage extends GenericPage {
     private static final Logger LOGGER = Logger.getLogger(RegisterPage.class.getName());
 
+    private static final String PAGE_NAME = "SunFun Register";
+
     private final JTextComponent txtCodiceFiscale;
     private final JTextComponent txtName;
     private final JTextComponent txtSurname;
@@ -34,8 +36,8 @@ public final class RegisterPage extends GenericPage {
     private final JTextComponent txtPasswordConfirm;
     private final JComboBox<String> comboParentType;
 
-    public RegisterPage(final String title, final CloseEvents closeEvent) {
-        super(title, closeEvent);
+    public RegisterPage(final CloseEvents closeEvent) {
+        super(PAGE_NAME, closeEvent);
         // Add two labels and text boxes for inputting username and password.
         final Component lblCodiceFiscale = new JLabel("Codice Fiscale: ");
         final Component lblName = new JLabel("Nome: ");
@@ -186,7 +188,7 @@ public final class RegisterPage extends GenericPage {
         );
         // Add events
         btnLogin.addActionListener(e -> {
-            this.switchPage(new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM));
+            this.switchPage(new LoginPage(CloseEvents.EXIT_PROGRAM));
         });
         btnRegister.addActionListener(e -> {
             if (RegisterPage.this.isDataValid()) {
@@ -208,7 +210,7 @@ public final class RegisterPage extends GenericPage {
                     database.closeConnection();
                     this.close();
                 }
-                this.switchPage(new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM));
+                this.switchPage(new LoginPage(CloseEvents.EXIT_PROGRAM));
             }
         });
         // Finish the window.

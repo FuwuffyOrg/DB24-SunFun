@@ -1,8 +1,8 @@
 package oop.sunfun;
 
-import oop.sunfun.ui.LoginPage;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
+import oop.sunfun.ui.login.RegisterPage;
 
 import javax.swing.JFrame;
 
@@ -18,7 +18,7 @@ public final class Main {
     public static void main(final String[] args) {
         GenericPage.setupTheme();
 
-        final JFrame loginPage = new LoginPage("Login", CloseEvents.EXIT_PROGRAM);
-        loginPage.setVisible(true);
+        final JFrame registerPage = new RegisterPage(CloseEvents.EXIT_PROGRAM);
+        registerPage.setVisible(true);
     }
 }
