@@ -34,7 +34,7 @@ public final class AccountDAO extends AbstractDAO {
             // Get the data and build an account record
             return Optional.of(new AccountData(queryData.getFirst()));
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't fetch the categories", err);
+            LOGGER.log(Level.SEVERE, "Couldn't fetch the account data", err);
             DB_CONNECTION.closeConnection();
         }
         return Optional.empty();

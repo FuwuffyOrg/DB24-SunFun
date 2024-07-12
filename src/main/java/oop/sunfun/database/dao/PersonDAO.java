@@ -23,7 +23,7 @@ public final class PersonDAO extends AbstractDAO {
             DB_CONNECTION.setQueryData(CREATE_PARENTE, codiceFiscale, accountEmail, name,
                     surname, phoneNumber, parentType.getTextValue());
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't fetch the categories", err);
+            LOGGER.log(Level.SEVERE, "Couldn't create the new parent", err);
             DB_CONNECTION.closeConnection();
         }
     }
