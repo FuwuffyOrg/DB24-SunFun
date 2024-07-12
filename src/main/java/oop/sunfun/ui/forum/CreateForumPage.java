@@ -15,7 +15,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
-import java.util.Objects;
 
 public final class CreateForumPage extends GenericPage {
 

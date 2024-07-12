@@ -21,12 +21,9 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.GridBagLayout;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 public final class ForumPage extends GenericPage {
-    private static final Logger LOGGER = Logger.getLogger(ForumPage.class.getName());
-
     private static final String PAGE_NAME = "Forums";
 
     private final AccountData accountData;
@@ -55,8 +52,10 @@ public final class ForumPage extends GenericPage {
                 .setRow(1).setColumn(1)
                 .setFillAll()
                 .build());
-        btnNewPost.addActionListener(e -> this.switchPage(new CreateForumPage(CloseEvents.EXIT_PROGRAM, this.accountData)));
-        btnDashboard.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, this.accountData)));
+        btnNewPost.addActionListener(e -> this.switchPage(new CreateForumPage(CloseEvents.EXIT_PROGRAM,
+                this.accountData)));
+        btnDashboard.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM,
+                this.accountData)));
         // Finalize the window
         this.buildWindow();
     }
@@ -115,8 +114,8 @@ public final class ForumPage extends GenericPage {
                 .setPadAll(2)
                 .setFillHorizontal()
                 .build());
-        btnEnterDiscussion.addActionListener(e -> this.switchPage(new ForumPostPage(discussion, CloseEvents.EXIT_PROGRAM,
-                this.accountData)));
+        btnEnterDiscussion.addActionListener(e -> this.switchPage(new ForumPostPage(discussion,
+                CloseEvents.EXIT_PROGRAM, this.accountData)));
         return discussionHeader;
     }
 }

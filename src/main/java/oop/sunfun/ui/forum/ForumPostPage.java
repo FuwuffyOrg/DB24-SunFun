@@ -9,7 +9,7 @@ public final class ForumPostPage extends GenericPage {
 
     private final AccountData accountData;
 
-    public ForumPostPage(DiscussionData discussion, CloseEvents closeEvent, final AccountData account) {
+    public ForumPostPage(final DiscussionData discussion, final CloseEvents closeEvent, final AccountData account) {
         super(discussion.getTitle(), closeEvent);
         this.accountData = account;
         // Finalize the window

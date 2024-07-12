@@ -46,7 +46,8 @@ public final class ForumDAO extends AbstractDAO {
         final List<DiscussionData> categories = new ArrayList<>();
         try {
             DB_CONNECTION.openConnection();
-            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_POSTS_FROM_CATEGORY, category.name());
+            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_POSTS_FROM_CATEGORY,
+                    category.name());
             for (final Map<String, Object> discussion : queryData) {
                 categories.add(new DiscussionData(discussion));
             }

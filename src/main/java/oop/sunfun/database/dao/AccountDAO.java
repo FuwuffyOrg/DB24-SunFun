@@ -26,7 +26,8 @@ public final class AccountDAO extends AbstractDAO {
     public static Optional<AccountData> getAccount(final String email, final String password) {
         try {
             DB_CONNECTION.openConnection();
-            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(FIND_ACCOUNT_BY_EMAIL_PASSWORD, email, password);
+            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(FIND_ACCOUNT_BY_EMAIL_PASSWORD,
+                    email, password);
             // If there's more than one account, there must have been an error
             if (queryData.size() > 1) {
                 LOGGER.log(Level.WARNING, "There's two accounts with the same email and password");
