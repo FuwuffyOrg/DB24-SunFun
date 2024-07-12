@@ -2,6 +2,7 @@ package oop.sunfun.ui.login;
 
 import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
+import oop.sunfun.database.data.QueryManager;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.behavior.CloseEvents;
@@ -18,6 +19,7 @@ import java.awt.Component;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,35 +86,12 @@ public final class LoginPage extends GenericPage {
         // Event to log into the application
         btnLogin.addActionListener(e -> {
             if (LoginPage.this.isDataValid()) {
-                final String accountQuery = "SELECT * FROM `account` WHERE `email` = ? AND password = ?";
-                final IDatabaseConnection database = SunFunDatabase.getDatabaseInstance();
-                try {
-                    database.openConnection();
-                    // Get all the results from the query
-                    final List<Map<String, Object>> results = database.getQueryData(accountQuery,
-                            txtEmail.getText(), txtPassword.getText());
-                    // Get the account
-                    final AccountData account = getAccountData(results);
-                    // Go to landing page
-                    this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account));
-                } catch (final SQLException err) {
-                    LOGGER.log(Level.SEVERE, "Couldn't fetch the account data", err);
-                    database.closeConnection();
-                    this.close();
-                }
+                final Optional<AccountData> account = QueryManager.getAccountByEmailAndPassword(txtEmail.getText(), txtPassword.getText());
+                account.ifPresent(accountData -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, accountData)));
             }
         });
         // Finish the window.
         this.buildWindow();
-    }
-
-    private static AccountData getAccountData(final List<Map<String, Object>> results) {
-        // If there's more than one account, there must have been an error
-        if (results.size() > 1) {
-            LOGGER.log(Level.WARNING, "There's two accounts with the same email and password");
-        }
-        // Get the data and build an account record
-        return new AccountData(results.getFirst());
     }
 
     private boolean isDataValid() {
