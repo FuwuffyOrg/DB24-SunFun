@@ -29,6 +29,9 @@ dependencies {
     // Connection to sql
     implementation("com.mysql:mysql-connector-j:9.0.0")
 
+    // Used to keep the database connection's info secure
+    implementation("io.github.cdimascio:dotenv-java:3.0.1")
+
     // Stuff for better UI
     implementation("com.formdev:flatlaf:3.4.1")
     implementation("com.formdev:flatlaf-intellij-themes:3.4.1")
