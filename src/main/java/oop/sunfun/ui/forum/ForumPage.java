@@ -84,28 +84,15 @@ public class ForumPage extends GenericPage {
         final JScrollPane scrollPanel = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         // Fetch all forum posts from that name
-        // TODO: Fix query to get email too
-        final String categoryQuery = "SELECT * FROM `discussione` WHERE `fk_categoria` = ?";
-        final IDatabaseConnection database = SunFunDatabase.getDatabaseInstance();
-        try {
-            database.openConnection();
-            // Get all the discussions with that name
-            final List<Map<String, Object>> results = database.getQueryData(categoryQuery, category.name());
-            IntStream.range(0, results.size()).forEach(i -> {
-                for (final Map<String, Object> post : results) {
-                    // Add the panel to the categories
-                    panel.add(this.createDiscussionHeader(new DiscussionData(post)), new GridBagConstraintBuilder()
-                            .setRow(i).setColumn(0)
-                            .setFillHorizontal()
-                            .build()
-                    );
-                }
-            });
-        } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't fetch the posts for the name " + category.name(), err);
-            database.closeConnection();
-            this.close();
-        }
+        final List<DiscussionData> discussions = ForumDAO.getAllPostsFromCategory(category);
+        IntStream.range(0, discussions.size()).forEach(i -> {
+            // Add the panel to the categories
+            panel.add(this.createDiscussionHeader(discussions.get(i)), new GridBagConstraintBuilder()
+                    .setRow(i).setColumn(0)
+                    .setFillHorizontal()
+                    .build()
+            );
+        });
         return scrollPanel;
     }
 
