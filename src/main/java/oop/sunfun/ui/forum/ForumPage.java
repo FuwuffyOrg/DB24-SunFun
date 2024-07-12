@@ -83,7 +83,7 @@ public final class ForumPage extends GenericPage {
             // Add the panel to the categories
             panel.add(this.createDiscussionHeader(discussions.get(i)), new GridBagConstraintBuilder()
                     .setRow(i).setColumn(0)
-                    .setFillHorizontal()
+                    .setFillAll()
                     .build()
             );
         });
@@ -93,26 +93,23 @@ public final class ForumPage extends GenericPage {
     private JPanel createDiscussionHeader(final DiscussionData discussion) {
         final JPanel discussionHeader = new JPanel();
         discussionHeader.setLayout(new GridBagLayout());
-        final JLabel lblPerson = new JLabel(discussion.getEmail());
+        final JLabel lblPerson = new JLabel(discussion.getName() + " " + discussion.getSurname());
         final JLabel lblTitle = new JLabel(discussion.getTitle());
         final AbstractButton btnEnterDiscussion = new JButton("Enter Discussion");
         discussionHeader.add(lblPerson, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
-                .setMarginAll(4)
-                .setPadAll(2)
-                .setFillHorizontal()
+                .setMarginAll(2)
+                .setFillAll()
                 .build());
         discussionHeader.add(lblTitle, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(1)
-                .setMarginAll(4)
-                .setPadAll(2)
-                .setFillHorizontal()
+                .setMarginAll(2)
+                .setFillAll()
                 .build());
         discussionHeader.add(btnEnterDiscussion, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(2)
-                .setMarginAll(4)
-                .setPadAll(2)
-                .setFillHorizontal()
+                .setMarginAll(2)
+                .setFillAll()
                 .build());
         btnEnterDiscussion.addActionListener(e -> this.switchPage(new ForumPostPage(discussion,
                 CloseEvents.EXIT_PROGRAM, this.accountData)));

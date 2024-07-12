@@ -17,8 +17,11 @@ public final class ForumDAO extends AbstractDAO {
 
     private static final String FIND_ALL_CATEGORIES = "SELECT * FROM `categoria`";
 
-    // TODO: Fix this query to get name and surname from account too
-    private static final String GET_ALL_POSTS_FROM_CATEGORY = "SELECT * FROM `discussione` WHERE `fk_categoria` = ?";
+    private static final String GET_ALL_POSTS_FROM_CATEGORY = "SELECT d.*, COALESCE(e.nome, pare.nome, "
+            + "part.nome, v.nome) AS nome, COALESCE(e.cognome, pare.cognome, part.cognome, v.cognome) AS cognome "
+            + "FROM discussione d LEFT JOIN educatore e ON d.fk_account = e.fk_account LEFT JOIN parente pare "
+            + "ON d.fk_account = pare.fk_account LEFT JOIN partecipante part ON d.fk_account = part.fk_account "
+            + "LEFT JOIN volontario v ON d.fk_account = v.fk_account WHERE d.fk_categoria = ? ORDER BY d.num_discussione";
 
     private static final String CREATE_FORUM_POST = "INSERT INTO `discussione`(`titolo`, `descrizione`, "
             + "`fk_categoria`, `fk_account`) VALUES (?,?,?,?)";

@@ -6,7 +6,8 @@ import java.util.Set;
 
 public final class DiscussionData {
     private static final String NUM_DISCUSSION_SQL = "num_discussione";
-    private static final String EMAIL_SQL = "email";
+    private static final String NAME_SQL = "nome";
+    private static final String SURNAME_SQL = "cognome";
     private static final String TITLE_SQL = "titolo";
     private static final String DESCRIPTION_SQL = "descrizione";
 
@@ -15,14 +16,15 @@ public final class DiscussionData {
     static {
         SQL_COLUMNS = new HashSet<>();
         SQL_COLUMNS.add(NUM_DISCUSSION_SQL);
-        // FIXME: Remove once fixed the sql bug
-        // SQL_COLUMNS.add(EMAIL_SQL);
+        SQL_COLUMNS.add(NAME_SQL);
+        SQL_COLUMNS.add(SURNAME_SQL);
         SQL_COLUMNS.add(TITLE_SQL);
         SQL_COLUMNS.add(DESCRIPTION_SQL);
     }
 
     private final int numDiscussion;
-    private final String email;
+    private final String name;
+    private final String surname;
     private final String title;
     private final String description;
     private final Set<CommentData> comments;
@@ -32,9 +34,8 @@ public final class DiscussionData {
             throw new IllegalStateException("The passed sql data is not made for DiscussionData!");
         }
         this.numDiscussion = (Integer) sqlData.get(NUM_DISCUSSION_SQL);
-        // FIXME: Remove once fixed the sql bug
-        // this.name = (String) sqlData.get(EMAIL_SQL);
-        this.email = "";
+        this.name = (String) sqlData.get(NAME_SQL);
+        this.surname = (String) sqlData.get(SURNAME_SQL);
         this.title = (String) sqlData.get(TITLE_SQL);
         this.description = (String) sqlData.get(DESCRIPTION_SQL);
         this.comments = new HashSet<>();
@@ -44,8 +45,12 @@ public final class DiscussionData {
         return this.numDiscussion;
     }
 
-    public String getEmail() {
-        return this.email;
+    public String getName() {
+        return this.name;
+    }
+
+    public String getSurname() {
+        return this.surname;
     }
 
     public String getTitle() {

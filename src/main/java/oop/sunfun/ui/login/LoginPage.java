@@ -92,7 +92,7 @@ public final class LoginPage extends GenericPage {
         final int emailLengthLimit = 256;
         final int minSize = 4;
         this.resetHighlights();
-        if (this.txtEmail.getText().length() > emailLengthLimit && this.txtEmail.getText().length() < minSize) {
+        if (this.txtEmail.getText().length() > emailLengthLimit || this.txtEmail.getText().length() < minSize) {
             GenericPage.highlightTextComponent(this.txtEmail);
             return false;
         }
