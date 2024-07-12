@@ -9,11 +9,18 @@ import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.GridBagLayout;
 import java.sql.SQLException;
-import java.util.*;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
@@ -28,12 +35,19 @@ public class ForumPage extends GenericPage {
         // Create the tabs with all the posts
         final JTabbedPane pane = this.createTabs();
         // Add them to the page
-        this.addPanelComponent(pane, new GridBagConstraintBuilder()
+        this.add(pane, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setAnchor(Anchors.TOP)
                 .setFillAll()
                 .build()
         );
+        // Add a button to create a new post
+        final AbstractButton btnNewPost = new JButton("Crea un nuovo post");
+        this.add(btnNewPost, new GridBagConstraintBuilder()
+                .setRow(1).setColumn(0)
+                .setFillAll()
+                .build());
+        btnNewPost.addActionListener(e -> this.switchPage(new CreateForumPage(CloseEvents.EXIT_PROGRAM)));
         // Finalize the window
         this.buildWindow();
     }
@@ -52,6 +66,7 @@ public class ForumPage extends GenericPage {
                 // Add a new panel for each name
                 final JComponent panel = this.addPanelCategory(category);
                 pane.add(panel, category.name());
+                // Add a button to create a new post
             }
         } catch (final SQLException err) {
             LOGGER.log(Level.SEVERE, "Couldn't fetch the categories", err);

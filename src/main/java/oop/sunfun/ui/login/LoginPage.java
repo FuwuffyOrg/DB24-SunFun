@@ -39,37 +39,37 @@ public final class LoginPage extends GenericPage {
         final AbstractButton btnLogin = new JButton("Login");
         final AbstractButton btnRegister = new JButton("Goto Register");
         // Add all the components.
-        this.addPanelComponent(lblEmail,
+        this.add(lblEmail,
                 new GridBagConstraintBuilder()
                         .setRow(0).setColumn(0)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(txtEmail,
+        this.add(txtEmail,
                 new GridBagConstraintBuilder()
                         .setRow(0).setColumn(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(lblPassword,
+        this.add(lblPassword,
                 new GridBagConstraintBuilder()
                         .setRow(1).setColumn(0)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(txtPassword,
+        this.add(txtPassword,
                 new GridBagConstraintBuilder()
                         .setRow(1).setColumn(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(btnLogin,
+        this.add(btnLogin,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(0)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(btnRegister,
+        this.add(btnRegister,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(1)
                         .setFillAll()

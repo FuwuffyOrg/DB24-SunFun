@@ -9,5 +9,7 @@ public class CreateForumPage extends GenericPage {
 
     public CreateForumPage(final CloseEvents closeEvent) {
         super(PAGE_NAME, closeEvent);
+        // Finalize the window
+        this.buildWindow();
     }
 }

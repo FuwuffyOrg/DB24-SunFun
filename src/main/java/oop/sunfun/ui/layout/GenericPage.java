@@ -128,15 +128,6 @@ public abstract class GenericPage extends JFrame {
     }
 
     /**
-     * Adds a component to the main panel of the window, this is the only way to properly add stuff.
-     * @param component The component to add to the window.
-     * @param constraint The constraints to use to properly position the component.
-     */
-    public final void addPanelComponent(final Component component, final GridBagConstraints constraint) {
-        this.contentPanel.add(component, constraint);
-    }
-
-    /**
      * Method to switch over the page to another.
      * @param page The page to switch view to.
      */

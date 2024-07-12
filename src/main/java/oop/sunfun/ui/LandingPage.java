@@ -35,7 +35,7 @@ public class LandingPage extends GenericPage {
                 final GenericPage page = it.next();
                 final AbstractButton btnPage = new JButton(page.getTitle());
                 btnPage.addActionListener(e -> this.switchPage(page));
-                this.addPanelComponent(btnPage, new GridBagConstraintBuilder()
+                this.add(btnPage, new GridBagConstraintBuilder()
                                 .setRow(r).setColumn(c)
                                 .setMarginAll(8)
                                 .setPadAll(4)

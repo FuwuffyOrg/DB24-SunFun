@@ -8,5 +8,7 @@ public class ForumPostPage extends GenericPage {
 
     public ForumPostPage(DiscussionData discussion, CloseEvents closeEvent) {
         super(discussion.getTitle(), closeEvent);
+        // Finalize the window
+        this.buildWindow();
     }
 }

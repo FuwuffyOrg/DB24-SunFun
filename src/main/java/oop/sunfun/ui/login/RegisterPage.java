@@ -59,14 +59,14 @@ public final class RegisterPage extends GenericPage {
         final AbstractButton btnRegister = new JButton("Register");
         final AbstractButton btnLogin = new JButton("Goto Login");
         // Add all the components.
-        this.addPanelComponent(lblCodiceFiscale,
+        this.add(lblCodiceFiscale,
                 new GridBagConstraintBuilder()
                         .setRow(0).setColumn(0)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(txtCodiceFiscale,
+        this.add(txtCodiceFiscale,
                 new GridBagConstraintBuilder()
                         .setRow(0).setColumn(1)
                         .setWeightColumn(0.1d)
@@ -74,112 +74,112 @@ public final class RegisterPage extends GenericPage {
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(lblName,
+        this.add(lblName,
                 new GridBagConstraintBuilder()
                         .setRow(1).setColumn(0)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(txtName,
+        this.add(txtName,
                 new GridBagConstraintBuilder()
                         .setRow(1).setColumn(1)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(lblSurname,
+        this.add(lblSurname,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(0)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(txtSurname,
+        this.add(txtSurname,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(1)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(lblPhone,
+        this.add(lblPhone,
                 new GridBagConstraintBuilder()
                         .setRow(3).setColumn(0)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(txtPhone,
+        this.add(txtPhone,
                 new GridBagConstraintBuilder()
                         .setRow(3).setColumn(1)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(lblEmail,
+        this.add(lblEmail,
                 new GridBagConstraintBuilder()
                         .setRow(4).setColumn(0)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(txtEmail,
+        this.add(txtEmail,
                 new GridBagConstraintBuilder()
                         .setRow(4).setColumn(1)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(lblPassword,
+        this.add(lblPassword,
                 new GridBagConstraintBuilder()
                         .setRow(5).setColumn(0)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(txtPassword,
+        this.add(txtPassword,
                 new GridBagConstraintBuilder()
                         .setRow(5).setColumn(1)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(lblPasswordConfirm,
+        this.add(lblPasswordConfirm,
                 new GridBagConstraintBuilder()
                         .setRow(6).setColumn(0)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(txtPasswordConfirm,
+        this.add(txtPasswordConfirm,
                 new GridBagConstraintBuilder()
                         .setRow(6).setColumn(1)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(lblParentType,
+        this.add(lblParentType,
                 new GridBagConstraintBuilder()
                         .setRow(7).setColumn(0)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(comboParentType,
+        this.add(comboParentType,
                 new GridBagConstraintBuilder()
                         .setRow(7).setColumn(1)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(btnRegister,
+        this.add(btnRegister,
                 new GridBagConstraintBuilder()
                         .setRow(8).setColumn(0)
                         .setWidth(1)
                         .setFillAll()
                         .build()
         );
-        this.addPanelComponent(btnLogin,
+        this.add(btnLogin,
                 new GridBagConstraintBuilder()
                         .setRow(8).setColumn(1)
                         .setWidth(1)
