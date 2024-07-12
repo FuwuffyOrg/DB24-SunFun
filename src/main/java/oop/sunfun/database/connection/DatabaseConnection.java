@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Implementation of the IDatabaseConnection interface.
  */
-public final class DatabaseConnection implements IDatabaseConnection {
+public class DatabaseConnection implements IDatabaseConnection {
     /**
      * The url location of the db.
      */
@@ -49,22 +49,23 @@ public final class DatabaseConnection implements IDatabaseConnection {
         this.password = dbPassword;
     }
 
-    private boolean isConnectionValid() throws SQLException {
-        return connection != null && !connection.isClosed();
-    }
-
     @Override
-    public void openConnection() throws SQLException {
-        if (!this.isConnectionValid()) {
+    public final void openConnection() throws SQLException {
+        if (!this.isConnectionOpen()) {
             connection = DriverManager.getConnection(this.url, this.user, this.password);
         }
     }
 
     @Override
-    public void closeConnection() throws SQLException {
-        if (this.isConnectionValid()) {
+    public final void closeConnection() throws SQLException {
+        if (this.isConnectionOpen()) {
             this.connection.close();
         }
+    }
+
+    @Override
+    public final boolean isConnectionOpen() throws SQLException {
+        return connection != null && !this.connection.isClosed();
     }
 
     private PreparedStatement prepareStatement(final String query, final Object... parameters) throws SQLException {
@@ -76,8 +77,9 @@ public final class DatabaseConnection implements IDatabaseConnection {
     }
 
     @Override
-    public List<Map<String, Object>> getQueryData(final String query, final Object... parameters) throws SQLException {
-        if (!this.isConnectionValid()) {
+    public final List<Map<String, Object>> getQueryData(final String query, final Object... parameters)
+            throws SQLException {
+        if (!this.isConnectionOpen()) {
             throw new SQLException("You need to establish a connection to the server before running a query.");
         }
         try (PreparedStatement preparedStatement = this.prepareStatement(query, parameters)) {
@@ -105,8 +107,8 @@ public final class DatabaseConnection implements IDatabaseConnection {
     }
 
     @Override
-    public void setQueryData(final String query, final Object... parameters) throws SQLException {
-        if (!this.isConnectionValid()) {
+    public final void setQueryData(final String query, final Object... parameters) throws SQLException {
+        if (!this.isConnectionOpen()) {
             throw new SQLException("You need to establish a connection to the server before running a query.");
         }
         try (PreparedStatement preparedStatement = this.prepareStatement(query, parameters)) {
