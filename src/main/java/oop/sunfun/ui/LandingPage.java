@@ -1,6 +1,6 @@
 package oop.sunfun.ui;
 
-import oop.sunfun.database.data.AccountData;
+import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.forum.ForumPage;
 import oop.sunfun.ui.layout.GenericPage;
