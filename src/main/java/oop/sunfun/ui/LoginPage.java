@@ -2,13 +2,13 @@ package oop.sunfun.ui;
 
 import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
+import oop.sunfun.database.data.AccountData;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class LoginPage extends GenericPage {
-    private static final Logger logger = Logger.getLogger(LoginPage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoginPage.class.getName());
 
     private final JTextComponent txtEmail;
     private final JTextComponent txtPassword;
@@ -73,30 +73,45 @@ public final class LoginPage extends GenericPage {
                         .build()
         );
         // Add events
+        // Event to go to the register page
         btnRegister.addActionListener(e -> {
-            final JFrame registerPage = new RegisterPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
-            registerPage.setVisible(true);
-            LoginPage.this.dispose();
+            // Go to register page
+            this.switchPage(new RegisterPage("SunFun Register", CloseEvents.EXIT_PROGRAM));
         });
+        // Event to log into the application
         btnLogin.addActionListener(e -> {
             if (LoginPage.this.isDataValid()) {
                 final String accountQuery = "SELECT * FROM `account` WHERE `email` = ? AND password = ?";
                 final IDatabaseConnection database = SunFunDatabase.getDatabaseInstance();
                 try {
                     database.openConnection();
+                    // Get all the results from the query
                     final List<Map<String, Object>> results = database.getQueryData(accountQuery,
                             txtEmail.getText(), txtPassword.getText());
-                    // TODO: Make actual login happen!
+                    // Get the account
+                    final AccountData account = getAccountData(results);
+                    // Go to landing page
+                    this.switchPage(new LandingPage("SunFun Hub", CloseEvents.EXIT_PROGRAM, account));
                 } catch (final SQLException err) {
-                    logger.log(Level.SEVERE, "Couldn't fetch the account data", err);
+                    LOGGER.log(Level.SEVERE, "Couldn't fetch the account data", err);
                     database.closeConnection();
                     this.close();
                 }
-                LoginPage.this.close();
             }
         });
         // Finish the window.
         this.buildWindow();
+    }
+
+    private static AccountData getAccountData(final List<Map<String, Object>> results) {
+        // If there's more than one account, there must have been an error
+        if (results.size() > 1) {
+            LOGGER.log(Level.WARNING, "There's two accounts with the same email and password");
+        }
+        // Get the data and build an account record
+        final Map<String, Object> data = results.getFirst();
+        return new AccountData((String) data.get("email"),
+                (String) data.get("tipologia"));
     }
 
     private boolean isDataValid() {

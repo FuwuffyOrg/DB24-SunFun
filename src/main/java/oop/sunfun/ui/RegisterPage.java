@@ -2,7 +2,7 @@ package oop.sunfun.ui;
 
 import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
-import oop.sunfun.database.enums.ParentType;
+import oop.sunfun.database.data.enums.ParentType;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
@@ -10,7 +10,6 @@ import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -24,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class RegisterPage extends GenericPage {
-    private static final Logger logger = Logger.getLogger(RegisterPage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RegisterPage.class.getName());
 
     private final JTextComponent txtCodiceFiscale;
     private final JTextComponent txtName;
@@ -187,9 +186,7 @@ public final class RegisterPage extends GenericPage {
         );
         // Add events
         btnLogin.addActionListener(e -> {
-            final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
-            loginPage.setVisible(true);
-            RegisterPage.this.dispose();
+            this.switchPage(new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM));
         });
         btnRegister.addActionListener(e -> {
             if (RegisterPage.this.isDataValid()) {
@@ -207,13 +204,11 @@ public final class RegisterPage extends GenericPage {
                             this.txtName.getText(), this.txtSurname.getText(), this.txtPhone.getText(),
                             this.comboParentType.getSelectedItem());
                 } catch (final SQLException err) {
-                    logger.log(Level.SEVERE, "Couldn't register the account data", err);
+                    LOGGER.log(Level.SEVERE, "Couldn't register the account data", err);
                     database.closeConnection();
                     this.close();
                 }
-                final JFrame loginPage = new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM);
-                loginPage.setVisible(true);
-                RegisterPage.this.dispose();
+                this.switchPage(new LoginPage("SunFun Register", CloseEvents.EXIT_PROGRAM));
             }
         });
         // Finish the window.

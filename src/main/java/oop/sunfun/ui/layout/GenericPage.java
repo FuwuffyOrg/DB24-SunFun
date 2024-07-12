@@ -135,4 +135,13 @@ public abstract class GenericPage extends JFrame {
     public final void addPanelComponent(final Component component, final GridBagConstraints constraint) {
         this.contentPanel.add(component, constraint);
     }
+
+    /**
+     * Method to switch over the page to another.
+     * @param page The page to switch view to.
+     */
+    protected final void switchPage(final GenericPage page) {
+        page.setVisible(true);
+        this.dispose();
+    }
 }
