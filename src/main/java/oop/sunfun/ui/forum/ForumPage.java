@@ -2,6 +2,7 @@ package oop.sunfun.ui.forum;
 
 import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
+import oop.sunfun.database.data.QueryManager;
 import oop.sunfun.database.data.forum.CategoryData;
 import oop.sunfun.database.data.forum.DiscussionData;
 import oop.sunfun.ui.behavior.CloseEvents;
@@ -21,6 +22,7 @@ import java.awt.GridBagLayout;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
@@ -55,23 +57,11 @@ public class ForumPage extends GenericPage {
     private JTabbedPane createTabs() {
         // Create the basic stuff for the query and display
         final JTabbedPane pane = new JTabbedPane();
-        final String categoryQuery = "SELECT * FROM `categoria`";
-        final IDatabaseConnection database = SunFunDatabase.getDatabaseInstance();
-        try {
-            database.openConnection();
-            // Get all the categories
-            final List<Map<String, Object>> results = database.getQueryData(categoryQuery);
-            for (final Map<String, Object> cat : results) {
-                final CategoryData category = new CategoryData((String) cat.get("nome"));
-                // Add a new panel for each name
-                final JComponent panel = this.addPanelCategory(category);
-                pane.add(panel, category.name());
-                // Add a button to create a new post
-            }
-        } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't fetch the categories", err);
-            database.closeConnection();
-            this.close();
+        final Set<CategoryData> categories = QueryManager.getAllCategories();
+        System.out.println(categories.size());
+        for (final CategoryData category : categories) {
+            final JComponent panel = this.addPanelCategory(category);
+            pane.add(panel, category.name());
         }
         return pane;
     }

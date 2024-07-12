@@ -23,7 +23,7 @@ public class LandingPage extends GenericPage {
         super(PAGE_NAME, closeEvent);
         // Set to contain all the pages reachable by that user.
         final Map<String, Supplier<GenericPage>> reachablePages = new HashMap<>();
-        // Add the pages that need to be shown
+        // Add the pages that need to be shownp
         // TODO: Add constraints depending on the account type
         reachablePages.put("Forum", () -> new ForumPage(CloseEvents.EXIT_PROGRAM));
         // Calculate the sides of a rectangle for the button layout
