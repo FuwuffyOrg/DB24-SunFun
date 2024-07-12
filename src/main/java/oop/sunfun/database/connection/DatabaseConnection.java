@@ -1,7 +1,5 @@
 package oop.sunfun.database.connection;
 
-import oop.sunfun.ui.LoginPage;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,7 +21,7 @@ public class DatabaseConnection implements IDatabaseConnection {
     /**
      * Logger to help show errors in try catches.
      */
-    private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DatabaseConnection.class.getName());
 
     /**
      * The url location of the db.
@@ -72,7 +70,7 @@ public class DatabaseConnection implements IDatabaseConnection {
                 this.connection.close();
             }
         } catch (final SQLException e) {
-            logger.log(Level.SEVERE, "Could not close the connection of the database!", e);
+            LOGGER.log(Level.SEVERE, "Could not close the connection of the database!", e);
         }
     }
 

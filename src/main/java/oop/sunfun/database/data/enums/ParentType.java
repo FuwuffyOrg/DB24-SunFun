@@ -1,4 +1,4 @@
-package oop.sunfun.database.enums;
+package oop.sunfun.database.data.enums;
 
 public enum ParentType {
     /**
