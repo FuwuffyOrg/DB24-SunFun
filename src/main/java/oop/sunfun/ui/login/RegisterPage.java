@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public final class RegisterPage extends GenericPage {
     private static final Logger LOGGER = Logger.getLogger(RegisterPage.class.getName());
 
-    private static final String PAGE_NAME = "SunFun Register";
+    private static final String PAGE_NAME = "Register";
 
     private final JTextComponent txtCodiceFiscale;
     private final JTextComponent txtName;

@@ -114,7 +114,7 @@ public abstract class GenericPage extends JFrame {
     /**
      * Method to reset all highlighted items in the page.
      */
-    protected void resetHighlights() {
+    protected final void resetHighlights() {
         for (final Component c : this.contentPanel.getComponents()) {
             c.setBackground(UIManager.getColor("TextField.background"));
         }

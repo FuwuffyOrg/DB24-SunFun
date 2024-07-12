@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public final class LoginPage extends GenericPage {
     private static final Logger LOGGER = Logger.getLogger(LoginPage.class.getName());
 
-    private static final String PAGE_NAME = "SunFun Login";
+    private static final String PAGE_NAME = "Login";
 
     private final JTextComponent txtEmail;
     private final JTextComponent txtPassword;
