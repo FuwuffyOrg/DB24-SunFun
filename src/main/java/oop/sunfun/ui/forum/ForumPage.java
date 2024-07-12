@@ -1,7 +1,5 @@
 package oop.sunfun.ui.forum;
 
-import oop.sunfun.database.connection.IDatabaseConnection;
-import oop.sunfun.database.connection.SunFunDatabase;
 import oop.sunfun.database.dao.ForumDAO;
 import oop.sunfun.database.data.forum.CategoryData;
 import oop.sunfun.database.data.forum.DiscussionData;
@@ -21,15 +19,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.GridBagLayout;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
-public class ForumPage extends GenericPage {
+public final class ForumPage extends GenericPage {
     private static final Logger LOGGER = Logger.getLogger(ForumPage.class.getName());
 
     private static final String PAGE_NAME = "Forums";

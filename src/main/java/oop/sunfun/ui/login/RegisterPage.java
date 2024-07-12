@@ -194,7 +194,7 @@ public final class RegisterPage extends GenericPage {
             this.switchPage(new LoginPage(CloseEvents.EXIT_PROGRAM));
         });
         btnRegister.addActionListener(e -> {
-            if (RegisterPage.this.isDataValid()) {
+            if (isDataValid()) {
                 final IDatabaseConnection database = SunFunDatabase.getDatabaseInstance();
                 try {
                     database.openConnection();

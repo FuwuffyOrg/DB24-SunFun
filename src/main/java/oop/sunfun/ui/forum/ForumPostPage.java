@@ -5,7 +5,7 @@ import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
 
-public class ForumPostPage extends GenericPage {
+public final class ForumPostPage extends GenericPage {
 
     private final AccountData accountData;
 

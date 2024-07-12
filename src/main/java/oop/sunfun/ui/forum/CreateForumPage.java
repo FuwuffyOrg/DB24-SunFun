@@ -7,12 +7,17 @@ import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
-import java.awt.*;
-import java.util.EnumSet;
+import java.awt.Component;
+import java.util.Objects;
 
-public class CreateForumPage extends GenericPage {
+public final class CreateForumPage extends GenericPage {
 
     private static final String PAGE_NAME = "Create A Post";
 
@@ -63,6 +68,7 @@ public class CreateForumPage extends GenericPage {
         this.add(txtDescription, new GridBagConstraintBuilder()
                 .setRow(2).setColumn(0)
                 .setWidth(2).setHeight(2)
+                .setWeightRow(0.2d)
                 .setFillAll()
                 .build()
         );
@@ -79,9 +85,30 @@ public class CreateForumPage extends GenericPage {
         // Handle the events
         btnForum.addActionListener(e -> this.switchPage(new ForumPage(CloseEvents.EXIT_PROGRAM, this.accountData)));
         btnCreatePost.addActionListener(e -> {
-            // TODO: Create the post
+            if (isDataValid()) {
+                ForumDAO.addNewDiscussion(txtTitle.getText(), txtDescription.getText(),
+                        new CategoryData((String) comboCategoryType.getSelectedItem()), accountData.getEmail());
+                this.switchPage(new ForumPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+            }
         });
         // Finalize the window
         this.buildWindow();
+    }
+
+    private boolean isDataValid() {
+        final int minSize = 4;
+        final int titleLengthLimit = 50;
+        final int descriptionLengthLimit = 10000;
+        this.resetHighlights();
+        if (this.txtTitle.getText().length() > titleLengthLimit || this.txtTitle.getText().length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtTitle);
+            return false;
+        }
+        if (this.txtDescription.getText().length() > descriptionLengthLimit
+                || this.txtDescription.getText().length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtDescription);
+            return false;
+        }
+        return true;
     }
 }
