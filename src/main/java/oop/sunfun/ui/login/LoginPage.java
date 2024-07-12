@@ -112,9 +112,7 @@ public final class LoginPage extends GenericPage {
             LOGGER.log(Level.WARNING, "There's two accounts with the same email and password");
         }
         // Get the data and build an account record
-        final Map<String, Object> data = results.getFirst();
-        return new AccountData((String) data.get("email"),
-                (String) data.get("tipologia"));
+        return new AccountData(results.getFirst());
     }
 
     private boolean isDataValid() {

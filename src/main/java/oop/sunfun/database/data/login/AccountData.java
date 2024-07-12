@@ -1,4 +1,2 @@
-package oop.sunfun.database.data.login;
-
-public record AccountData(String email, String type) {
+package oop.sunfun.database.data.login;public class AccountData {
 }
