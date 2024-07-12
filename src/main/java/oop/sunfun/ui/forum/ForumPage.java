@@ -2,7 +2,7 @@ package oop.sunfun.ui.forum;
 
 import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
-import oop.sunfun.database.data.QueryManager;
+import oop.sunfun.database.dao.ForumDAO;
 import oop.sunfun.database.data.forum.CategoryData;
 import oop.sunfun.database.data.forum.DiscussionData;
 import oop.sunfun.ui.behavior.CloseEvents;
@@ -57,8 +57,7 @@ public class ForumPage extends GenericPage {
     private JTabbedPane createTabs() {
         // Create the basic stuff for the query and display
         final JTabbedPane pane = new JTabbedPane();
-        final Set<CategoryData> categories = QueryManager.getAllCategories();
-        System.out.println(categories.size());
+        final Set<CategoryData> categories = ForumDAO.getAllCategories();
         for (final CategoryData category : categories) {
             final JComponent panel = this.addPanelCategory(category);
             pane.add(panel, category.name());

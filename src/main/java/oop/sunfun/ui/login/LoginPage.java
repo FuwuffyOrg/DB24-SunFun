@@ -1,8 +1,6 @@
 package oop.sunfun.ui.login;
 
-import oop.sunfun.database.connection.IDatabaseConnection;
-import oop.sunfun.database.connection.SunFunDatabase;
-import oop.sunfun.database.data.QueryManager;
+import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.behavior.CloseEvents;
@@ -16,16 +14,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public final class LoginPage extends GenericPage {
-    private static final Logger LOGGER = Logger.getLogger(LoginPage.class.getName());
-
     private static final String PAGE_NAME = "Login";
 
     private final JTextComponent txtEmail;
@@ -86,8 +77,10 @@ public final class LoginPage extends GenericPage {
         // Event to log into the application
         btnLogin.addActionListener(e -> {
             if (LoginPage.this.isDataValid()) {
-                final Optional<AccountData> account = QueryManager.getAccountByEmailAndPassword(txtEmail.getText(), txtPassword.getText());
-                account.ifPresent(accountData -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, accountData)));
+                final Optional<AccountData> account = AccountDAO.getAccount(txtEmail.getText(),
+                        txtPassword.getText());
+                account.ifPresent(accountData -> this.switchPage(new LandingPage(
+                        CloseEvents.EXIT_PROGRAM, accountData)));
             }
         });
         // Finish the window.

@@ -2,6 +2,8 @@ package oop.sunfun.ui.login;
 
 import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
+import oop.sunfun.database.dao.AccountDAO;
+import oop.sunfun.database.dao.PersonDAO;
 import oop.sunfun.database.data.enums.ParentType;
 import oop.sunfun.ui.behavior.CloseEvents;
 import oop.sunfun.ui.layout.GenericPage;
@@ -192,19 +194,13 @@ public final class RegisterPage extends GenericPage {
         });
         btnRegister.addActionListener(e -> {
             if (RegisterPage.this.isDataValid()) {
-                final String accountQuery = "INSERT INTO `account`(`email`, `password`, `tipologia`) "
-                        + "VALUES (?,?,'Parente')";
-
-                final String parenteQuery = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
-                        + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
-
                 final IDatabaseConnection database = SunFunDatabase.getDatabaseInstance();
                 try {
                     database.openConnection();
-                    database.setQueryData(accountQuery, this.txtEmail.getText(), this.txtPassword.getText());
-                    database.setQueryData(parenteQuery, this.txtCodiceFiscale.getText(), this.txtEmail.getText(),
+                    AccountDAO.createAccount(this.txtEmail.getText(), this.txtPassword.getText());
+                    PersonDAO.createParent(this.txtCodiceFiscale.getText(), this.txtEmail.getText(),
                             this.txtName.getText(), this.txtSurname.getText(), this.txtPhone.getText(),
-                            this.comboParentType.getSelectedItem());
+                            (String) this.comboParentType.getSelectedItem());
                 } catch (final SQLException err) {
                     LOGGER.log(Level.SEVERE, "Couldn't register the account data", err);
                     database.closeConnection();
