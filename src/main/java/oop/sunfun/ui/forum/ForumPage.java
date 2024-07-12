@@ -25,7 +25,6 @@ public class ForumPage extends GenericPage {
 
     public ForumPage(final CloseEvents closeEvent) {
         super(PAGE_NAME, closeEvent);
-        // Fetch all the categories
         // Create the tabs with all the posts
         final JTabbedPane pane = this.createTabs();
         // Add them to the page
@@ -102,14 +101,20 @@ public class ForumPage extends GenericPage {
         final AbstractButton btnEnterDiscussion = new JButton("Enter Discussion");
         discussionHeader.add(lblPerson, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
+                .setMarginAll(4)
+                .setPadAll(2)
                 .setFillHorizontal()
                 .build());
         discussionHeader.add(lblTitle, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(1)
+                .setMarginAll(4)
+                .setPadAll(2)
                 .setFillHorizontal()
                 .build());
         discussionHeader.add(btnEnterDiscussion, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(2)
+                .setMarginAll(4)
+                .setPadAll(2)
                 .setFillHorizontal()
                 .build());
         btnEnterDiscussion.addActionListener(e -> this.switchPage(new ForumPostPage(discussion, CloseEvents.EXIT_PROGRAM)));

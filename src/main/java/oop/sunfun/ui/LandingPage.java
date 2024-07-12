@@ -21,6 +21,8 @@ public class LandingPage extends GenericPage {
         // Set to contain all the pages reachable by that user.
         final Set<GenericPage> reachablePages = new HashSet<>();
         // Add the pages that need to be shown
+        // TODO: Make pages load dynamically
+        // TODO: Add constraints depending on the account type
         reachablePages.add(new ForumPage(CloseEvents.EXIT_PROGRAM));
         // Calculate the sides of a rectangle for the button layout
         final double side = Math.sqrt(reachablePages.size());
