@@ -39,15 +39,15 @@ public final class CommentData {
         return this.numResponse;
     }
 
-    public String getCommentResponse() {
+    public String getResponse() {
         return this.response;
     }
 
-    public String getCommentSurname() {
+    public String getSurname() {
         return this.surname;
     }
 
-    public String getCommentName() {
+    public String getName() {
         return this.name;
     }
 }

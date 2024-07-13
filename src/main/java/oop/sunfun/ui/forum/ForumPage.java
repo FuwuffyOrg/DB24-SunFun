@@ -10,15 +10,8 @@ import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.ScrollPaneConstants;
-import java.awt.GridBagLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -68,11 +61,11 @@ public final class ForumPage extends GenericPage {
         return pane;
     }
 
-    private JComponent addPanelCategory(final CategoryData category) {
+    private Component addPanelCategory(final CategoryData category) {
         // Create the stuff to display
-        final JPanel panel = new JPanel();
+        final JComponent panel = new JPanel();
         panel.setLayout(new GridBagLayout());
-        final JScrollPane scrollPanel = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+        final Component scrollPanel = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         // Fetch all forum posts from that name
         final List<DiscussionData> discussions = ForumDAO.getAllPostsFromCategory(category);
