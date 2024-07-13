@@ -35,7 +35,7 @@ public class LandingPage extends GenericPage {
             case AccountType.PARENTE:
                 break;
             case AccountType.EDUCATORE:
-                reachablePages.put("Gestione Periodi", () -> new PeriodPage(CloseEvents.EXIT_PROGRAM));
+                reachablePages.put("Gestione Periodi", () -> new PeriodPage(CloseEvents.EXIT_PROGRAM, this.accountData));
                 break;
             case AccountType.VOLONTARIO:
                 break;
