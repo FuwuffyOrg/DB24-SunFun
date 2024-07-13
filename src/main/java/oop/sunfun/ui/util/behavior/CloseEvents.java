@@ -1,4 +1,4 @@
-package oop.sunfun.ui.behavior;
+package oop.sunfun.ui.util.behavior;
 
 import javax.swing.JFrame;
 

@@ -26,7 +26,7 @@ public final class SunFunDatabase extends DatabaseConnection {
     private static final String DATABASE_USERNAME;
 
     /**
-     * The database's passowrd for logging in to the server.
+     * The database's password for logging in to the server.
      */
     private static final String DATABASE_PASSWORD;
 

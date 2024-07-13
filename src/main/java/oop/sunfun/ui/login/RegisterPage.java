@@ -6,9 +6,9 @@ import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.dao.PersonDAO;
 import oop.sunfun.database.data.enums.AccountType;
 import oop.sunfun.database.data.enums.ParentType;
-import oop.sunfun.ui.behavior.CloseEvents;
-import oop.sunfun.ui.layout.GenericPage;
-import oop.sunfun.ui.layout.GridBagConstraintBuilder;
+import oop.sunfun.ui.util.behavior.CloseEvents;
+import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;

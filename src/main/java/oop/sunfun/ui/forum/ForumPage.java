@@ -5,10 +5,10 @@ import oop.sunfun.database.data.forum.CategoryData;
 import oop.sunfun.database.data.forum.DiscussionData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
-import oop.sunfun.ui.behavior.CloseEvents;
-import oop.sunfun.ui.layout.Anchors;
-import oop.sunfun.ui.layout.GenericPage;
-import oop.sunfun.ui.layout.GridBagConstraintBuilder;
+import oop.sunfun.ui.util.behavior.CloseEvents;
+import oop.sunfun.ui.util.layout.Anchors;
+import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;

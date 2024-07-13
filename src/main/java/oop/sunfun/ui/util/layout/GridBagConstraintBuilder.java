@@ -1,6 +1,6 @@
-package oop.sunfun.ui.layout;
+package oop.sunfun.ui.util.layout;
 
-import oop.sunfun.util.Pair;
+import oop.sunfun.ui.util.Pair;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;

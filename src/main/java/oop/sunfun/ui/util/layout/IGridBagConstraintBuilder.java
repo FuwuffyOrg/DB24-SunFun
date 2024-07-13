@@ -1,4 +1,4 @@
-package oop.sunfun.ui.layout;
+package oop.sunfun.ui.util.layout;
 
 import java.awt.GridBagConstraints;
 

@@ -1,7 +1,7 @@
 package oop.sunfun;
 
-import oop.sunfun.ui.behavior.CloseEvents;
-import oop.sunfun.ui.layout.GenericPage;
+import oop.sunfun.ui.util.behavior.CloseEvents;
+import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.login.RegisterPage;
 
 import javax.swing.JFrame;

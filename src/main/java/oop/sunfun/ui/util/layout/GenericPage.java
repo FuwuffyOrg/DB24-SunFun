@@ -1,7 +1,7 @@
-package oop.sunfun.ui.layout;
+package oop.sunfun.ui.util.layout;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import oop.sunfun.ui.behavior.CloseEvents;
+import oop.sunfun.ui.util.behavior.CloseEvents;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
