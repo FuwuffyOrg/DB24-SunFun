@@ -9,24 +9,31 @@ import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.GridBagLayout;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public final class ForumPostPage extends GenericPage {
 
-    private final AccountData accountData;
+    private final JTextComponent txtComment;
 
     public ForumPostPage(final DiscussionData discussion, final CloseEvents closeEvent, final AccountData account) {
         super(discussion.getTitle(), closeEvent);
-        this.accountData = account;
         // Get the comments on the post
         final Component lblDescription = new JLabel(discussion.getDescription());
         final Component commentArea = this.getCommentArea(discussion);
         final AbstractButton btnGotoDiscussion = new JButton("Return to discussions");
-        final JTextComponent txtComment = new JTextArea();
+        this.txtComment = new JTextArea();
         final AbstractButton btnComment = new JButton("Send");
         this.add(lblDescription, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
@@ -49,7 +56,7 @@ public final class ForumPostPage extends GenericPage {
                 .setWeightColumn(0.03d)
                 .build()
         );
-        this.add(txtComment, new GridBagConstraintBuilder()
+        this.add(this.txtComment, new GridBagConstraintBuilder()
                 .setRow(2).setColumn(1)
                 .setFillAll()
                 .setAnchor(Anchors.BOTTOM)
@@ -64,8 +71,15 @@ public final class ForumPostPage extends GenericPage {
                 .build()
         );
         // Add events
+        // Go back button
         btnGotoDiscussion.addActionListener(e -> this.switchPage(new ForumPage(CloseEvents.EXIT_PROGRAM, account)));
-        // TODO: add comment action
+        // Comment button
+        btnComment.addActionListener(e -> {
+            if (isDataValid()) {
+                ForumDAO.addNewComment(account.getEmail(), txtComment.getText(), discussion.getDiscussionNumber());
+                this.switchPage(new ForumPostPage(discussion, CloseEvents.EXIT_PROGRAM, account));
+            }
+        });
         // Finalize the window
         this.buildWindow();
     }
@@ -103,5 +117,16 @@ public final class ForumPostPage extends GenericPage {
                 .build()
         );
         return commentHeader;
+    }
+
+    private boolean isDataValid() {
+        final int minSize = 4;
+        final int titleLengthLimit = 10000;
+        this.resetHighlights();
+        if (this.txtComment.getText().length() > titleLengthLimit || this.txtComment.getText().length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtComment);
+            return false;
+        }
+        return true;
     }
 }

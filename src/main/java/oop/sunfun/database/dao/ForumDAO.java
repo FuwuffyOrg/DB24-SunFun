@@ -3,6 +3,7 @@ package oop.sunfun.database.dao;
 import oop.sunfun.database.data.forum.CategoryData;
 import oop.sunfun.database.data.forum.CommentData;
 import oop.sunfun.database.data.forum.DiscussionData;
+import oop.sunfun.database.data.login.AccountData;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public final class ForumDAO extends AbstractDAO {
 
     private static final String CREATE_FORUM_POST = "INSERT INTO `discussione`(`titolo`, `descrizione`, "
             + "`fk_categoria`, `fk_account`) VALUES (?,?,?,?)";
+
+    private static final String CREATE_COMMENT_POST = "INSERT INTO `risposta`(`testo`, `fk_discussione`, "
+            + "`fk_account`) VALUES (?,?,?)";
 
     private ForumDAO() {
         super();
@@ -84,6 +88,16 @@ public final class ForumDAO extends AbstractDAO {
             DB_CONNECTION.setQueryData(CREATE_FORUM_POST, title, description, category.name(), accountEmail);
         } catch (final SQLException err) {
             LOGGER.log(Level.SEVERE, "Couldn't create a new discussion", err);
+            DB_CONNECTION.closeConnection();
+        }
+    }
+
+    public static void addNewComment(final String accountEmail, final String description, final int discussionId) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(CREATE_COMMENT_POST, description, discussionId, accountEmail);
+        } catch (final SQLException err) {
+            LOGGER.log(Level.SEVERE, "Couldn't create a new comment for " + discussionId, err);
             DB_CONNECTION.closeConnection();
         }
     }
