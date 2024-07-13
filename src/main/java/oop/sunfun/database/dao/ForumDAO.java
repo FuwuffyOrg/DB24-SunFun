@@ -3,7 +3,6 @@ package oop.sunfun.database.dao;
 import oop.sunfun.database.data.forum.CategoryData;
 import oop.sunfun.database.data.forum.CommentData;
 import oop.sunfun.database.data.forum.DiscussionData;
-import oop.sunfun.database.data.login.AccountData;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
