@@ -31,10 +31,8 @@ public final class ForumPage extends GenericPage {
     public ForumPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
         this.accountData = account;
-        // Create the tabs with all the posts
-        final JTabbedPane pane = this.createTabs();
-        // Add them to the page
-        this.add(pane, new GridBagConstraintBuilder()
+        // Create the tabs with all the posts and add them to the page
+        this.add(this.createTabs(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setWidth(2)
                 .setAnchor(Anchors.TOP)
@@ -65,8 +63,7 @@ public final class ForumPage extends GenericPage {
         final JTabbedPane pane = new JTabbedPane();
         final Set<CategoryData> categories = ForumDAO.getAllCategories();
         for (final CategoryData category : categories) {
-            final JComponent panel = this.addPanelCategory(category);
-            pane.add(panel, category.name());
+            pane.add(this.addPanelCategory(category), category.name());
         }
         return pane;
     }

@@ -89,6 +89,8 @@ public abstract class GenericPage extends JFrame {
         this.pack();
         // Set the minimum size as the packed size
         final Dimension minimumDim = this.getSize();
+        minimumDim.setSize(Math.min(minimumDim.getWidth(), SCREEN_DIMENSIONS.getWidth() / 2.0d),
+                Math.min(minimumDim.getHeight(), SCREEN_DIMENSIONS.getHeight() / 2.0d));
         this.setMinimumSize(minimumDim);
         // Calculate new dimensions for the window
         final Dimension dimensions = this.getSize();
