@@ -88,14 +88,14 @@ public final class PeriodPage extends GenericPage {
     }
 
     private Component getPeriodTable() {
+        // TODO: Find way to put buttons in here to delete periods
         final Set<PeriodData> periods = PeriodDAO.getAllPeriods();
         final Object[][] periodsForTable = periods.stream()
                 .map(p -> new String[]{p.startDate().toString(), p.endDate().toString()})
                 .toArray(Object[][]::new);
         final AbstractTableModel tableModel = new DefaultTableModel(periodsForTable, new String[]{"Data Inizio", "Data Fine"});
         final Component table = new JTable(tableModel);
-        final Component scrollPane = new JScrollPane(table);
-        return scrollPane;
+        return new JScrollPane(table);
     }
 
     private boolean isDataValid() {
