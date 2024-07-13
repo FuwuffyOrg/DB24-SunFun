@@ -21,7 +21,8 @@ public final class ForumDAO extends AbstractDAO {
     private static final String GET_ALL_POSTS_FROM_CATEGORY = "SELECT d.*, a.nome, a.cognome FROM discussione d, "
             + "account_data a WHERE d.fk_categoria = ? ORDER BY d.num_discussione";
 
-    private static final String GET_COMMENTS_FROM_ID = "SELECT * FROM `risposta` WHERE `risposta`.fk_discussione = ?";
+    private static final String GET_COMMENTS_FROM_ID = "SELECT r.num_risposta, r.testo, a.nome, a.cognome "
+            + "FROM `risposta` r, `account_data` a WHERE r.fk_discussione = ?";
 
     private static final String CREATE_FORUM_POST = "INSERT INTO `discussione`(`titolo`, `descrizione`, "
             + "`fk_categoria`, `fk_account`) VALUES (?,?,?,?)";
@@ -55,7 +56,7 @@ public final class ForumDAO extends AbstractDAO {
                 categories.add(new DiscussionData(discussion));
             }
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't create a new discussion", err);
+            LOGGER.log(Level.SEVERE, "Couldn't fetch the posts from the category " + category.name(), err);
             DB_CONNECTION.closeConnection();
         }
         return categories;
@@ -70,7 +71,7 @@ public final class ForumDAO extends AbstractDAO {
                 comments.add(new CommentData(comment));
             }
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't create a new discussion", err);
+            LOGGER.log(Level.SEVERE, "Couldn't fetch the comments for the discussion " + discussionId, err);
             DB_CONNECTION.closeConnection();
         }
         return comments;
