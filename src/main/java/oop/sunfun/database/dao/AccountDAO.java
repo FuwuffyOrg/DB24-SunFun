@@ -1,6 +1,6 @@
 package oop.sunfun.database.dao;
 
-import oop.sunfun.database.data.enums.AccountType;
+import oop.sunfun.database.data.login.AccountType;
 import oop.sunfun.database.data.login.AccountData;
 
 import java.sql.SQLException;

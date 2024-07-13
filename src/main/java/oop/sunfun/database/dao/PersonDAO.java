@@ -1,6 +1,6 @@
 package oop.sunfun.database.dao;
 
-import oop.sunfun.database.data.enums.ParentType;
+import oop.sunfun.database.data.admin.ParentType;
 
 import java.sql.SQLException;
 import java.util.logging.Level;

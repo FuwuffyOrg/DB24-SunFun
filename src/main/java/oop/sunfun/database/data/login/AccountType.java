@@ -1,4 +1,4 @@
-package oop.sunfun.database.data.enums;
+package oop.sunfun.database.data.login;
 
 import java.util.EnumSet;
 import java.util.Objects;

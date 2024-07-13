@@ -1,7 +1,5 @@
 package oop.sunfun.database.data.login;
 
-import oop.sunfun.database.data.enums.AccountType;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
