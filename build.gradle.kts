@@ -32,8 +32,12 @@ dependencies {
     // Used to keep the database connection's info secure
     implementation("io.github.cdimascio:dotenv-java:3.0.1")
 
+    // Other useful java swing components
+    implementation("org.swinglabs.swingx:swingx-all:1.6.5-1")
+
     // Stuff for better UI
     implementation("com.formdev:flatlaf:3.4.1")
+    implementation("com.formdev:flatlaf-swingx:3.4.1")
     implementation("com.formdev:flatlaf-intellij-themes:3.4.1")
 }
 
