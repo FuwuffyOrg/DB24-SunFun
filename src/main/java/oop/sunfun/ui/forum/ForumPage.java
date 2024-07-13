@@ -10,8 +10,16 @@ import oop.sunfun.ui.layout.Anchors;
 import oop.sunfun.ui.layout.GenericPage;
 import oop.sunfun.ui.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.Component;
+import java.awt.GridBagLayout;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -51,9 +59,9 @@ public final class ForumPage extends GenericPage {
         this.buildWindow();
     }
 
-    private JTabbedPane createTabs() {
+    private JComponent createTabs() {
         // Create the basic stuff for the query and display
-        final JTabbedPane pane = new JTabbedPane();
+        final JComponent pane = new JTabbedPane();
         final Set<CategoryData> categories = ForumDAO.getAllCategories();
         for (final CategoryData category : categories) {
             pane.add(this.addPanelCategory(category), category.name());
@@ -80,11 +88,11 @@ public final class ForumPage extends GenericPage {
         return scrollPanel;
     }
 
-    private JPanel createDiscussionHeader(final DiscussionData discussion) {
-        final JPanel discussionHeader = new JPanel();
+    private JComponent createDiscussionHeader(final DiscussionData discussion) {
+        final JComponent discussionHeader = new JPanel();
         discussionHeader.setLayout(new GridBagLayout());
-        final JLabel lblPerson = new JLabel(discussion.getName() + " " + discussion.getSurname());
-        final JLabel lblTitle = new JLabel(discussion.getTitle());
+        final Component lblPerson = new JLabel(discussion.getName() + " " + discussion.getSurname());
+        final Component lblTitle = new JLabel(discussion.getTitle());
         final AbstractButton btnEnterDiscussion = new JButton("Enter Discussion");
         discussionHeader.add(lblPerson, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)

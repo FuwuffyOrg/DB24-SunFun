@@ -31,6 +31,8 @@ public final class AccountDAO extends AbstractDAO {
             // If there's more than one account, there must have been an error
             if (queryData.size() > 1) {
                 LOGGER.log(Level.WARNING, "There's two accounts with the same email and password");
+            } else if (queryData.isEmpty()) {
+                return Optional.empty();
             }
             // Get the data and build an account record
             return Optional.of(new AccountData(queryData.getFirst()));

@@ -104,8 +104,8 @@ public final class ForumPostPage extends GenericPage {
     private Component createCommentHeader(final CommentData comment) {
         final JComponent commentHeader = new JPanel();
         commentHeader.setLayout(new GridBagLayout());
-        final JLabel lblPerson = new JLabel(comment.getName() + " " + comment.getSurname());
-        final JLabel lblComment = new JLabel(comment.getResponse());
+        final JComponent lblPerson = new JLabel(comment.getName() + " " + comment.getSurname());
+        final JComponent lblComment = new JLabel(comment.getResponse());
         commentHeader.add(lblPerson, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setFillAll()
