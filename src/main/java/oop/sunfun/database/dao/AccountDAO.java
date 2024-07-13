@@ -20,7 +20,7 @@ public final class AccountDAO extends AbstractDAO {
             + "`tipologia`) VALUES (?,?,?)";
 
     private AccountDAO() {
-        super();
+        // Useless constructor
     }
 
     public static Optional<AccountData> getAccount(final String email, final String password) {

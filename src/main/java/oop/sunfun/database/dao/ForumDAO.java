@@ -31,7 +31,7 @@ public final class ForumDAO extends AbstractDAO {
             + "`fk_account`) VALUES (?,?,?)";
 
     private ForumDAO() {
-        super();
+        // Useless constructor
     }
 
     public static Set<CategoryData> getAllCategories() {

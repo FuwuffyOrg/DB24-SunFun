@@ -13,7 +13,7 @@ public final class PersonDAO extends AbstractDAO {
             + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
 
     private PersonDAO() {
-        super();
+        // Useless constructor
     }
 
     public static void createParent(final String codiceFiscale, final String accountEmail, final String name,

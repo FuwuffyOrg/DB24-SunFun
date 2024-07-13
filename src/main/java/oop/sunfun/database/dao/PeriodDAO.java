@@ -1,0 +1,50 @@
+package oop.sunfun.database.dao;
+
+import oop.sunfun.database.data.admin.ParentType;
+import oop.sunfun.database.data.admin.PeriodData;
+import oop.sunfun.database.data.forum.CategoryData;
+
+import java.sql.SQLException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class PeriodDAO extends AbstractDAO {
+    private static final Logger LOGGER = Logger.getLogger(PeriodDAO.class.getName());
+
+    private static final String GET_ALL_PERIODS = "SELECT * FROM `periodo`";
+
+    private static final String CREATE_PERIOD = "INSERT INTO `periodo`(`data_inizio`, `data_fine`) VALUES (?,?)";
+
+    private PeriodDAO() {
+        // Useless constructor
+    }
+
+    public static Set<PeriodData> getAllPeriods() {
+        final Set<PeriodData> categories = new HashSet<>();
+        try {
+            DB_CONNECTION.openConnection();
+            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_PERIODS);
+            for (final Map<String, Object> category : queryData) {
+                categories.add(new PeriodData(
+                        (Date) category.get("data_inizio"),
+                        (Date) category.get("data_fine")
+                ));
+            }
+        } catch (final SQLException err) {
+            LOGGER.log(Level.SEVERE, "Couldn't fetch the periods", err);
+            DB_CONNECTION.closeConnection();
+        }
+        return categories;
+    }
+
+    public static void createParent(final Date dataInizio, final Date dataFine) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(CREATE_PERIOD, dataInizio, dataFine);
+        } catch (final SQLException err) {
+            LOGGER.log(Level.SEVERE, "Couldn't create the new period", err);
+            DB_CONNECTION.closeConnection();
+        }
+    }
+}
