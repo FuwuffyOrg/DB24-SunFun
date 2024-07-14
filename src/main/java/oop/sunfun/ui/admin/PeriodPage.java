@@ -3,17 +3,20 @@ package oop.sunfun.ui.admin;
 import oop.sunfun.database.dao.PeriodDAO;
 import oop.sunfun.database.data.admin.PeriodData;
 import oop.sunfun.database.data.login.AccountData;
-import oop.sunfun.database.data.login.AccountType;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 import org.jdesktop.swingx.JXDatePicker;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.Component;
 import java.util.Date;
 import java.util.Set;
 

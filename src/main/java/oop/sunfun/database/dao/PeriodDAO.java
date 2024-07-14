@@ -1,15 +1,17 @@
 package oop.sunfun.database.dao;
 
-import oop.sunfun.database.data.admin.ParentType;
 import oop.sunfun.database.data.admin.PeriodData;
-import oop.sunfun.database.data.forum.CategoryData;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PeriodDAO extends AbstractDAO {
+public final class PeriodDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(PeriodDAO.class.getName());
 
     private static final String GET_ALL_PERIODS = "SELECT * FROM `periodo`";
