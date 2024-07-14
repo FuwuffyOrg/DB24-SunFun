@@ -167,12 +167,10 @@ public final class GroupPage extends GenericPage {
         if (txtNome.getText().length() > nameLengthLimit || txtNome.getText().length() < minSize) {
             GenericPage.highlightTextComponent(txtNome);
             return false;
-        }
-        if (!txtEtaMin.getText().matches(isAgeNumberRegex)) {
+        } else if (!txtEtaMin.getText().matches(isAgeNumberRegex)) {
             GenericPage.highlightTextComponent(txtEtaMin);
             return false;
-        }
-        if (!txtEtaMax.getText().matches(isAgeNumberRegex)) {
+        } else if (!txtEtaMax.getText().matches(isAgeNumberRegex)) {
             GenericPage.highlightTextComponent(txtEtaMax);
             return false;
         }

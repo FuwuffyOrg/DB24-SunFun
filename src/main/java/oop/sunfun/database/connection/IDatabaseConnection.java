@@ -38,7 +38,7 @@ public interface IDatabaseConnection {
     List<Map<String, Object>> getQueryData(String query, Object... parameters) throws SQLException;
 
     /**
-     * Method to run a INSERT query on the database.
+     * Method to run a INSERT or DELETE query on the database.
      * @param query The query to execute on the server.
      * @param parameters The ? in the query will be replaced by these objects.
      * @throws SQLException If the query couldn't run successfully.

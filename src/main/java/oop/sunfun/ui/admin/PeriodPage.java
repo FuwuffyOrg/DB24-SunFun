@@ -161,9 +161,8 @@ public final class PeriodPage extends GenericPage {
     }
 
     private boolean isDataValid() {
-        if (this.dateInizio.getDate().compareTo(this.dateFine.getDate()) >= 0) {
-            return false;
-        }
-        return this.dateInizio.getDate() != null && this.dateFine.getDate() != null;
+        final Date startDate = this.dateInizio.getDate();
+        final Date endDate = this.dateFine.getDate();
+        return startDate.compareTo(endDate) < 0;
     }
 }

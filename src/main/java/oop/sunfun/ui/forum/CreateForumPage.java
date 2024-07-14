@@ -102,8 +102,7 @@ public final class CreateForumPage extends GenericPage {
         if (this.txtTitle.getText().length() > titleLengthLimit || this.txtTitle.getText().length() < minSize) {
             GenericPage.highlightTextComponent(this.txtTitle);
             return false;
-        }
-        if (this.txtDescription.getText().length() > descriptionLengthLimit
+        } else if (this.txtDescription.getText().length() > descriptionLengthLimit
                 || this.txtDescription.getText().length() < minSize) {
             GenericPage.highlightTextComponent(this.txtDescription);
             return false;

@@ -123,7 +123,8 @@ public final class ForumPostPage extends GenericPage {
         final int minSize = 4;
         final int titleLengthLimit = 10000;
         this.resetHighlights();
-        if (this.txtComment.getText().length() > titleLengthLimit || this.txtComment.getText().length() < minSize) {
+        final String comment = this.txtComment.getText();
+        if (comment.length() > titleLengthLimit || comment.length() < minSize) {
             GenericPage.highlightTextComponent(this.txtComment);
             return false;
         }

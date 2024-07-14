@@ -204,33 +204,33 @@ public final class RegisterPage extends GenericPage {
         final int codiceFiscaleLength = 16;
         final int phoneNumberLength = 10;
         this.resetHighlights();
-        if (this.txtCodiceFiscale.getText().length() != codiceFiscaleLength) {
+        final String codiceFiscale = this.txtCodiceFiscale.getText();
+        final String name = this.txtName.getText();
+        final String surname = this.txtSurname.getText();
+        final String phoneNumber = this.txtPhone.getText();
+        final String email = this.txtEmail.getText();
+        final String password = this.txtPassword.getText();
+        final String passwordConfirm = this.txtPasswordConfirm.getText();
+        if (codiceFiscale.length() != codiceFiscaleLength) {
             GenericPage.highlightTextComponent(this.txtCodiceFiscale);
             return false;
-        }
-        if (this.txtName.getText().length() > nameLengthLimit || this.txtName.getText().length() < minSize) {
+        } else if (name.length() > nameLengthLimit || name.length() < minSize) {
             GenericPage.highlightTextComponent(this.txtName);
             return false;
-        }
-        if (this.txtSurname.getText().length() > nameLengthLimit || this.txtSurname.getText().length() < minSize) {
+        } else if (surname.length() > nameLengthLimit || surname.length() < minSize) {
             GenericPage.highlightTextComponent(this.txtSurname);
             return false;
-        }
-        if (this.txtPhone.getText().length() != phoneNumberLength) {
+        } else if (phoneNumber.length() != phoneNumberLength) {
             GenericPage.highlightTextComponent(this.txtPhone);
             return false;
-        }
-        if (this.txtEmail.getText().length() > emailLengthLimit || this.txtEmail.getText().length() < minSize) {
+        } else if (email.length() > emailLengthLimit || email.length() < minSize) {
             GenericPage.highlightTextComponent(this.txtEmail);
             return false;
-        }
-        if (this.txtPassword.getText().length() > passwordLengthLimit
-                || this.txtPassword.getText().length() < minSize) {
+        } else if (password.length() > passwordLengthLimit || password.length() < minSize) {
             GenericPage.highlightTextComponent(this.txtPassword);
             GenericPage.highlightTextComponent(this.txtPasswordConfirm);
             return false;
-        }
-        if (!Objects.equals(this.txtPassword.getText(), this.txtPasswordConfirm.getText())) {
+        } else if (!Objects.equals(password, passwordConfirm)) {
             GenericPage.highlightTextComponent(this.txtPassword);
             GenericPage.highlightTextComponent(this.txtPasswordConfirm);
             return false;

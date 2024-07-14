@@ -127,8 +127,7 @@ public final class AllergiesPage extends GenericPage {
         if (name.length() > nameLengthLimit || name.length() < minSize) {
             highlightTextComponent(txtName);
             return false;
-        }
-        if (description.length() > descriptionLengthLimit || description.length() < minSize) {
+        } else if (description.length() > descriptionLengthLimit || description.length() < minSize) {
             highlightTextComponent(txtDescription);
             return false;
         }
