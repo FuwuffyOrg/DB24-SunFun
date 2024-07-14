@@ -46,6 +46,8 @@ public class LandingPage extends GenericPage {
                 break;
             case AccountType.PARTECIPANTE:
                 break;
+            default:
+                throw new IllegalStateException("The account type is not valid!");
         }
         // Calculate the sides of a rectangle for the button layout
         final double side = Math.sqrt(reachablePages.size());
