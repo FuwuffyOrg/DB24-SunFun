@@ -26,8 +26,6 @@ public final class AddParticipantPage extends GenericPage {
 
     private static final String PAGE_NAME = "Aggiungi un partecipante";
 
-    private final AccountData accountData;
-
     private final JTextComponent txtCodiceFiscale;
     private final JTextComponent txtName;
     private final JTextComponent txtSurname;
@@ -38,7 +36,6 @@ public final class AddParticipantPage extends GenericPage {
 
     public AddParticipantPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
-        this.accountData = account;
         final Component lblCodiceFiscale = new JLabel("Codice Fiscale: ");
         final Component lblName = new JLabel("Nome: ");
         final Component lblSurname = new JLabel("Cognome: ");
