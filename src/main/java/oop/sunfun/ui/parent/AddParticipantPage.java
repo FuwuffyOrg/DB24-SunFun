@@ -107,7 +107,7 @@ public final class AddParticipantPage extends GenericPage {
         );
         this.add(lblDateOfBirth,
                 new GridBagConstraintBuilder()
-                        .setRow(4).setColumn(1)
+                        .setRow(4).setColumn(0)
                         .setFillAll()
                         .build()
         );
