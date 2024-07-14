@@ -14,9 +14,11 @@ import java.util.logging.Logger;
 public final class PeriodDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(PeriodDAO.class.getName());
 
-    private static final String GET_ALL_PERIODS = "SELECT * FROM `periodo`";
+    private static final String GET_ALL_PERIODS = "SELECT * FROM `periodo` ORDER BY `data_inizio`";
 
     private static final String CREATE_PERIOD = "INSERT INTO `periodo`(`data_inizio`, `data_fine`) VALUES (?,?)";
+
+    private static final String ERASE_PERIOD = "DELETE FROM `periodo` WHERE `data_inizio`=? AND `data_fine`=?";
 
     private PeriodDAO() {
         // Useless constructor
@@ -40,12 +42,23 @@ public final class PeriodDAO extends AbstractDAO {
         return categories;
     }
 
-    public static void createParent(final Date dataInizio, final Date dataFine) {
+    public static void createPeriod(final PeriodData periodData) {
         try {
             DB_CONNECTION.openConnection();
-            DB_CONNECTION.setQueryData(CREATE_PERIOD, dataInizio, dataFine);
+            DB_CONNECTION.setQueryData(CREATE_PERIOD, periodData.startDate(), periodData.endDate());
         } catch (final SQLException err) {
             LOGGER.log(Level.SEVERE, "Couldn't create the new period", err);
+            DB_CONNECTION.closeConnection();
+        }
+    }
+
+    public static void deletePeriod(final PeriodData periodData) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(ERASE_PERIOD, periodData.startDate(), periodData.endDate());
+        } catch (final SQLException err) {
+            LOGGER.log(Level.SEVERE, "Couldn't erase the period" + periodData.startDate() + " "
+                    + periodData.endDate(), err);
             DB_CONNECTION.closeConnection();
         }
     }

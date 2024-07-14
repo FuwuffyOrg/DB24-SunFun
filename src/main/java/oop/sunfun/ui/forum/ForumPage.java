@@ -10,14 +10,7 @@ import oop.sunfun.ui.util.layout.Anchors;
 import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.util.List;
@@ -80,7 +73,12 @@ public final class ForumPage extends GenericPage {
         IntStream.range(0, discussions.size()).forEach(i -> {
             // Add the panel to the categories
             panel.add(this.createDiscussionHeader(discussions.get(i)), new GridBagConstraintBuilder()
-                    .setRow(i).setColumn(0)
+                    .setRow(i * 2).setColumn(0)
+                    .setFillAll()
+                    .build()
+            );
+            panel.add(new JSeparator(), new GridBagConstraintBuilder()
+                    .setRow((i * 2) + 1).setColumn(0)
                     .setFillAll()
                     .build()
             );

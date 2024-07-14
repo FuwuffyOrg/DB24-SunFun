@@ -9,29 +9,28 @@ import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 import org.jdesktop.swingx.JXDatePicker;
 
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.*;
 import java.awt.Component;
+import java.awt.GridBagLayout;
+import java.util.List;
 import java.util.Date;
-import java.util.Set;
+import java.util.stream.IntStream;
 
 public final class PeriodPage extends GenericPage {
 
     private static final String PAGE_NAME = "Gestione Periodi";
 
-    final JXDatePicker dateInizio;
-    final JXDatePicker dateFine;
+    private final AccountData accountData;
+
+    private final JXDatePicker dateInizio;
+    private final JXDatePicker dateFine;
 
     public PeriodPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
+        this.accountData = account;
         // Add inputs to add a new period
         final Component lblInizio = new JLabel("Data di inizio:");
-        final Component lblFine = new JLabel("Data di inizio:");
+        final Component lblFine = new JLabel("Data di fine:");
         this.dateInizio = new JXDatePicker();;
         this.dateFine = new JXDatePicker();
         final AbstractButton btnAddPeriod = new JButton("Aggiungi il periodo");
@@ -82,7 +81,7 @@ public final class PeriodPage extends GenericPage {
             if (isDataValid()) {
                 final Date startDate = this.dateInizio.getDate();
                 final Date endDate = this.dateFine.getDate();
-                PeriodDAO.createParent(startDate, endDate);
+                PeriodDAO.createPeriod(new PeriodData(startDate, endDate));
                 this.switchPage(new PeriodPage(CloseEvents.EXIT_PROGRAM, account));
             }
         });
@@ -91,14 +90,47 @@ public final class PeriodPage extends GenericPage {
     }
 
     private Component getPeriodTable() {
-        // TODO: Find way to put buttons in here to delete periods
-        final Set<PeriodData> periods = PeriodDAO.getAllPeriods();
-        final Object[][] periodsForTable = periods.stream()
-                .map(p -> new String[]{p.startDate().toString(), p.endDate().toString()})
-                .toArray(Object[][]::new);
-        final AbstractTableModel tableModel = new DefaultTableModel(periodsForTable, new String[]{"Data Inizio", "Data Fine"});
-        final Component table = new JTable(tableModel);
-        return new JScrollPane(table);
+        // Create the panel
+        final JComponent tablePanel = new JPanel();
+        tablePanel.setLayout(new GridBagLayout());
+        // Get the periods
+        final List<PeriodData> periods = PeriodDAO.getAllPeriods().stream().toList();
+        // Add the periods to the table
+        IntStream.range(0, periods.size()).forEach(i -> {
+            final PeriodData period = periods.get(i);
+            final Component lblDateStart = new JLabel(period.startDate().toString());
+            final Component lblDateEnd = new JLabel(period.endDate().toString());
+            final AbstractButton btnDeletePeriod = new JButton("Elimina");
+            // Add them to the panel
+            tablePanel.add(lblDateStart, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(0)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(lblDateEnd, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(1)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(btnDeletePeriod, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(2)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(new JSeparator(), new GridBagConstraintBuilder()
+                    .setRow((i * 2) + 1).setColumn(0)
+                    .setWidth(3)
+                    .setFillAll()
+                    .build()
+            );
+            // Add delete event
+            btnDeletePeriod.addActionListener(e -> {
+                PeriodDAO.deletePeriod(period);
+                this.switchPage(new PeriodPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+            });
+        });
+        // Add the table to the panel
+        return new JScrollPane(tablePanel);
     }
 
     private boolean isDataValid() {
