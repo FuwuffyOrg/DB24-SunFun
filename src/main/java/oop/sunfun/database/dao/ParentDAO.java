@@ -15,15 +15,15 @@ public final class ParentDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(ParentDAO.class.getName());
 
     private static final String CREATE_PARENTE = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
-            + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
+            + "`name`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
 
     private static final String CREATE_PARTICIPANT = "INSERT INTO `partecipante`(`codice_fiscale`, `fk_account`, "
-            + "`fk_dieta`, `fk_gruppo`, `nome`, `cognome`, `data_di_nascita`) VALUES (?,?,?,?,?,?,?)";
+            + "`fk_dieta`, `fk_gruppo`, `name`, `cognome`, `data_di_nascita`) VALUES (?,?,?,?,?,?,?)";
 
     private static final String DELETE_PARTICIPANT = "DELETE FROM `partecipante` WHERE `codice_fiscale`=?";
 
     private static final String GET_ALL_PARTICIPANTS_FROM_PARENT = "SELECT `codice_fiscale`, `fk_dieta`, "
-            + "`fk_gruppo`, `nome`, `cognome`, `data_di_nascita` FROM `partecipante`, `ritiro` WHERE "
+            + "`fk_gruppo`, `name`, `cognome`, `data_di_nascita` FROM `partecipante`, `ritiro` WHERE "
             + "`partecipante`.`codice_fiscale`=`ritiro`.`fk_partecipante` AND `ritiro`.`fk_parente`=?";
 
     private static final String ADD_RITIRO_PARENTE = "INSERT INTO `ritiro`(`fk_parente`, `fk_partecipante`) "
@@ -77,7 +77,7 @@ public final class ParentDAO extends AbstractDAO {
                 final String codiceFiscale = (String) participant.get("codice_fiscale");
                 final String dieta = (String) participant.get("dieta");
                 final String gruppo = (String) participant.get("fk_gruppo");
-                final String name = (String) participant.get("nome");
+                final String name = (String) participant.get("name");
                 final String surname = (String) participant.get("cognome");
                 final Date dateOfBirth = (Date) participant.get("data_di_nascita");
                 participants.add(new ParticipantData(codiceFiscale, dieta, gruppo, name, surname, dateOfBirth));
