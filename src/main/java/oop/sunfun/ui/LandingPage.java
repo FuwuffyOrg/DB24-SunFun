@@ -31,7 +31,7 @@ public class LandingPage extends GenericPage {
         // Add the pages that need to be shownp
         reachablePages.put("Forum", () -> new ForumPage(CloseEvents.EXIT_PROGRAM, this.accountData));
         // TODO: Add constraints depending on the account type
-        switch (account.getType()) {
+        switch (account.type()) {
             case AccountType.PARENTE:
                 break;
             case AccountType.EDUCATORE:

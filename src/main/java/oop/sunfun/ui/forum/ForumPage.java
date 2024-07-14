@@ -91,8 +91,8 @@ public final class ForumPage extends GenericPage {
     private JComponent createDiscussionHeader(final DiscussionData discussion) {
         final JComponent discussionHeader = new JPanel();
         discussionHeader.setLayout(new GridBagLayout());
-        final Component lblPerson = new JLabel(discussion.getName() + " " + discussion.getSurname());
-        final Component lblTitle = new JLabel(discussion.getTitle());
+        final Component lblPerson = new JLabel(discussion.name() + " " + discussion.surname());
+        final Component lblTitle = new JLabel(discussion.title());
         final AbstractButton btnEnterDiscussion = new JButton("Enter Discussion");
         discussionHeader.add(lblPerson, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)

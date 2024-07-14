@@ -35,7 +35,9 @@ public final class AccountDAO extends AbstractDAO {
                 return Optional.empty();
             }
             // Get the data and build an account record
-            return Optional.of(new AccountData(queryData.getFirst()));
+            final Map<String, Object> account = queryData.getFirst();
+            final AccountType type = AccountType.getFromString((String) account.get("tipologia"));
+            return Optional.of(new AccountData(email, type));
         } catch (final SQLException err) {
             LOGGER.log(Level.SEVERE, "Couldn't fetch the account data", err);
             DB_CONNECTION.closeConnection();

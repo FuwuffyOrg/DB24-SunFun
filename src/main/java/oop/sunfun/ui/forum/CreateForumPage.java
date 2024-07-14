@@ -86,7 +86,7 @@ public final class CreateForumPage extends GenericPage {
         btnCreatePost.addActionListener(e -> {
             if (isDataValid()) {
                 ForumDAO.addNewDiscussion(txtTitle.getText(), txtDescription.getText(),
-                        new CategoryData((String) comboCategoryType.getSelectedItem()), accountData.getEmail());
+                        new CategoryData((String) comboCategoryType.getSelectedItem()), accountData.email());
                 this.switchPage(new ForumPage(CloseEvents.EXIT_PROGRAM, this.accountData));
             }
         });

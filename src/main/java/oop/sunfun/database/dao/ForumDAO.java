@@ -56,7 +56,12 @@ public final class ForumDAO extends AbstractDAO {
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_POSTS_FROM_CATEGORY,
                     category.name());
             for (final Map<String, Object> discussion : queryData) {
-                categories.add(new DiscussionData(discussion));
+                final int numDiscussion = (Integer) discussion.get("num_discussione");
+                final String title = (String) discussion.get("titolo");
+                final String description = (String) discussion.get("descrizione");
+                final String name = (String) discussion.get("nome");
+                final String surname = (String) discussion.get("cognome");
+                categories.add(new DiscussionData(numDiscussion, title, description, name, surname));
             }
         } catch (final SQLException err) {
             LOGGER.log(Level.SEVERE, "Couldn't fetch the posts from the category " + category.name(), err);
@@ -71,7 +76,11 @@ public final class ForumDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_COMMENTS_FROM_ID, discussionId);
             for (final Map<String, Object> comment : queryData) {
-                comments.add(new CommentData(comment));
+                final int numResponse = (Integer) comment.get("num_risposta");
+                final String text = (String) comment.get("testo");
+                final String name = (String) comment.get("nome");
+                final String surname = (String) comment.get("cognome");
+                comments.add(new CommentData(numResponse, text, name, surname));
             }
         } catch (final SQLException err) {
             LOGGER.log(Level.SEVERE, "Couldn't fetch the comments for the discussion " + discussionId, err);

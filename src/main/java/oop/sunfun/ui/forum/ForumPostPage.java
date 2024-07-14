@@ -28,9 +28,9 @@ public final class ForumPostPage extends GenericPage {
     private final JTextComponent txtComment;
 
     public ForumPostPage(final DiscussionData discussion, final CloseEvents closeEvent, final AccountData account) {
-        super(discussion.getTitle(), closeEvent);
+        super(discussion.title(), closeEvent);
         // Get the comments on the post
-        final Component lblDescription = new JLabel(discussion.getDescription());
+        final Component lblDescription = new JLabel(discussion.description());
         final Component commentArea = this.getCommentArea(discussion);
         final AbstractButton btnGotoDiscussion = new JButton("Return to discussions");
         this.txtComment = new JTextArea();
@@ -76,7 +76,7 @@ public final class ForumPostPage extends GenericPage {
         // Comment button
         btnComment.addActionListener(e -> {
             if (isDataValid()) {
-                ForumDAO.addNewComment(account.getEmail(), txtComment.getText(), discussion.getDiscussionNumber());
+                ForumDAO.addNewComment(account.email(), txtComment.getText(), discussion.discussionNumber());
                 this.switchPage(new ForumPostPage(discussion, CloseEvents.EXIT_PROGRAM, account));
             }
         });
@@ -89,7 +89,7 @@ public final class ForumPostPage extends GenericPage {
         commentPanel.setLayout(new GridBagLayout());
         final Component commentArea = new JScrollPane(commentPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        final List<CommentData> comments = ForumDAO.getCommentsFromDiscussion(discussion.getDiscussionNumber());
+        final List<CommentData> comments = ForumDAO.getCommentsFromDiscussion(discussion.discussionNumber());
         IntStream.range(0, comments.size()).forEach(i -> {
             // Add the panel to the categories
             commentPanel.add(this.createCommentHeader(comments.get(i)), new GridBagConstraintBuilder()
@@ -104,8 +104,8 @@ public final class ForumPostPage extends GenericPage {
     private Component createCommentHeader(final CommentData comment) {
         final JComponent commentHeader = new JPanel();
         commentHeader.setLayout(new GridBagLayout());
-        final JComponent lblPerson = new JLabel(comment.getName() + " " + comment.getSurname());
-        final JComponent lblComment = new JLabel(comment.getResponse());
+        final JComponent lblPerson = new JLabel(comment.name() + " " + comment.surname());
+        final JComponent lblComment = new JLabel(comment.response());
         commentHeader.add(lblPerson, new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setFillAll()
