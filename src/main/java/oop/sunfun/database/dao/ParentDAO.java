@@ -1,7 +1,6 @@
 package oop.sunfun.database.dao;
 
 import oop.sunfun.database.data.admin.ParentType;
-import oop.sunfun.database.data.forum.DiscussionData;
 import oop.sunfun.database.data.login.ParticipantData;
 
 import java.sql.SQLException;
@@ -12,8 +11,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class PersonDAO extends AbstractDAO {
-    private static final Logger LOGGER = Logger.getLogger(PersonDAO.class.getName());
+public final class ParentDAO extends AbstractDAO {
+    private static final Logger LOGGER = Logger.getLogger(ParentDAO.class.getName());
 
     private static final String CREATE_PARENTE = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
             + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
@@ -27,7 +26,10 @@ public final class PersonDAO extends AbstractDAO {
             + "`fk_gruppo`, `nome`, `cognome`, `data_di_nascita` FROM `partecipante`, `ritiro` WHERE "
             + "`partecipante`.`codice_fiscale`=`ritiro`.`fk_partecipante` AND `ritiro`.`fk_parente`=?";
 
-    private PersonDAO() {
+    private static final String ADD_RITIRO_PARENTE = "INSERT INTO `ritiro`(`fk_parente`, `fk_partecipante`) "
+            + "VALUES (?, ?)";
+
+    private ParentDAO() {
         // Useless constructor
     }
 
@@ -85,5 +87,16 @@ public final class PersonDAO extends AbstractDAO {
             DB_CONNECTION.closeConnection();
         }
         return participants;
+    }
+
+    public static void addRitiroParente(final String codFiscParente, final String codFiscPartecipante) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(ADD_RITIRO_PARENTE, codFiscParente, codFiscPartecipante);
+        } catch (final SQLException err) {
+            LOGGER.log(Level.SEVERE, "Couldn't add the ritiro for the participant " + codFiscPartecipante +
+                    " and for the parent " + codFiscParente, err);
+            DB_CONNECTION.closeConnection();
+        }
     }
 }

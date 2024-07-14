@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GroupDAO extends AbstractDAO {
+public final class GroupDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(GroupDAO.class.getName());
 
     private static final String GET_ALL_GROUPS = "SELECT * FROM `gruppo`";

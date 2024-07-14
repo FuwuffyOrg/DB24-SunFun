@@ -1,6 +1,6 @@
 package oop.sunfun.ui.parent;
 
-import oop.sunfun.database.dao.PersonDAO;
+import oop.sunfun.database.dao.ParentDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.login.ParticipantData;
 import oop.sunfun.ui.LandingPage;
@@ -59,7 +59,7 @@ public final class ManageParticipantPage extends GenericPage {
     private Component createParticipantTable() {
         final JComponent participantPanel = new JPanel();
         participantPanel.setLayout(new GridBagLayout());
-        final List<ParticipantData> participants = PersonDAO.getAllParticipantsFromParent(accountData.codFisc());
+        final List<ParticipantData> participants = ParentDAO.getAllParticipantsFromParent(accountData.codFisc());
         IntStream.range(0, participants.size()).forEach(i -> {
             final ParticipantData participant = participants.get(i);
             final Component lblName = new JLabel(participant.name());
@@ -113,7 +113,7 @@ public final class ManageParticipantPage extends GenericPage {
             btnMembership.addActionListener(e -> this.switchPage(new ParticipantMembershipPage(CloseEvents.EXIT_PROGRAM,
                     this.accountData, participant)));
             btnUnsubscribe.addActionListener(e -> {
-                PersonDAO.eraseParticipant(participant);
+                ParentDAO.eraseParticipant(participant);
                 this.switchPage(new ManageParticipantPage(CloseEvents.EXIT_PROGRAM, this.accountData));
             });
         });

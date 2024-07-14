@@ -9,10 +9,20 @@ import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 import org.jdesktop.swingx.JXDatePicker;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 public final class PeriodPage extends GenericPage {
@@ -30,7 +40,7 @@ public final class PeriodPage extends GenericPage {
         // Add inputs to add a new period
         final Component lblInizio = new JLabel("Data di inizio:");
         final Component lblFine = new JLabel("Data di fine:");
-        this.dateInizio = new JXDatePicker();;
+        this.dateInizio = new JXDatePicker();
         this.dateFine = new JXDatePicker();
         final AbstractButton btnAddPeriod = new JButton("Aggiungi il periodo");
         final AbstractButton btnGoBack = new JButton("Torna alla dashboard");

@@ -3,7 +3,7 @@ package oop.sunfun.ui.login;
 import oop.sunfun.database.connection.IDatabaseConnection;
 import oop.sunfun.database.connection.SunFunDatabase;
 import oop.sunfun.database.dao.AccountDAO;
-import oop.sunfun.database.dao.PersonDAO;
+import oop.sunfun.database.dao.ParentDAO;
 import oop.sunfun.database.data.login.AccountType;
 import oop.sunfun.database.data.admin.ParentType;
 import oop.sunfun.ui.util.behavior.CloseEvents;
@@ -65,7 +65,6 @@ public final class RegisterPage extends GenericPage {
         this.add(lblCodiceFiscale,
                 new GridBagConstraintBuilder()
                         .setRow(0).setColumn(0)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
@@ -73,119 +72,102 @@ public final class RegisterPage extends GenericPage {
                 new GridBagConstraintBuilder()
                         .setRow(0).setColumn(1)
                         .setWeightColumn(0.1d)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(lblName,
                 new GridBagConstraintBuilder()
                         .setRow(1).setColumn(0)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(txtName,
                 new GridBagConstraintBuilder()
                         .setRow(1).setColumn(1)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(lblSurname,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(0)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(txtSurname,
                 new GridBagConstraintBuilder()
                         .setRow(2).setColumn(1)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(lblPhone,
                 new GridBagConstraintBuilder()
                         .setRow(3).setColumn(0)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(txtPhone,
                 new GridBagConstraintBuilder()
                         .setRow(3).setColumn(1)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(lblEmail,
                 new GridBagConstraintBuilder()
                         .setRow(4).setColumn(0)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(txtEmail,
                 new GridBagConstraintBuilder()
                         .setRow(4).setColumn(1)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(lblPassword,
                 new GridBagConstraintBuilder()
                         .setRow(5).setColumn(0)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(txtPassword,
                 new GridBagConstraintBuilder()
                         .setRow(5).setColumn(1)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(lblPasswordConfirm,
                 new GridBagConstraintBuilder()
                         .setRow(6).setColumn(0)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(txtPasswordConfirm,
                 new GridBagConstraintBuilder()
                         .setRow(6).setColumn(1)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(lblParentType,
                 new GridBagConstraintBuilder()
                         .setRow(7).setColumn(0)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(comboParentType,
                 new GridBagConstraintBuilder()
                         .setRow(7).setColumn(1)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(btnRegister,
                 new GridBagConstraintBuilder()
                         .setRow(8).setColumn(0)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
         this.add(btnLogin,
                 new GridBagConstraintBuilder()
                         .setRow(8).setColumn(1)
-                        .setWidth(1)
                         .setFillAll()
                         .build()
         );
@@ -199,7 +181,7 @@ public final class RegisterPage extends GenericPage {
                 try {
                     database.openConnection();
                     AccountDAO.createAccount(this.txtEmail.getText(), this.txtPassword.getText(), AccountType.PARENTE);
-                    PersonDAO.createParent(this.txtCodiceFiscale.getText(), this.txtEmail.getText(),
+                    ParentDAO.createParent(this.txtCodiceFiscale.getText(), this.txtEmail.getText(),
                             this.txtName.getText(), this.txtSurname.getText(), this.txtPhone.getText(),
                             ParentType.getFromString((String) this.comboParentType.getSelectedItem()));
                 } catch (final SQLException err) {
