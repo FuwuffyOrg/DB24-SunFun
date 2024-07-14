@@ -24,7 +24,7 @@ public final class PersonDAO extends AbstractDAO {
     private static final String DELETE_PARTICIPANT = "DELETE FROM `partecipante` WHERE `codice_fiscale`=?";
 
     private static final String GET_ALL_PARTICIPANTS_FROM_PARENT = "SELECT `codice_fiscale`, `fk_dieta`, "
-            + "`fk_gruppo`, `nome`, `cognome`, `data_di_nascita` FROM `partecipante` WHERE "
+            + "`fk_gruppo`, `nome`, `cognome`, `data_di_nascita` FROM `partecipante`, `ritiro` WHERE "
             + "`partecipante`.`codice_fiscale`=`ritiro`.`fk_partecipante` AND `ritiro`.`fk_parente`=?";
 
     private PersonDAO() {
