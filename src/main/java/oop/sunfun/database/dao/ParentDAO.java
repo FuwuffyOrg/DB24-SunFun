@@ -94,8 +94,8 @@ public final class ParentDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(ADD_RITIRO_PARENTE, codFiscParente, codFiscPartecipante);
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't add the ritiro for the participant " + codFiscPartecipante +
-                    " and for the parent " + codFiscParente, err);
+            LOGGER.log(Level.SEVERE, "Couldn't add the ritiro for the participant " + codFiscPartecipante
+                    + " and for the parent " + codFiscParente, err);
             DB_CONNECTION.closeConnection();
         }
     }
