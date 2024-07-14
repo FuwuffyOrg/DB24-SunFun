@@ -33,37 +33,6 @@ public abstract class GenericPage extends JFrame {
     private final JPanel contentPanel;
 
     /**
-     * Sets up everything to do with theming.
-     */
-    public static void setupTheme() {
-        final int cornersRoundness = 15;
-        final int focusSize = 2;
-        final int scrollbarRoundness = 999;
-        final Insets trackInset = new Insets(2, 4, 2, 4);
-        final Insets thumbInsets = new Insets(2, 2, 2, 2);
-        FlatNordIJTheme.setup();
-        // Rounded borders
-        UIManager.put("Button.arc", cornersRoundness);
-        UIManager.put("Component.arc", cornersRoundness);
-        UIManager.put("CheckBox.arc", cornersRoundness);
-        UIManager.put("ProgressBar.arc", cornersRoundness);
-        UIManager.put("TextComponent.arc", cornersRoundness);
-        // Arrows on number stuff
-        UIManager.put("Component.arrowType", "triangle");
-        // Focus size
-        UIManager.put("Component.focusWidth", focusSize);
-        // Show buttons on scrollbars
-        UIManager.put("ScrollBar.showButtons", true);
-        // Track for scrollbars
-        UIManager.put("ScrollBar.trackArc", scrollbarRoundness);
-        UIManager.put("ScrollBar.thumbArc", scrollbarRoundness);
-        UIManager.put("ScrollBar.trackInsets", trackInset);
-        UIManager.put("ScrollBar.thumbInsets", thumbInsets);
-        // Tab separator stuff
-        UIManager.put("TabbedPane.showTabSeparators", true);
-    }
-
-    /**
      * Basic constructor for a generic window in the project.
      * @param title The title of the window.
      * @param closeEvent Describes what happens when the window closes.
