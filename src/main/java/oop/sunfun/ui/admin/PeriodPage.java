@@ -18,8 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.util.List;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public final class PeriodPage extends GenericPage {
@@ -88,6 +87,7 @@ public final class PeriodPage extends GenericPage {
                 final Date startDate = this.dateInizio.getDate();
                 final Date endDate = this.dateFine.getDate();
                 PeriodDAO.createPeriod(new PeriodData(startDate, endDate));
+                getDatesBetween(startDate, endDate).forEach(PeriodDAO::createDate);
                 this.switchPage(new PeriodPage(CloseEvents.EXIT_PROGRAM, account));
             }
         });
@@ -132,11 +132,26 @@ public final class PeriodPage extends GenericPage {
             // Add delete event
             btnDeletePeriod.addActionListener(e -> {
                 PeriodDAO.deletePeriod(period);
+                PeriodDAO.deleteDatesBetween(period.startDate(), period.endDate());
                 this.switchPage(new PeriodPage(CloseEvents.EXIT_PROGRAM, this.accountData));
             });
         });
         // Add the table to the panel
         return new JScrollPane(tablePanel);
+    }
+
+    private static Set<Date> getDatesBetween(final Date startDate, final Date endDate) {
+        final Set<Date> datesInRange = new HashSet<>();
+        final Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(startDate);
+        final Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(endDate);
+        while (startCalendar.before(endCalendar)) {
+            final Date result = startCalendar.getTime();
+            datesInRange.add(result);
+            startCalendar.add(Calendar.DATE, 1);
+        }
+        return datesInRange;
     }
 
     private boolean isDataValid() {

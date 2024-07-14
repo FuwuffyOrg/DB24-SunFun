@@ -20,7 +20,6 @@ import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 public final class GroupPage extends GenericPage {
