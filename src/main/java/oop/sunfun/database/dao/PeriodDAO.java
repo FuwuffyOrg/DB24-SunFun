@@ -57,7 +57,7 @@ public final class PeriodDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(ERASE_PERIOD, periodData.startDate(), periodData.endDate());
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't erase the period" + periodData.startDate() + " "
+            LOGGER.log(Level.SEVERE, "Couldn't erase the period " + periodData.startDate() + " "
                     + periodData.endDate(), err);
             DB_CONNECTION.closeConnection();
         }

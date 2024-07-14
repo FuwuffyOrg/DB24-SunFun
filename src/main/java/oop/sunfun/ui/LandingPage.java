@@ -2,6 +2,7 @@ package oop.sunfun.ui;
 
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.login.AccountType;
+import oop.sunfun.ui.admin.GroupPage;
 import oop.sunfun.ui.admin.PeriodPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.forum.ForumPage;
@@ -28,7 +29,7 @@ public class LandingPage extends GenericPage {
         this.accountData = account;
         // Set to contain all the pages reachable by that user.
         final Map<String, Supplier<GenericPage>> reachablePages = new HashMap<>();
-        // Add the pages that need to be shownp
+        // Add the pages that need to be shown
         reachablePages.put("Forum", () -> new ForumPage(CloseEvents.EXIT_PROGRAM, this.accountData));
         // TODO: Add constraints depending on the account type
         switch (account.type()) {
@@ -36,6 +37,7 @@ public class LandingPage extends GenericPage {
                 break;
             case AccountType.EDUCATORE:
                 reachablePages.put("Gestione Periodi", () -> new PeriodPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+                reachablePages.put("Gestione Gruppi", () -> new GroupPage(CloseEvents.EXIT_PROGRAM, this.accountData));
                 break;
             case AccountType.VOLONTARIO:
                 break;
@@ -44,7 +46,7 @@ public class LandingPage extends GenericPage {
         }
         // Calculate the sides of a rectangle for the button layout
         final double side = Math.sqrt(reachablePages.size());
-        final int rows = (int) Math.floor(side);
+        final int rows = (int) Math.ceil(side);
         final int cols = (int) Math.ceil(side);
         // Add the buttons to the page
         final Iterator<Entry<String, Supplier<GenericPage>>> it = reachablePages.entrySet().iterator();
