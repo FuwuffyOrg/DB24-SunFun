@@ -18,6 +18,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
 
 public final class AddParticipantPage extends GenericPage {
 
@@ -40,6 +43,7 @@ public final class AddParticipantPage extends GenericPage {
         final Component lblName = new JLabel("Nome: ");
         final Component lblSurname = new JLabel("Cognome: ");
         final Component lblEmail = new JLabel("Email: ");
+        final Component lblDateOfBirth = new JLabel("Data di Nascita: ");
         final Component lblPassword = new JLabel("Password: ");
         final Component lblPasswordConfirm = new JLabel("Conferma Password: ");
         this.txtCodiceFiscale = new JTextField();
@@ -101,6 +105,12 @@ public final class AddParticipantPage extends GenericPage {
                         .setFillAll()
                         .build()
         );
+        this.add(lblDateOfBirth,
+                new GridBagConstraintBuilder()
+                        .setRow(4).setColumn(1)
+                        .setFillAll()
+                        .build()
+        );
         this.add(dateBirth,
                 new GridBagConstraintBuilder()
                         .setRow(4).setColumn(1)
@@ -147,12 +157,11 @@ public final class AddParticipantPage extends GenericPage {
         btnDasbhoard.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
         btnAddParticipant.addActionListener(e -> {
             if (isDataValid()) {
-                // TODO: add diets and groups???
                 AccountDAO.createAccount(this.txtEmail.getText(), this.txtPassword.getText(), AccountType.PARTECIPANTE);
-                ParentDAO.createParticipant(new ParticipantData(this.txtCodiceFiscale.getText(), "", "",
-                        this.txtName.getText(), this.txtSurname.getText(), this.dateBirth.getDate()),
-                        this.txtEmail.getText());
-                ParentDAO.addRitiroParente(this.txtCodiceFiscale.getText(), account.codFisc());
+                ParentDAO.createParticipant(new ParticipantData(this.txtCodiceFiscale.getText(),
+                                Optional.empty(), Optional.empty(), this.txtName.getText(),
+                                this.txtSurname.getText(), this.dateBirth.getDate()), this.txtEmail.getText());
+                ParentDAO.addRitiroParente(account.codFisc(), this.txtCodiceFiscale.getText());
                 this.switchPage(new ManageParticipantPage(CloseEvents.EXIT_PROGRAM, account));
             }
         });
@@ -161,7 +170,42 @@ public final class AddParticipantPage extends GenericPage {
     }
 
     private boolean isDataValid() {
-        // TODO: Complete this method
+        final int minSize = 4;
+        final int nameLengthLimit = 36;
+        final int passwordLengthLimit = 24;
+        final int emailLengthLimit = 256;
+        final int codiceFiscaleLength = 16;
+        this.resetHighlights();
+        final String codiceFiscale = this.txtCodiceFiscale.getText();
+        final String name = this.txtName.getText();
+        final String surname = this.txtSurname.getText();
+        final String email = this.txtEmail.getText();
+        final String password = this.txtPassword.getText();
+        final String passwordConfirm = this.txtPasswordConfirm.getText();
+        final Date dateOfBirth = this.dateBirth.getDate();
+        if (codiceFiscale.length() != codiceFiscaleLength) {
+            GenericPage.highlightTextComponent(this.txtCodiceFiscale);
+            return false;
+        } else if (name.length() > nameLengthLimit || name.length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtName);
+            return false;
+        } else if (surname.length() > nameLengthLimit || surname.length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtSurname);
+            return false;
+        } else if (email.length() > emailLengthLimit || email.length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtEmail);
+            return false;
+        } else if (dateOfBirth == null) {
+            return false;
+        } else if (password.length() > passwordLengthLimit || password.length() < minSize) {
+            GenericPage.highlightTextComponent(this.txtPassword);
+            GenericPage.highlightTextComponent(this.txtPasswordConfirm);
+            return false;
+        } else if (!Objects.equals(password, passwordConfirm)) {
+            GenericPage.highlightTextComponent(this.txtPassword);
+            GenericPage.highlightTextComponent(this.txtPasswordConfirm);
+            return false;
+        }
         return true;
     }
 }

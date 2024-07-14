@@ -113,7 +113,7 @@ public final class ManageParticipantPage extends GenericPage {
             btnMembership.addActionListener(e -> this.switchPage(new ParticipantMembershipPage(CloseEvents.EXIT_PROGRAM,
                     this.accountData, participant)));
             btnUnsubscribe.addActionListener(e -> {
-                ParentDAO.eraseParticipant(participant);
+                ParentDAO.eraseParticipantAccount(participant);
                 this.switchPage(new ManageParticipantPage(CloseEvents.EXIT_PROGRAM, this.accountData));
             });
         });

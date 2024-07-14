@@ -4,10 +4,7 @@ import oop.sunfun.database.data.admin.ParentType;
 import oop.sunfun.database.data.login.ParticipantData;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,19 +12,20 @@ public final class ParentDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(ParentDAO.class.getName());
 
     private static final String CREATE_PARENTE = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
-            + "`name`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
+            + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
 
     private static final String CREATE_PARTICIPANT = "INSERT INTO `partecipante`(`codice_fiscale`, `fk_account`, "
-            + "`fk_dieta`, `fk_gruppo`, `name`, `cognome`, `data_di_nascita`) VALUES (?,?,?,?,?,?,?)";
+            + "`fk_dieta`, `fk_gruppo`, `nome`, `cognome`, `data_di_nascita`) VALUES (?,?,?,?,?,?,?)";
 
-    private static final String DELETE_PARTICIPANT = "DELETE FROM `partecipante` WHERE `codice_fiscale`=?";
+    private static final String DELETE_PARTICIPANT = "DELETE a FROM account a JOIN account_data ad ON a.email = "
+            + "ad.email WHERE ad.codice_fiscale=?";
 
     private static final String GET_ALL_PARTICIPANTS_FROM_PARENT = "SELECT `codice_fiscale`, `fk_dieta`, "
-            + "`fk_gruppo`, `name`, `cognome`, `data_di_nascita` FROM `partecipante`, `ritiro` WHERE "
+            + "`fk_gruppo`, `nome`, `cognome`, `data_di_nascita` FROM `partecipante`, `ritiro` WHERE "
             + "`partecipante`.`codice_fiscale`=`ritiro`.`fk_partecipante` AND `ritiro`.`fk_parente`=?";
 
     private static final String ADD_RITIRO_PARENTE = "INSERT INTO `ritiro`(`fk_parente`, `fk_partecipante`) "
-            + "VALUES (?, ?)";
+            + "VALUES (?,?)";
 
     private ParentDAO() {
         // Useless constructor
@@ -50,9 +48,10 @@ public final class ParentDAO extends AbstractDAO {
     public static void createParticipant(final ParticipantData participant, final String accountEmail) {
         try {
             DB_CONNECTION.openConnection();
-            DB_CONNECTION.setQueryData(CREATE_PARTICIPANT, participant.codiceFiscale(), accountEmail,
-                    participant.dieta(), participant.group(), participant.name(), participant.surname(),
-                    participant.dateOfBirth());
+            final String group = participant.group().isPresent() ? participant.group().get() : null;
+            final String diet = participant.dieta().isPresent() ? participant.dieta().get() : null;
+            DB_CONNECTION.setQueryData(CREATE_PARTICIPANT, participant.codiceFiscale(), accountEmail, diet, group,
+                    participant.name(), participant.surname(), participant.dateOfBirth());
         } catch (final SQLException err) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Couldn't create the new participant", err);
@@ -61,7 +60,7 @@ public final class ParentDAO extends AbstractDAO {
         }
     }
 
-    public static void eraseParticipant(final ParticipantData participantData) {
+    public static void eraseParticipantAccount(final ParticipantData participantData) {
         try {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(DELETE_PARTICIPANT, participantData.codiceFiscale());
@@ -83,10 +82,11 @@ public final class ParentDAO extends AbstractDAO {
                 final String codiceFiscale = (String) participant.get("codice_fiscale");
                 final String dieta = (String) participant.get("dieta");
                 final String gruppo = (String) participant.get("fk_gruppo");
-                final String name = (String) participant.get("name");
+                final String name = (String) participant.get("nome");
                 final String surname = (String) participant.get("cognome");
                 final Date dateOfBirth = (Date) participant.get("data_di_nascita");
-                participants.add(new ParticipantData(codiceFiscale, dieta, gruppo, name, surname, dateOfBirth));
+                participants.add(new ParticipantData(codiceFiscale, Optional.ofNullable(dieta),
+                        Optional.ofNullable(gruppo), name, surname, dateOfBirth));
             }
         } catch (final SQLException err) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
