@@ -4,6 +4,7 @@ import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.login.AccountType;
 import oop.sunfun.ui.admin.GroupPage;
 import oop.sunfun.ui.admin.PeriodPage;
+import oop.sunfun.ui.parent.ManageParticipantPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.forum.ForumPage;
 import oop.sunfun.ui.util.layout.GenericPage;
@@ -34,6 +35,8 @@ public class LandingPage extends GenericPage {
         // TODO: Add constraints depending on the account type
         switch (account.type()) {
             case AccountType.PARENTE:
+                reachablePages.put("Gestione Partecipanti", () -> new ManageParticipantPage(CloseEvents.EXIT_PROGRAM,
+                        this.accountData));
                 break;
             case AccountType.EDUCATORE:
                 reachablePages.put("Gestione Periodi", () -> new PeriodPage(CloseEvents.EXIT_PROGRAM, this.accountData));

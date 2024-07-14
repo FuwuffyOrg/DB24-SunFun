@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public final class AccountDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(AccountDAO.class.getName());
 
-    private static final String FIND_ACCOUNT_BY_EMAIL_PASSWORD = "SELECT * FROM `account` WHERE `email` = ? "
+    private static final String FIND_ACCOUNT_BY_EMAIL_PASSWORD = "SELECT * FROM `account_data` WHERE `email` = ? "
             + "AND password = ?";
 
     private static final String CREATE_ACCOUNT_BY_EMAIL_PASSOWRD = "INSERT INTO `account`(`email`, `password`, "
@@ -37,7 +37,7 @@ public final class AccountDAO extends AbstractDAO {
             // Get the data and build an account record
             final Map<String, Object> account = queryData.getFirst();
             final AccountType type = AccountType.getFromString((String) account.get("tipologia"));
-            return Optional.of(new AccountData(email, type));
+            return Optional.of(new AccountData(email, (String) account.get("codice_fiscale"), type));
         } catch (final SQLException err) {
             LOGGER.log(Level.SEVERE, "Couldn't fetch the account data", err);
             DB_CONNECTION.closeConnection();
