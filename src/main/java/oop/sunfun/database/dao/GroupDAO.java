@@ -34,7 +34,9 @@ public final class GroupDAO extends AbstractDAO {
                         (Integer) category.get("eta_max")));
             }
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't fetch the groups", err);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Couldn't fetch the groups", err);
+            }
             DB_CONNECTION.closeConnection();
         }
         return categories;
@@ -45,7 +47,9 @@ public final class GroupDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_GROUP, groupData.name(), groupData.minAge(), groupData.maxAge());
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't create the new group " + groupData.name(), err);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Couldn't create the new group " + groupData.name(), err);
+            }
             DB_CONNECTION.closeConnection();
         }
     }
@@ -55,7 +59,9 @@ public final class GroupDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(ERASE_GROUP, groupName);
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't erase the group " + groupName, err);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Couldn't erase the group " + groupName, err);
+            }
             DB_CONNECTION.closeConnection();
         }
     }

@@ -42,7 +42,9 @@ public final class PeriodDAO extends AbstractDAO {
                 ));
             }
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't fetch the periods", err);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Couldn't fetch the periods", err);
+            }
             DB_CONNECTION.closeConnection();
         }
         return periods;
@@ -53,7 +55,9 @@ public final class PeriodDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_PERIOD, periodData.startDate(), periodData.endDate());
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't create the new period", err);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Couldn't create the new period", err);
+            }
             DB_CONNECTION.closeConnection();
         }
     }
@@ -63,8 +67,10 @@ public final class PeriodDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(ERASE_PERIOD, periodData.startDate(), periodData.endDate());
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't erase the period " + periodData.startDate() + " "
-                    + periodData.endDate(), err);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Couldn't erase the period " + periodData.startDate() + " "
+                        + periodData.endDate(), err);
+            }
             DB_CONNECTION.closeConnection();
         }
     }
@@ -78,7 +84,9 @@ public final class PeriodDAO extends AbstractDAO {
                 dates.add((Date) date.get("data"));
             }
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't fetch the dates", err);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Couldn't fetch the dates", err);
+            }
             DB_CONNECTION.closeConnection();
         }
         return dates;
@@ -89,7 +97,9 @@ public final class PeriodDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_DATE, date);
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't create the new date", err);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Couldn't create the new date", err);
+            }
             DB_CONNECTION.closeConnection();
         }
     }
@@ -99,7 +109,9 @@ public final class PeriodDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(ERASE_DATES_BETWEEN, startDate, endDate);
         } catch (final SQLException err) {
-            LOGGER.log(Level.SEVERE, "Couldn't erase the dates between " + startDate + " " + endDate, err);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Couldn't erase the dates between " + startDate + " " + endDate, err);
+            }
             DB_CONNECTION.closeConnection();
         }
     }
