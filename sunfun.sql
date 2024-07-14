@@ -73,7 +73,7 @@ CREATE TABLE `gruppo` (
 DROP TABLE IF EXISTS `intolleranza`;
 CREATE TABLE `intolleranza` (
   `fk_partecipante` varchar(16) NOT NULL COMMENT 'Chiave esterna del partecipante che ha una intolleranza.',
-  `fk_sostanza` varchar(30) NOT NULL COMMENT 'Chiave esterna della sostanza alla quale il partecipante é intollerante.'
+  `fk_allergene` varchar(30) NOT NULL COMMENT 'Chiave esterna dell''allergene alla quale il partecipante é intollerante.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS `modalita`;
@@ -149,10 +149,10 @@ CREATE TABLE `ritiro` (
   `fk_partecipante` varchar(16) NOT NULL COMMENT 'Chiave esterna del partecipante che potrá essere ritirato dal parente.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `sostanza`;
-CREATE TABLE `sostanza` (
-  `nome` varchar(30) NOT NULL COMMENT 'Il nome della sostanza per le intolleranze.',
-  `descrizione` varchar(255) DEFAULT NULL COMMENT 'Descrizione della sostanza.'
+DROP TABLE IF EXISTS `allergene`;
+CREATE TABLE `allergene` (
+  `nome` varchar(30) NOT NULL COMMENT 'Il nome dell''allergene per le intolleranze.',
+  `descrizione` varchar(255) DEFAULT NULL COMMENT 'Descrizione dell''allergene.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS `svolgimento`;
@@ -206,8 +206,8 @@ ALTER TABLE `gruppo`
   ADD PRIMARY KEY (`nome`);
 
 ALTER TABLE `intolleranza`
-  ADD PRIMARY KEY (`fk_partecipante`,`fk_sostanza`),
-  ADD KEY `FK Sostanza Intolleranza` (`fk_sostanza`),
+  ADD PRIMARY KEY (`fk_partecipante`,`fk_allergene`),
+  ADD KEY `FK Allergene Intolleranza` (`fk_allergene`),
   ADD KEY `FK Partecipante Intolleranza` (`fk_partecipante`) USING BTREE;
 
 ALTER TABLE `modalita`
@@ -253,7 +253,7 @@ ALTER TABLE `ritiro`
   ADD KEY `FK Partecipante Ritiro` (`fk_partecipante`),
   ADD KEY `FK Parente Ritiro` (`fk_parente`) USING BTREE;
 
-ALTER TABLE `sostanza`
+ALTER TABLE `allergene`
   ADD PRIMARY KEY (`nome`);
 
 ALTER TABLE `svolgimento`
@@ -284,7 +284,7 @@ ALTER TABLE `educatore`
 
 ALTER TABLE `intolleranza`
   ADD CONSTRAINT `FK Partecipante Intolleranza` FOREIGN KEY (`fk_partecipante`) REFERENCES `partecipante` (`codice_fiscale`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK Sostanza Intolleranza` FOREIGN KEY (`fk_sostanza`) REFERENCES `sostanza` (`nome`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK Allergene Intolleranza` FOREIGN KEY (`fk_allergene`) REFERENCES `allergene` (`nome`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `modalita`
   ADD CONSTRAINT `FK Partecipante Modalita` FOREIGN KEY (`fk_partecipante`) REFERENCES `partecipante` (`codice_fiscale`) ON DELETE CASCADE ON UPDATE CASCADE,
