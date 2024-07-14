@@ -19,13 +19,13 @@ public final class FoodDAO extends AbstractDAO {
 
     private static final String GET_ALL_DIETS = "SELECT * FROM `dieta`";
 
-    private static final String CREATE_ALLERGEN = "INSERT INTO `allergene`(`name`, `description`) VALUES (?,?)";
+    private static final String CREATE_ALLERGEN = "INSERT INTO `allergene`(`nome`, `descrizione`) VALUES (?,?)";
 
-    private static final String CREATE_DIET = "INSERT INTO `dieta`(`name`, `description`) VALUES (?,?)";
+    private static final String CREATE_DIET = "INSERT INTO `dieta`(`nome`, `descrizione`) VALUES (?,?)";
 
-    private static final String DELETE_ALLERGEN = "DELETE FROM `allergene` WHERE `name`=?";
+    private static final String DELETE_ALLERGEN = "DELETE FROM `allergene` WHERE `nome`=?";
 
-    private static final String DELETE_DIET = "DELETE FROM `dieta` WHERE `name`=?";
+    private static final String DELETE_DIET = "DELETE FROM `dieta` WHERE `nome`=?";
 
     public static Set<AllergenData> getAllAllergens() {
         final Set<AllergenData> allergens = new HashSet<>();

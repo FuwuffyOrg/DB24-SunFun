@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public final class ForumPage extends GenericPage {
+
     private static final String PAGE_NAME = "Forums";
 
     private final AccountData accountData;

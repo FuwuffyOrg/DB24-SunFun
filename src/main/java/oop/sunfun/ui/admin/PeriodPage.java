@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.ScrollPaneConstants;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.util.Calendar;
@@ -141,7 +142,8 @@ public final class PeriodPage extends GenericPage {
             });
         });
         // Add the table to the panel
-        return new JScrollPane(tablePanel);
+        return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
     private static Set<Date> getDatesBetween(final Date startDate, final Date endDate) {

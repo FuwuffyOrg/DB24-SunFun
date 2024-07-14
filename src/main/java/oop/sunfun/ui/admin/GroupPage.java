@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.GridBagLayout;
@@ -154,7 +155,8 @@ public final class GroupPage extends GenericPage {
             });
         });
         // Add the table to the panel
-        return new JScrollPane(tablePanel);
+        return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
     private boolean isDataValid() {
