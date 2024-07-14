@@ -2,11 +2,11 @@ package oop.sunfun;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.login.RegisterPage;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import java.awt.Insets;
 
 public final class Main {
     private Main() {
