@@ -14,7 +14,8 @@ import java.util.logging.Logger;
 public final class ActivityDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(ActivityDAO.class.getName());
 
-    private static final String GET_ALL_ACTIVITIES = "SELECT * FROM `attivita`";
+    private static final String GET_ALL_ACTIVITIES = "SELECT a.nome, a.descrizione, AVG(r.`voto`) AS media_voto FROM "
+            + "`attivita` a LEFT JOIN `recensione` r ON r.`fk_attivita` = a.`nome` GROUP BY a.nome, a.descrizione";
 
     private static final String CREATE_ACTIVITY = "INSERT INTO `attivita`(`nome`, `descrizione`) VALUES (?,?)";
 
@@ -30,7 +31,9 @@ public final class ActivityDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_ACTIVITIES);
             for (final Map<String, Object> activity : queryData) {
-                activities.add(new ActivityData((String) activity.get("nome"), (String) activity.get("descrizione")));
+                final Object avgGrade = activity.get("media_voto");
+                activities.add(new ActivityData((String) activity.get("nome"), (String) activity.get("descrizione"),
+                        avgGrade != null ? (float) avgGrade : 0.0f));
             }
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all the activities", err);

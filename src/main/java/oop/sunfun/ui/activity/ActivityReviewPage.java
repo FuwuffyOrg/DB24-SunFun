@@ -7,7 +7,7 @@ import oop.sunfun.ui.util.layout.GenericPage;
 
 public final class ActivityReviewPage extends GenericPage {
 
-    private static final String PAGE_NAME = "Recensioni dell'attivitá ";
+    private static final String PAGE_NAME = "Recensioni dell'attivita: ";
 
     public ActivityReviewPage(final CloseEvents closeEvent, final AccountData account, final ActivityData activity) {
         super(PAGE_NAME + activity.name(), closeEvent);

@@ -87,7 +87,8 @@ public final class ActivityPage extends GenericPage {
         btnGotoDashboard.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
         btnAddActivity.addActionListener(e -> {
             if (isDataValid()) {
-                ActivityDAO.createNewActivity(new ActivityData(txtName.getText(), txtDescription.getText()));
+                ActivityDAO.createNewActivity(new ActivityData(txtName.getText(), txtDescription.getText(),
+                        0.0f));
                 this.switchPage(new ActivityPage(CloseEvents.EXIT_PROGRAM, account));
             }
         });
@@ -105,6 +106,7 @@ public final class ActivityPage extends GenericPage {
         IntStream.range(0, activities.size()).forEach(i -> {
             final ActivityData activity = activities.get(i);
             final Component lblName = new JLabel(activity.name());
+            final Component lblGrade = new JLabel(String.valueOf(activity.avgGrade()));
             final Component lblDescription = new JLabel(activity.description());
             final AbstractButton btnCheckReviews = new JButton("Recensioni");
             final AbstractButton btnDeleteActivity = new JButton("Elimina");
@@ -114,24 +116,30 @@ public final class ActivityPage extends GenericPage {
                     .setFillAll()
                     .build()
             );
-            tablePanel.add(lblDescription, new GridBagConstraintBuilder()
+            tablePanel.add(lblGrade, new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(1)
+                    .setWeightColumn(0.01d)
                     .setFillAll()
                     .build()
             );
-            tablePanel.add(btnCheckReviews, new GridBagConstraintBuilder()
+            tablePanel.add(lblDescription, new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(2)
                     .setFillAll()
                     .build()
             );
-            tablePanel.add(btnDeleteActivity, new GridBagConstraintBuilder()
+            tablePanel.add(btnCheckReviews, new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(3)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(btnDeleteActivity, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(4)
                     .setFillAll()
                     .build()
             );
             tablePanel.add(new JSeparator(), new GridBagConstraintBuilder()
                     .setRow((i * 2) + 1).setColumn(0)
-                    .setWidth(4)
+                    .setWidth(5)
                     .setFillAll()
                     .build()
             );
