@@ -2,7 +2,6 @@ package oop.sunfun.database.dao;
 
 import oop.sunfun.database.data.activity.ActivityData;
 import oop.sunfun.database.data.activity.ReviewData;
-import oop.sunfun.database.data.food.AllergenData;
 
 import java.sql.SQLException;
 import java.util.HashSet;

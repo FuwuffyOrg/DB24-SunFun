@@ -11,7 +11,7 @@ public final class ActivityReviewPage extends GenericPage {
 
     public ActivityReviewPage(final CloseEvents closeEvent, final AccountData account, final ActivityData activity) {
         super(PAGE_NAME + activity.name(), closeEvent);
-        // TODO: Completa con attivitá
+        // TODO: Completa con le recensioni di una attivitá
         // Finalize the window
         this.buildWindow();
     }

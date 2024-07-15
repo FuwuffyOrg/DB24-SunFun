@@ -106,6 +106,7 @@ public final class ActivityPage extends GenericPage {
             final ActivityData activity = activities.get(i);
             final Component lblName = new JLabel(activity.name());
             final Component lblDescription = new JLabel(activity.description());
+            final AbstractButton btnCheckReviews = new JButton("Recensioni");
             final AbstractButton btnDeleteActivity = new JButton("Elimina");
             // Add them to the panel
             tablePanel.add(lblName, new GridBagConstraintBuilder()
@@ -118,14 +119,19 @@ public final class ActivityPage extends GenericPage {
                     .setFillAll()
                     .build()
             );
-            tablePanel.add(btnDeleteActivity, new GridBagConstraintBuilder()
+            tablePanel.add(btnCheckReviews, new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(2)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(btnDeleteActivity, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(3)
                     .setFillAll()
                     .build()
             );
             tablePanel.add(new JSeparator(), new GridBagConstraintBuilder()
                     .setRow((i * 2) + 1).setColumn(0)
-                    .setWidth(3)
+                    .setWidth(4)
                     .setFillAll()
                     .build()
             );
@@ -133,6 +139,9 @@ public final class ActivityPage extends GenericPage {
             btnDeleteActivity.addActionListener(e -> {
                 ActivityDAO.deleteActivity(activity);
                 this.switchPage(new ActivityPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+            });
+            btnCheckReviews.addActionListener(e -> {
+                this.switchPage(new ActivityReviewPage(CloseEvents.EXIT_PROGRAM, this.accountData, activity));
             });
         });
         // Add the table to the panel
