@@ -31,8 +31,8 @@ public final class ParentDAO extends AbstractDAO {
     private static final String ADD_RITIRO_PARENTE = "INSERT INTO `ritiro`(`fk_parente`, `fk_partecipante`) "
             + "VALUES (?,?)";
 
-    private static final String UPDATE_PARTICIPANT_DIET = "UPDATE `partecipante` SET `fk_dieta`=? WHERE " +
-            "`partecipante`.`codice_fiscale`=?";
+    private static final String UPDATE_PARTICIPANT_DIET = "UPDATE `partecipante` SET `fk_dieta`=? WHERE "
+            + "`partecipante`.`codice_fiscale`=?";
 
     public static void createParent(final String codiceFiscale, final String accountEmail, final String name,
                                     final String surname, final String phoneNumber, final ParentType parentType) {

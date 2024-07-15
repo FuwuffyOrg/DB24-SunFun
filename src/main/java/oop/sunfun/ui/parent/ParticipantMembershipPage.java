@@ -4,9 +4,6 @@ import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.login.ParticipantData;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.GenericPage;
-import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
-
-import java.awt.*;
 
 public final class ParticipantMembershipPage extends GenericPage {
 
