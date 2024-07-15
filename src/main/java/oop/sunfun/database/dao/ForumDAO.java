@@ -43,9 +43,7 @@ public final class ForumDAO extends AbstractDAO {
                 categories.add(new CategoryData((String) category.get("name")));
             }
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't fetch the categories", err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the categories", err);
             DB_CONNECTION.closeConnection();
         }
         return categories;
@@ -66,9 +64,8 @@ public final class ForumDAO extends AbstractDAO {
                 categories.add(new DiscussionData(numDiscussion, title, description, name, surname));
             }
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't fetch the posts from the category " + category.name(), err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the posts from the category " + category.name(),
+                    err);
             DB_CONNECTION.closeConnection();
         }
         return categories;
@@ -87,9 +84,7 @@ public final class ForumDAO extends AbstractDAO {
                 comments.add(new CommentData(numResponse, text, name, surname));
             }
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't fetch the comments for the discussion " + discussionId, err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the comments for the discussion " + discussionId, err);
             DB_CONNECTION.closeConnection();
         }
         return comments;
@@ -101,9 +96,7 @@ public final class ForumDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_FORUM_POST, title, description, category.name(), accountEmail);
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't create a new discussion", err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't create a new discussion", err);
             DB_CONNECTION.closeConnection();
         }
     }
@@ -113,9 +106,7 @@ public final class ForumDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_COMMENT_POST, description, discussionId, accountEmail);
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't create a new comment for " + discussionId, err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't create a new comment for " + discussionId, err);
             DB_CONNECTION.closeConnection();
         }
     }

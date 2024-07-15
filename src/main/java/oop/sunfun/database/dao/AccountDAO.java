@@ -30,9 +30,7 @@ public final class AccountDAO extends AbstractDAO {
                     email, password);
             // If there's more than one account, there must have been an error
             if (queryData.size() > 1) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "There's two accounts with the same email and password");
-                }
+                bracedLog(LOGGER, Level.WARNING, "There's two accounts with the same email and password");
             } else if (queryData.isEmpty()) {
                 return Optional.empty();
             }
@@ -41,9 +39,7 @@ public final class AccountDAO extends AbstractDAO {
             final AccountType type = AccountType.getFromString((String) account.get("tipologia"));
             return Optional.of(new AccountData(email, (String) account.get("codice_fiscale"), type));
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't fetch the account data", err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the account data", err);
             DB_CONNECTION.closeConnection();
         }
         return Optional.empty();
@@ -54,9 +50,7 @@ public final class AccountDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_ACCOUNT_BY_EMAIL_PASSOWRD, email, password, accountType.getTextValue());
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't fetch the categories", err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the categories", err);
             DB_CONNECTION.closeConnection();
         }
     }

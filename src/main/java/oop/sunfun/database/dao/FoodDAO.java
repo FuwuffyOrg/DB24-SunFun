@@ -36,9 +36,7 @@ public final class FoodDAO extends AbstractDAO {
                 allergens.add(new AllergenData((String) allergen.get("nome"), (String) allergen.get("descrizione")));
             }
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't fetch all the allergens", err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all the allergens", err);
             DB_CONNECTION.closeConnection();
         }
         return allergens;
@@ -53,9 +51,7 @@ public final class FoodDAO extends AbstractDAO {
                 diets.add(new DietData((String) diet.get("nome"), (String) diet.get("descrizione")));
             }
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't fetch all the diet types", err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all the diet types", err);
             DB_CONNECTION.closeConnection();
         }
         return diets;
@@ -66,9 +62,7 @@ public final class FoodDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_ALLERGEN, allergen.name(), allergen.description());
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't create a new allergen " + allergen.name(), err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't create a new allergen " + allergen.name(), err);
             DB_CONNECTION.closeConnection();
         }
     }
@@ -78,9 +72,7 @@ public final class FoodDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_DIET, dietData.name(), dietData.description());
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't create a new diet " + dietData.name(), err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't create a new diet " + dietData.name(), err);
             DB_CONNECTION.closeConnection();
         }
     }
@@ -90,9 +82,7 @@ public final class FoodDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(DELETE_ALLERGEN, allergen.name());
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't delete the allergen " + allergen.name(), err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't delete the allergen " + allergen.name(), err);
             DB_CONNECTION.closeConnection();
         }
     }
@@ -102,9 +92,7 @@ public final class FoodDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(DELETE_DIET, dietData.name());
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't delete the diet " + dietData.name(), err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't delete the diet " + dietData.name(), err);
             DB_CONNECTION.closeConnection();
         }
     }

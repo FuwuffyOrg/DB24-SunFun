@@ -42,9 +42,7 @@ public final class ParentDAO extends AbstractDAO {
             DB_CONNECTION.setQueryData(CREATE_PARENTE, codiceFiscale, accountEmail, name,
                     surname, phoneNumber, parentType.getTextValue());
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't create the new parent", err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't create the new parent", err);
             DB_CONNECTION.closeConnection();
         }
     }
@@ -57,9 +55,7 @@ public final class ParentDAO extends AbstractDAO {
             DB_CONNECTION.setQueryData(CREATE_PARTICIPANT, participant.codiceFiscale(), accountEmail, diet, group,
                     participant.name(), participant.surname(), participant.dateOfBirth());
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't create the new participant", err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't create the new participant", err);
             DB_CONNECTION.closeConnection();
         }
     }
@@ -69,9 +65,8 @@ public final class ParentDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(DELETE_PARTICIPANT, participantData.codiceFiscale());
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't erase the participant " + participantData.codiceFiscale(), err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't erase the participant " + participantData.codiceFiscale(),
+                    err);
             DB_CONNECTION.closeConnection();
         }
     }
@@ -93,9 +88,8 @@ public final class ParentDAO extends AbstractDAO {
                         Optional.ofNullable(gruppo), name, surname, dateOfBirth));
             }
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't fetch the posts for the parent " + parentCodiceFiscale, err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the posts for the parent " + parentCodiceFiscale,
+                    err);
             DB_CONNECTION.closeConnection();
         }
         return participants;
@@ -106,10 +100,8 @@ public final class ParentDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(ADD_RITIRO_PARENTE, codFiscParente, codFiscPartecipante);
         } catch (final SQLException err) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Couldn't add the ritiro for the participant " + codFiscPartecipante
-                        + " and for the parent " + codFiscParente, err);
-            }
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't add the ritiro for the participant " + codFiscPartecipante
+                    + " and for the parent " + codFiscParente, err);
             DB_CONNECTION.closeConnection();
         }
     }
