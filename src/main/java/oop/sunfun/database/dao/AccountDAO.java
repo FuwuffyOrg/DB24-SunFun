@@ -19,10 +19,6 @@ public final class AccountDAO extends AbstractDAO {
     private static final String CREATE_ACCOUNT_BY_EMAIL_PASSOWRD = "INSERT INTO `account`(`email`, `password`, "
             + "`tipologia`) VALUES (?,?,?)";
 
-    private AccountDAO() {
-        // Useless constructor
-    }
-
     public static Optional<AccountData> getAccount(final String email, final String password) {
         try {
             DB_CONNECTION.openConnection();

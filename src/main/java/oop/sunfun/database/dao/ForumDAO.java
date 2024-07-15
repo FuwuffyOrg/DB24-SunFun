@@ -30,10 +30,6 @@ public final class ForumDAO extends AbstractDAO {
     private static final String CREATE_COMMENT_POST = "INSERT INTO `risposta`(`testo`, `fk_discussione`, "
             + "`fk_account`) VALUES (?,?,?)";
 
-    private ForumDAO() {
-        // Useless constructor
-    }
-
     public static Set<CategoryData> getAllCategories() {
         final Set<CategoryData> categories = new HashSet<>();
         try {

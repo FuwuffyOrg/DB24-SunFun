@@ -31,10 +31,6 @@ public final class ParentDAO extends AbstractDAO {
     private static final String ADD_RITIRO_PARENTE = "INSERT INTO `ritiro`(`fk_parente`, `fk_partecipante`) "
             + "VALUES (?,?)";
 
-    private ParentDAO() {
-        // Useless constructor
-    }
-
     public static void createParent(final String codiceFiscale, final String accountEmail, final String name,
                                     final String surname, final String phoneNumber, final ParentType parentType) {
         try {

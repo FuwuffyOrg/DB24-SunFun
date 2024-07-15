@@ -9,9 +9,19 @@ import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.GridBagLayout;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -150,6 +160,7 @@ public final class ActivityReviewPage extends GenericPage {
         if (description.length() > descriptionLimit || description.length() < minSize) {
             highlightTextComponent(this.txtDescription);
             return false;
-        } else return gradeValue != null;
+        }
+        return gradeValue != null;
     }
 }

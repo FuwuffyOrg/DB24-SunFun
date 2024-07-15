@@ -6,11 +6,7 @@ import oop.sunfun.database.connection.SunFunDatabase;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AbstractDAO {
-
-    protected AbstractDAO() {
-        // Useless constructor
-    }
+public abstract class AbstractDAO {
 
     protected static final IDatabaseConnection DB_CONNECTION;
     static {

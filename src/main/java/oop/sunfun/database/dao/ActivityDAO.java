@@ -22,8 +22,8 @@ public final class ActivityDAO extends AbstractDAO {
 
     private static final String DELETE_ACTIVITY = "DELETE FROM `attivita` WHERE `nome`=?";
 
-    private static final String GET_ACTIVITY_REVIEWS = "SELECT r.voto, r.descrizione, a.nome, a.cognome FROM recensione "
-            + "r JOIN account_data a ON r.fk_account = a.email WHERE r.fk_attivita=?;";
+    private static final String GET_ACTIVITY_REVIEWS = "SELECT r.voto, r.descrizione, a.nome, a.cognome FROM "
+            + "recensione r JOIN account_data a ON r.fk_account = a.email WHERE r.fk_attivita=?;";
 
     private static final String CREATE_ACTIVITY_REVIEW = "INSERT INTO `recensione`(`voto`, `descrizione`, "
             + "`fk_attivita`, `fk_account`) VALUES (?,?,?,?)";

@@ -26,10 +26,6 @@ public final class PeriodDAO extends AbstractDAO {
 
     private static final String ERASE_DATES_BETWEEN = "DELETE FROM `giornata` WHERE `data`>=? AND `data`<=?";
 
-    private PeriodDAO() {
-        // Useless constructor
-    }
-
     public static Set<PeriodData> getAllPeriods() {
         final Set<PeriodData> periods = new HashSet<>();
         try {

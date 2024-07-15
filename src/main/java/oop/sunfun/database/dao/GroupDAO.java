@@ -19,11 +19,6 @@ public final class GroupDAO extends AbstractDAO {
 
     private static final String ERASE_GROUP = "DELETE FROM `gruppo` WHERE `name`=?";
 
-
-    private GroupDAO() {
-        // Useless constructor
-    }
-
     public static Set<GroupData> getAllGroups() {
         final Set<GroupData> categories = new HashSet<>();
         try {
