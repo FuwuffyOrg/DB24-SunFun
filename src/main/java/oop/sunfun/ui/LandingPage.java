@@ -2,6 +2,7 @@ package oop.sunfun.ui;
 
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.login.AccountType;
+import oop.sunfun.ui.activity.ActivityPage;
 import oop.sunfun.ui.admin.AllergiesPage;
 import oop.sunfun.ui.admin.GroupPage;
 import oop.sunfun.ui.admin.PeriodPage;
@@ -44,10 +45,14 @@ public class LandingPage extends GenericPage {
                         this.accountData));
                 reachablePages.put("Gestione Allergie", () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
+                reachablePages.put("Gestione Attivita", () -> new ActivityPage(CloseEvents.EXIT_PROGRAM,
+                        this.accountData));
                 reachablePages.put("Gestione Gruppi", () -> new GroupPage(CloseEvents.EXIT_PROGRAM, this.accountData));
                 break;
             case AccountType.VOLONTARIO:
                 reachablePages.put("Gestione Allergie", () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM,
+                        this.accountData));
+                reachablePages.put("Gestione Attivita", () -> new ActivityPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
                 break;
             case AccountType.PARTECIPANTE:

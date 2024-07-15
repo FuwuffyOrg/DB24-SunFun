@@ -144,7 +144,7 @@ public final class GroupPage extends GenericPage {
             );
             tablePanel.add(new JSeparator(), new GridBagConstraintBuilder()
                     .setRow((i * 2) + 1).setColumn(0)
-                    .setWidth(3)
+                    .setWidth(4)
                     .setFillAll()
                     .build()
             );
