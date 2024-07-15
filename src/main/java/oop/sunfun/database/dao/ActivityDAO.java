@@ -3,6 +3,7 @@ package oop.sunfun.database.dao;
 import oop.sunfun.database.data.activity.ActivityData;
 import oop.sunfun.database.data.activity.ReviewData;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
@@ -21,9 +22,11 @@ public final class ActivityDAO extends AbstractDAO {
 
     private static final String DELETE_ACTIVITY = "DELETE FROM `attivita` WHERE `nome`=?";
 
-    private static final String GET_ACTIVITY_REVIEWS = "";
+    private static final String GET_ACTIVITY_REVIEWS = "SELECT r.voto, r.descrizione, a.nome, a.cognome FROM recensione "
+            + "r JOIN account_data a ON r.fk_account = a.email WHERE r.fk_attivita=?;";
 
-    private static final String CREATE_ACTIVITY_REVIEW = "";
+    private static final String CREATE_ACTIVITY_REVIEW = "INSERT INTO `recensione`(`voto`, `descrizione`, "
+            + "`fk_attivita`, `fk_account`) VALUES (?,?,?,?)";
 
     public static Set<ActivityData> getAllActivities() {
         final Set<ActivityData> activities = new HashSet<>();
@@ -31,9 +34,9 @@ public final class ActivityDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_ACTIVITIES);
             for (final Map<String, Object> activity : queryData) {
-                final Object avgGrade = activity.get("media_voto");
+                final BigDecimal avgGrade = (BigDecimal) activity.get("media_voto");
                 activities.add(new ActivityData((String) activity.get("nome"), (String) activity.get("descrizione"),
-                        avgGrade != null ? (float) avgGrade : 0.0f));
+                        avgGrade != null ? avgGrade.floatValue() : 0.0f));
             }
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all the activities", err);
@@ -62,13 +65,31 @@ public final class ActivityDAO extends AbstractDAO {
         }
     }
 
-    public static Set<ReviewData> getReviewsFromActivity() {
+    public static Set<ReviewData> getReviewsFromActivity(final String activityName) {
         final Set<ReviewData> reviews = new HashSet<>();
-        // TODO: Complete method and query
+        try {
+            DB_CONNECTION.openConnection();
+            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ACTIVITY_REVIEWS, activityName);
+            for (final Map<String, Object> review : queryData) {
+                reviews.add(new ReviewData((int) review.get("voto"), (String) review.get("descrizione"),
+                        (String) review.get("nome"), (String) review.get("cognome")));
+            }
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all the reviews for the activity " + activityName, err);
+            DB_CONNECTION.closeConnection();
+        }
         return reviews;
     }
 
-    public static void createNewReviewForActivity(final ReviewData reviewData) {
-        // TODO: Complete method and query
+    public static void createNewReviewForActivity(final int grade, final String description, final String activity,
+                                                  final String accountEmail) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(CREATE_ACTIVITY_REVIEW, grade, description, activity, accountEmail);
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't create a the review " + grade + " " + description
+                    + " for " + activity, err);
+            DB_CONNECTION.closeConnection();
+        }
     }
 }
