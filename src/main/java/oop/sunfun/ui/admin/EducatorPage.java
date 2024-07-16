@@ -35,6 +35,7 @@ public class EducatorPage extends GenericPage {
         super(PAGE_NAME, closeEvent);
         this.accountData = account;
         final AbstractButton btnGoBack = new JButton("Torna alla dashboard");
+        final AbstractButton btnAddNewEducator = new JButton("Aggiungi un nuovo personale");
         this.add(getEducatorTable(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setFillAll()
@@ -47,13 +48,17 @@ public class EducatorPage extends GenericPage {
         );
         this.add(btnGoBack, new GridBagConstraintBuilder()
                 .setRow(1).setColumn(0)
-                .setWidth(2)
+                .setFillAll()
+                .build()
+        );
+        this.add(btnAddNewEducator, new GridBagConstraintBuilder()
+                .setRow(1).setColumn(1)
                 .setFillAll()
                 .build()
         );
         // Set action events
-        // TODO: add possibility to add educator and voluntary
         btnGoBack.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
+        btnAddNewEducator.addActionListener(e -> this.switchPage(new AddEducatorPage(CloseEvents.EXIT_PROGRAM, account)));
         // Finalize page
         this.buildWindow();
     }
@@ -67,7 +72,7 @@ public class EducatorPage extends GenericPage {
         // Add the groups to the table
         IntStream.range(0, educators.size()).forEach(i -> {
             final EducatorData educator = educators.get(i);
-            final Component lblCodFisc = new JLabel(String.valueOf(educator.codiceFiscale()));
+            final Component lblCodFisc = new JLabel(String.valueOf(educator.codFisc()));
             final Component lblName = new JLabel(educator.name());
             final Component lblSurname = new JLabel(String.valueOf(educator.surname()));
             final Component lblEmail = new JLabel(String.valueOf(educator.accountEmail()));
@@ -149,7 +154,7 @@ public class EducatorPage extends GenericPage {
         // Add the groups to the table
         IntStream.range(0, voluntaries.size()).forEach(i -> {
             final VoluntaryData voluntary = voluntaries.get(i);
-            final Component lblCodFisc = new JLabel(String.valueOf(voluntary.codiceFiscale()));
+            final Component lblCodFisc = new JLabel(String.valueOf(voluntary.codFisc()));
             final Component lblName = new JLabel(voluntary.name());
             final Component lblSurname = new JLabel(String.valueOf(voluntary.surname()));
             final Component lblEmail = new JLabel(String.valueOf(voluntary.accountEmail()));

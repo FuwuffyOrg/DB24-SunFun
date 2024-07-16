@@ -51,7 +51,7 @@ public abstract class GenericPage extends JFrame {
      */
     public final void buildWindow() {
         final double ratio = SCREEN_DIMENSIONS.getWidth() / SCREEN_DIMENSIONS.getHeight();
-        final double scaleAmount = 1.25d * (SCREEN_DIMENSIONS.getWidth() / 1920.0d);
+        final double scaleAmount = 1.1d * (SCREEN_DIMENSIONS.getWidth() / 1920.0d);
         // Pack the window to little size
         this.pack();
         // Set the minimum size as the packed size

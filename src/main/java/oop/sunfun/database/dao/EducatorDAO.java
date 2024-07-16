@@ -24,6 +24,12 @@ public final class EducatorDAO extends AbstractDAO {
     private static final String UPDATE_EDUCATOR_GROUP = "UPDATE `educatore` SET `fk_gruppo`=? WHERE "
             + "`educatore`.`codice_fiscale`=?";
 
+    private static final String CREATE_EDUCATOR = "INSERT INTO `educatore`(`codice_fiscale`, `nome`, `cognome`, "
+            + "`cellulare`, `fk_account`) VALUES (?,?,?,?,?)";
+
+    private static final String CREATE_VOLUNTARY = "INSERT INTO `volontario`(`codice_fiscale`, `fk_account`, `nome`, "
+            + "`cognome`) VALUES (?,?,?,?)";
+
     public static Set<EducatorData> getAllEducators() {
         final Set<EducatorData> educators = new HashSet<>();
         try {
@@ -62,7 +68,7 @@ public final class EducatorDAO extends AbstractDAO {
     public static void changeEducatorGroup(final EducatorData educatorData, final String groupName) {
         try {
             DB_CONNECTION.openConnection();
-            DB_CONNECTION.setQueryData(UPDATE_EDUCATOR_GROUP, groupName, educatorData.codiceFiscale());
+            DB_CONNECTION.setQueryData(UPDATE_EDUCATOR_GROUP, groupName, educatorData.codFisc());
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't update the group of " + educatorData.name() + " "
                     + educatorData.surname(), err);
@@ -71,10 +77,24 @@ public final class EducatorDAO extends AbstractDAO {
     }
 
     public static void createEducator(final EducatorData educatorData) {
-        // TODO
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(CREATE_EDUCATOR, educatorData.codFisc(), educatorData.name(),
+                    educatorData.surname(), educatorData.phoneNumber(), educatorData.accountEmail());
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't update the educator" + educatorData.codFisc(), err);
+            DB_CONNECTION.closeConnection();
+        }
     }
 
     public static void createVoluntary(final VoluntaryData voluntaryData) {
-        // TODO
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(CREATE_VOLUNTARY, voluntaryData.codFisc(), voluntaryData.accountEmail(),
+                    voluntaryData.name(), voluntaryData.surname());
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't update the voluntary" + voluntaryData.codFisc(), err);
+            DB_CONNECTION.closeConnection();
+        }
     }
 }
