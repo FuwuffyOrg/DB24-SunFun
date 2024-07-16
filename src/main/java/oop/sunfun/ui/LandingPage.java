@@ -5,6 +5,7 @@ import oop.sunfun.database.data.login.AccountType;
 import oop.sunfun.ui.activity.ActivityPage;
 import oop.sunfun.ui.admin.AllergiesPage;
 import oop.sunfun.ui.admin.EducatorPage;
+import oop.sunfun.ui.admin.GroupManagementPage;
 import oop.sunfun.ui.admin.GroupPage;
 import oop.sunfun.ui.admin.PeriodPage;
 import oop.sunfun.ui.parent.ManageParticipantPage;
@@ -49,7 +50,9 @@ public class LandingPage extends GenericPage {
                         this.accountData));
                 reachablePages.put("Gestione Educatori", () -> new EducatorPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
-                reachablePages.put("Gestione Gruppi", () -> new GroupPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+                reachablePages.put("Creazione Gruppi", () -> new GroupPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+                reachablePages.put("Popolazione Gruppi", () -> new GroupManagementPage(CloseEvents.EXIT_PROGRAM,
+                        this.accountData));
                 break;
             case AccountType.VOLONTARIO:
                 reachablePages.put("Gestione Allergie", () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM,
@@ -58,6 +61,7 @@ public class LandingPage extends GenericPage {
                         this.accountData));
                 break;
             case AccountType.PARTECIPANTE:
+                // TODO: add attivitá del gruppo del partecipante
                 break;
             default:
                 throw new IllegalStateException("The account type is not valid!");

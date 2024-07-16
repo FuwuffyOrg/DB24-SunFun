@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
 
 public final class GroupPage extends FormPage {
 
-    private static final String PAGE_NAME = "Gestione Gruppi";
+    private static final String PAGE_NAME = "Gestione Inserimento Gruppi";
 
     private final AccountData accountData;
 
@@ -116,5 +116,12 @@ public final class GroupPage extends FormPage {
         // Add the table to the panel
         return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    }
+
+    @Override
+    protected boolean isDataValid() {
+        final int minAge = Integer.parseInt(((JTextComponent) TXT_ETA_MIN).getText());
+        final int maxAge = Integer.parseInt(((JTextComponent) TXT_ETA_MAX).getText());
+        return super.isDataValid() && minAge < maxAge;
     }
 }

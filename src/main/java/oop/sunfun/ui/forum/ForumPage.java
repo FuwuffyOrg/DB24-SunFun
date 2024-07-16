@@ -66,12 +66,12 @@ public final class ForumPage extends GenericPage {
         final JComponent pane = new JTabbedPane();
         final Set<CategoryData> categories = ForumDAO.getAllCategories();
         for (final CategoryData category : categories) {
-            pane.add(this.addPanelCategory(category), category.name());
+            pane.add(this.createPanelCategory(category), category.name());
         }
         return pane;
     }
 
-    private Component addPanelCategory(final CategoryData category) {
+    private Component createPanelCategory(final CategoryData category) {
         // Create the stuff to display
         final JComponent panel = new JPanel();
         panel.setLayout(new GridBagLayout());
