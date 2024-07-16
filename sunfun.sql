@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS `account` (
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `account` (`email`, `password`, `tipologia`) VALUES
+('admin@admin.com', 'admin', 'Educatore');
+
 DROP VIEW IF EXISTS `account_data`;
 CREATE TABLE IF NOT EXISTS `account_data` (
 `email` varchar(256)
@@ -75,10 +78,16 @@ CREATE TABLE IF NOT EXISTS `educatore` (
   KEY `FK Gruppo Educatore` (`fk_gruppo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `educatore` (`codice_fiscale`, `nome`, `cognome`, `cellulare`, `fk_gruppo`, `fk_account`) VALUES
+('DMNDMN73H24E506X', 'Admin', 'Adminson', '0000000000', NULL, 'admin@admin.com');
+
 DROP TABLE IF EXISTS `giornata`;
 CREATE TABLE IF NOT EXISTS `giornata` (
   `data` date NOT NULL COMMENT 'La data della giornata.',
-  PRIMARY KEY (`data`)
+  `fk_periodo_inizio` date NOT NULL,
+  `fk_periodo_fine` date NOT NULL,
+  PRIMARY KEY (`data`),
+  KEY `FK Periodo Giornata` (`fk_periodo_inizio`,`fk_periodo_fine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS `gruppo`;
@@ -232,6 +241,9 @@ ALTER TABLE `educatore`
   ADD CONSTRAINT `FK Account Educatore` FOREIGN KEY (`fk_account`) REFERENCES `account` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK Gruppo Educatore` FOREIGN KEY (`fk_gruppo`) REFERENCES `gruppo` (`nome`) ON UPDATE CASCADE;
 
+ALTER TABLE `giornata`
+  ADD CONSTRAINT `FK Periodo Giornata` FOREIGN KEY (`fk_periodo_inizio`,`fk_periodo_fine`) REFERENCES `periodo` (`data_inizio`, `data_fine`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 ALTER TABLE `intolleranza`
   ADD CONSTRAINT `FK Allergene Intolleranza` FOREIGN KEY (`fk_allergene`) REFERENCES `allergene` (`nome`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK Partecipante Intolleranza` FOREIGN KEY (`fk_partecipante`) REFERENCES `partecipante` (`codice_fiscale`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -276,6 +288,3 @@ ALTER TABLE `svolgimento`
 ALTER TABLE `volontario`
   ADD CONSTRAINT `FK Account Volontario` FOREIGN KEY (`fk_account`) REFERENCES `account` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
-
-INSERT INTO `account`(`email`, `password`, `tipologia`) VALUES ('admin@admin.com','admin','Educatore');
-INSERT INTO `educatore`(`codice_fiscale`, `nome`, `cognome`, `cellulare`, `fk_account`) VALUES ('DMNDMN73H24E506X','Admin','Adminson','0000000000','admin@admin.com');
