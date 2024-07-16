@@ -3,105 +3,51 @@ package oop.sunfun.ui.login;
 import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
+import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.pages.GenericPage;
-import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
+import oop.sunfun.ui.util.pages.FormPage;
 
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 
-// TODO: Change to form, need to change form functionality tho
-public final class LoginPage extends GenericPage {
+public final class LoginPage extends FormPage {
     private static final String PAGE_NAME = "Login";
 
-    private final JTextComponent txtEmail;
-    private final JTextComponent txtPassword;
+    private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    private static final JComponent TXT_EMAIL;
+    private static final JComponent TXT_PASSWORD;
+
+    static {
+        FORM_COMPONENTS = new LinkedHashMap<>();
+        TXT_EMAIL = new JTextField();
+        TXT_PASSWORD = new JPasswordField();
+        FORM_COMPONENTS.put(new JLabel("Email:"), new Pair<>(TXT_EMAIL, 256));
+        FORM_COMPONENTS.put(new JLabel("Password:"), new Pair<>(TXT_PASSWORD, 24));
+    }
+
+    // A bit weird but works, have to do the same query twice but clean code
     public LoginPage(final CloseEvents closeEvent) {
-        super(PAGE_NAME, closeEvent);
-        // Add two labels and text boxes for inputting username and password.
-        final Component lblEmail = new JLabel("Email: ");
-        final Component lblPassword = new JLabel("Password: ");
-        this.txtEmail = new JTextField();
-        this.txtPassword = new JPasswordField();
-        final AbstractButton btnLogin = new JButton("Login");
-        final AbstractButton btnRegister = new JButton("Goto Register");
-        // Add all the components.
-        this.add(lblEmail,
-                new GridBagConstraintBuilder()
-                        .setRow(0).setColumn(0)
-                        .setFillAll()
-                        .build()
-        );
-        this.add(txtEmail,
-                new GridBagConstraintBuilder()
-                        .setRow(0).setColumn(1)
-                        .setFillAll()
-                        .build()
-        );
-        this.add(lblPassword,
-                new GridBagConstraintBuilder()
-                        .setRow(1).setColumn(0)
-                        .setFillAll()
-                        .build()
-        );
-        this.add(txtPassword,
-                new GridBagConstraintBuilder()
-                        .setRow(1).setColumn(1)
-                        .setFillAll()
-                        .build()
-        );
-        this.add(btnLogin,
-                new GridBagConstraintBuilder()
-                        .setRow(2).setColumn(0)
-                        .setFillAll()
-                        .build()
-        );
-        this.add(btnRegister,
-                new GridBagConstraintBuilder()
-                        .setRow(2).setColumn(1)
-                        .setFillAll()
-                        .build()
-        );
-        // Add events
-        // Event to go to the register page
-        btnRegister.addActionListener(e -> {
-            // Go to register page
-            this.switchPage(new RegisterPage(CloseEvents.EXIT_PROGRAM));
-        });
-        // Event to log into the application
-        btnLogin.addActionListener(e -> {
-            if (LoginPage.this.isDataValid()) {
-                final Optional<AccountData> account = AccountDAO.getAccount(txtEmail.getText(),
-                        txtPassword.getText());
-                account.ifPresent(accountData -> this.switchPage(new LandingPage(
-                        CloseEvents.EXIT_PROGRAM, accountData)));
-            }
-        });
+        super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
+                () -> new LandingPage(CloseEvents.EXIT_PROGRAM, AccountDAO.getAccount(((JTextComponent) TXT_EMAIL).getText(),
+                        ((JTextComponent) TXT_PASSWORD).getText()).get()),
+                () -> new RegisterPage(CloseEvents.EXIT_PROGRAM),
+                () -> {});
         // Finish the window.
         this.buildWindow();
     }
 
-    private boolean isDataValid() {
-        final int passwordLengthLimit = 24;
-        final int emailLengthLimit = 256;
-        final int minSize = 4;
-        this.resetHighlights();
-        final String email = this.txtEmail.getText();
-        final String password = this.txtEmail.getText();
-        if (email.length() > emailLengthLimit || email.length() < minSize) {
-            GenericPage.highlightTextComponent(this.txtEmail);
-            return false;
-        } else if (password.length() > passwordLengthLimit || password.length() < minSize) {
-            GenericPage.highlightTextComponent(this.txtPassword);
-            return false;
-        }
-        return true;
+    @Override
+    protected boolean isDataValid() {
+        final Optional<AccountData> account = AccountDAO.getAccount(((JTextComponent) TXT_EMAIL).getText(),
+                ((JTextComponent) TXT_PASSWORD).getText());
+        return super.isDataValid() && account.isPresent();
     }
 }

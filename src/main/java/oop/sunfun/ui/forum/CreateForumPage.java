@@ -42,7 +42,7 @@ public final class CreateForumPage extends FormPage {
 
     public CreateForumPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, FORM_COMPONENTS,
-                () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
+                () -> new ForumPage(CloseEvents.EXIT_PROGRAM, account),
                 () -> ForumDAO.addNewDiscussion(((JTextComponent) TXT_TITLE).getText(),
                         ((JTextComponent) TXT_DESCRIPTION).getText(),
                         new CategoryData((String) COMBO_CATEGORY.getSelectedItem()), account.email()));

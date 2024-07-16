@@ -50,6 +50,7 @@ public final class GroupPage extends FormPage {
 
     public GroupPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
+                () -> new GroupPage(CloseEvents.EXIT_PROGRAM, account),
                 () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
                 () -> GroupDAO.createGroup(new GroupData(((JTextComponent) TXT_NAME).getText(),
                             Integer.parseInt(((JTextComponent) TXT_ETA_MIN).getText()),

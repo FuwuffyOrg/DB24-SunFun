@@ -29,12 +29,13 @@ public abstract class FormPage extends GenericPage {
      * @param closeEvent The event that happens when you click the X button.
      * @param rowOffset The offset in case you want to add more things to the form.
      * @param components The components to add to the page in the form <Label, Pair<Component, SizeLimit>>
-     * @param returnPage The page that it redirects you to when you try to go back.
+     * @param confirmPage The page that it redirects you to when you confirm.
+     * @param cancelPage The page that it redirects you to when you cancel.
      * @param confirmEvent The event that happens when you confirm the form.
      */
     public FormPage(final String title, final CloseEvents closeEvent, final int rowOffset,
-                    final Map<Component, Pair<JComponent, Integer>> components, final Supplier<GenericPage> returnPage,
-                    final Runnable confirmEvent) {
+                    final Map<Component, Pair<JComponent, Integer>> components, final Supplier<GenericPage> confirmPage,
+                    final Supplier<GenericPage> cancelPage, final Runnable confirmEvent) {
         super(title, closeEvent);
         this.inputs = new LinkedHashMap<>();
         // Add the various inputs to the page
@@ -55,11 +56,11 @@ public abstract class FormPage extends GenericPage {
         // Create the buttons and their events
         final AbstractButton btnReturn = new JButton("Torna indietro");
         final AbstractButton btnConfirm = new JButton("Conferma form");
-        btnReturn.addActionListener(e -> this.switchPage(returnPage.get()));
+        btnReturn.addActionListener(e -> this.switchPage(cancelPage.get()));
         btnConfirm.addActionListener(e -> {
             if (this.isDataValid()) {
                 confirmEvent.run();
-                this.switchPage(returnPage.get());
+                this.switchPage(confirmPage.get());
             }
         });
         // Add the buttons
@@ -73,6 +74,21 @@ public abstract class FormPage extends GenericPage {
                 .setFillAll()
                 .build()
         );
+    }
+
+    /**
+     * Creates a page that is also a form.
+     * @param title The title of the page.
+     * @param closeEvent The event that happens when you click the X button.
+     * @param rowOffset The offset in case you want to add more things to the form.
+     * @param components The components to add to the page in the form <Label, Pair<Component, SizeLimit>>
+     * @param returnPage The page that it redirects you to when you try to go back.
+     * @param confirmEvent The event that happens when you confirm the form.
+     */
+    public FormPage(final String title, final CloseEvents closeEvent, final int rowOffset,
+                    final Map<Component, Pair<JComponent, Integer>> components, final Supplier<GenericPage> returnPage,
+                    final Runnable confirmEvent) {
+        this(title, closeEvent, rowOffset, components, returnPage, returnPage, confirmEvent);
     }
 
     /**

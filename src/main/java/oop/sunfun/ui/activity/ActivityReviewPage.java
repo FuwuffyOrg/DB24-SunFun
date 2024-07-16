@@ -4,6 +4,8 @@ import oop.sunfun.database.dao.ActivityDAO;
 import oop.sunfun.database.data.activity.ActivityData;
 import oop.sunfun.database.data.activity.ReviewData;
 import oop.sunfun.database.data.login.AccountData;
+import oop.sunfun.ui.LandingPage;
+import oop.sunfun.ui.admin.PeriodPage;
 import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.pages.FormPage;
@@ -49,6 +51,7 @@ public final class ActivityReviewPage extends FormPage {
 
     public ActivityReviewPage(final CloseEvents closeEvent, final AccountData account, final ActivityData activity) {
         super(PAGE_NAME + activity.name(), closeEvent, 1, FORM_COMPONENTS,
+                () -> new ActivityReviewPage(CloseEvents.EXIT_PROGRAM, account, activity),
                 () -> new ActivityPage(CloseEvents.EXIT_PROGRAM, account),
                 () -> ActivityDAO.createNewReviewForActivity((int) COMBO_GRADE.getSelectedItem(),
                         ((JTextComponent) TXT_DESCRIPTION).getText(), activity.name(), account.email()));

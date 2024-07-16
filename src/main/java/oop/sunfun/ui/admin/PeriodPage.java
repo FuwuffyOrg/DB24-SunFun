@@ -49,6 +49,7 @@ public final class PeriodPage extends FormPage {
 
     public PeriodPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
+                () -> new PeriodPage(CloseEvents.EXIT_PROGRAM, account),
                 () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
                 () -> {
                     final Date startDate = DATE_START.getDate();
