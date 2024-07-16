@@ -4,7 +4,7 @@ import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.dao.ParentDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.login.AccountType;
-import oop.sunfun.database.data.login.ParticipantData;
+import oop.sunfun.database.data.person.ParticipantData;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.GenericPage;
@@ -156,8 +156,9 @@ public final class AddParticipantPage extends GenericPage {
             if (isDataValid()) {
                 AccountDAO.createAccount(this.txtEmail.getText(), this.txtPassword.getText(), AccountType.PARTECIPANTE);
                 ParentDAO.createParticipant(new ParticipantData(this.txtCodiceFiscale.getText(),
-                                Optional.empty(), Optional.empty(), this.txtName.getText(),
-                                this.txtSurname.getText(), this.dateBirth.getDate()), this.txtEmail.getText());
+                        this.txtEmail.getText(),Optional.empty(), Optional.empty(),
+                        this.txtName.getText(),  this.txtSurname.getText(), this.dateBirth.getDate()),
+                        this.txtEmail.getText());
                 ParentDAO.addRitiroParente(account.codFisc(), this.txtCodiceFiscale.getText());
                 this.switchPage(new ManageParticipantPage(CloseEvents.EXIT_PROGRAM, account));
             }

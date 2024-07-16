@@ -4,7 +4,7 @@ import oop.sunfun.database.dao.FoodDAO;
 import oop.sunfun.database.dao.ParentDAO;
 import oop.sunfun.database.data.food.AllergenData;
 import oop.sunfun.database.data.login.AccountData;
-import oop.sunfun.database.data.login.ParticipantData;
+import oop.sunfun.database.data.person.ParticipantData;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
@@ -99,8 +99,8 @@ public final class ParticipantDietPage extends GenericPage {
             final String diet = (String) comboDiet.getSelectedItem();
             ParentDAO.updateParticipantDiet(diet, this.participantData);
             final ParticipantData newParticipant = new ParticipantData(this.participantData.codiceFiscale(),
-                    Optional.ofNullable(diet), this.participantData.group(), this.participantData.name(),
-                    this.participantData.surname(), this.participantData.dateOfBirth());
+                    this.participantData.accountEmail(), Optional.ofNullable(diet), this.participantData.group(),
+                    this.participantData.name(), this.participantData.surname(), this.participantData.dateOfBirth());
             this.switchPage(new ParticipantDietPage(CloseEvents.EXIT_PROGRAM, this.accountData, newParticipant));
         });
         return dietsPanel;

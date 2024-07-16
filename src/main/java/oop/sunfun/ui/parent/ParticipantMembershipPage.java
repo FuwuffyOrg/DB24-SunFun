@@ -1,7 +1,7 @@
 package oop.sunfun.ui.parent;
 
 import oop.sunfun.database.data.login.AccountData;
-import oop.sunfun.database.data.login.ParticipantData;
+import oop.sunfun.database.data.person.ParticipantData;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.GenericPage;
 

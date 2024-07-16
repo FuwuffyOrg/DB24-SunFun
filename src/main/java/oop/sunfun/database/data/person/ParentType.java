@@ -1,4 +1,4 @@
-package oop.sunfun.database.data.admin;
+package oop.sunfun.database.data.person;
 
 import java.util.EnumSet;
 import java.util.Objects;

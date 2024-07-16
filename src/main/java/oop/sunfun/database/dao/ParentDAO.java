@@ -1,7 +1,7 @@
 package oop.sunfun.database.dao;
 
-import oop.sunfun.database.data.admin.ParentType;
-import oop.sunfun.database.data.login.ParticipantData;
+import oop.sunfun.database.data.person.ParentType;
+import oop.sunfun.database.data.person.ParticipantData;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,9 +24,10 @@ public final class ParentDAO extends AbstractDAO {
     private static final String DELETE_PARTICIPANT = "DELETE a FROM account a JOIN account_data ad ON a.email = "
             + "ad.email WHERE ad.codice_fiscale=?";
 
-    private static final String GET_ALL_PARTICIPANTS_FROM_PARENT = "SELECT `codice_fiscale`, `fk_dieta`, "
-            + "`fk_gruppo`, `nome`, `cognome`, `data_di_nascita` FROM `partecipante`, `ritiro` WHERE "
-            + "`partecipante`.`codice_fiscale`=`ritiro`.`fk_partecipante` AND `ritiro`.`fk_parente`=?";
+    private static final String GET_ALL_PARTICIPANTS_FROM_PARENT = "SELECT p.codice_fiscale, d.email, p.fk_dieta, "
+            + "p.fk_gruppo, p.nome, p.cognome, p.data_di_nascita FROM partecipante p JOIN account_data d "
+            + "ON p.codice_fiscale = d.codice_fiscale JOIN ritiro r ON p.codice_fiscale = r.fk_partecipante WHERE "
+            + "r.fk_parente=?";
 
     private static final String ADD_RITIRO_PARENTE = "INSERT INTO `ritiro`(`fk_parente`, `fk_partecipante`) "
             + "VALUES (?,?)";
@@ -83,7 +84,8 @@ public final class ParentDAO extends AbstractDAO {
                 final String name = (String) participant.get("nome");
                 final String surname = (String) participant.get("cognome");
                 final Date dateOfBirth = (Date) participant.get("data_di_nascita");
-                participants.add(new ParticipantData(codiceFiscale, Optional.ofNullable(dieta),
+                // TODO: add account
+                participants.add(new ParticipantData(codiceFiscale, "", Optional.ofNullable(dieta),
                         Optional.ofNullable(gruppo), name, surname, dateOfBirth));
             }
         } catch (final SQLException err) {

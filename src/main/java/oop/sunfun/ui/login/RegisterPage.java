@@ -5,7 +5,7 @@ import oop.sunfun.database.connection.SunFunDatabase;
 import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.dao.ParentDAO;
 import oop.sunfun.database.data.login.AccountType;
-import oop.sunfun.database.data.admin.ParentType;
+import oop.sunfun.database.data.person.ParentType;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
