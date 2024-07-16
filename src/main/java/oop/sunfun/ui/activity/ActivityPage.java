@@ -4,8 +4,9 @@ import oop.sunfun.database.dao.ActivityDAO;
 import oop.sunfun.database.data.activity.ActivityData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
+import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.FormPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
@@ -15,35 +16,41 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.GridBagLayout;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
-public final class ActivityPage extends GenericPage {
+public final class ActivityPage extends FormPage {
 
     private static final String PAGE_NAME = "Gestione Attivitá";
 
     private final AccountData accountData;
 
-    private final JTextComponent txtName;
+    private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
-    private final JTextComponent txtDescription;
+    private static final JComponent TXT_NAME;
+    private static final JComponent TXT_DESCRIPTION;
+
+    static {
+        FORM_COMPONENTS = new LinkedHashMap<>();
+        TXT_NAME = new JTextField();
+        TXT_DESCRIPTION = new JTextField();
+        FORM_COMPONENTS.put(new JLabel("Nome dell'Attivita:"), new Pair<>(TXT_NAME, 50));
+        FORM_COMPONENTS.put(new JLabel("Descrizione:"), new Pair<>(TXT_DESCRIPTION, 10000));
+    }
 
     public ActivityPage(final CloseEvents closeEvent, final AccountData account) {
-        super(PAGE_NAME, closeEvent);
+        super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
+                () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
+                () -> ActivityDAO.createNewActivity(new ActivityData(((JTextComponent) TXT_NAME).getText(),
+                        ((JTextComponent) TXT_DESCRIPTION).getText(), 0.0f)));
         this.accountData = account;
-        // Create the components to add to the page
-        final Component lblName = new JLabel("Nome:");
-        final Component lblDescription = new JLabel("Descrizione:");
-        this.txtName = new JTextField();
-        this.txtDescription = new JTextArea();
-        final AbstractButton btnAddActivity = new JButton("Aggiungi attivita");
-        final AbstractButton btnGotoDashboard = new JButton("Torna alla dashboard");
         // Add the components to the page
         this.add(getActivityTable(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
@@ -51,47 +58,6 @@ public final class ActivityPage extends GenericPage {
                 .setFillAll()
                 .build()
         );
-        this.add(lblName, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(lblDescription, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(this.txtName, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        this.add(this.txtDescription, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        this.add(btnAddActivity, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(2)
-                .setHeight(2)
-                .setFillAll()
-                .build()
-        );
-        this.add(btnGotoDashboard, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(3)
-                .setHeight(2)
-                .setFillAll()
-                .build()
-        );
-        // Handle events
-        btnGotoDashboard.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
-        btnAddActivity.addActionListener(e -> {
-            if (isDataValid()) {
-                ActivityDAO.createNewActivity(new ActivityData(txtName.getText(), txtDescription.getText(),
-                        0.0f));
-                this.switchPage(new ActivityPage(CloseEvents.EXIT_PROGRAM, account));
-            }
-        });
         // Finalize the window
         this.buildWindow();
     }
@@ -155,22 +121,5 @@ public final class ActivityPage extends GenericPage {
         // Add the table to the panel
         return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    }
-
-    private boolean isDataValid() {
-        final int minSize = 2;
-        final int nameLengthLimit = 50;
-        final int descriptionLengthLimit = 10000;
-        this.resetHighlights();
-        final String name = this.txtName.getText();
-        final String description = this.txtDescription.getText();
-        if (name.length() > nameLengthLimit || name.length() < minSize) {
-            highlightTextComponent(this.txtName);
-            return false;
-        } else if (description.length() > descriptionLengthLimit || description.length() < minSize) {
-            highlightTextComponent(this.txtDescription);
-            return false;
-        }
-        return true;
     }
 }

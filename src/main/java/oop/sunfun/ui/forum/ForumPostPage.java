@@ -4,13 +4,12 @@ import oop.sunfun.database.dao.ForumDAO;
 import oop.sunfun.database.data.forum.CommentData;
 import oop.sunfun.database.data.forum.DiscussionData;
 import oop.sunfun.database.data.login.AccountData;
+import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.Anchors;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.FormPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,66 +19,43 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.GridBagLayout;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
-public final class ForumPostPage extends GenericPage {
+public final class ForumPostPage extends FormPage {
 
-    private final JTextComponent txtComment;
+    private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
+
+    private static final JComponent TXT_COMMENT;
+
+    static {
+        FORM_COMPONENTS = new LinkedHashMap<>();
+        TXT_COMMENT = new JTextArea();
+        FORM_COMPONENTS.put(new JLabel("Commento:"), new Pair<>(TXT_COMMENT, 10000));
+    }
 
     public ForumPostPage(final DiscussionData discussion, final CloseEvents closeEvent, final AccountData account) {
-        super(discussion.title(), closeEvent);
+        super(discussion.title(), closeEvent, 2, FORM_COMPONENTS,
+                () -> new ForumPage(CloseEvents.EXIT_PROGRAM, account),
+                () -> ForumDAO.addNewComment(account.email(), ((JTextComponent) TXT_COMMENT).getText(),
+                        discussion.discussionNumber()));
         // Get the comments on the post
-        final Component lblDescription = new JLabel(discussion.description());
-        final Component commentArea = this.getCommentArea(discussion);
-        final AbstractButton btnGotoDiscussion = new JButton("Return to discussions");
-        this.txtComment = new JTextArea();
-        final AbstractButton btnComment = new JButton("Send");
-        this.add(lblDescription, new GridBagConstraintBuilder()
+        this.add(new JLabel(discussion.description()), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setWidth(3)
                 .setAnchor(Anchors.TOP)
                 .setFillAll()
                 .build()
         );
-        this.add(commentArea, new GridBagConstraintBuilder()
+        this.add(this.getCommentArea(discussion), new GridBagConstraintBuilder()
                 .setRow(1).setColumn(0)
                 .setWidth(3)
                 .setAnchor(Anchors.CENTER)
                 .setFillAll()
                 .build()
         );
-        this.add(btnGotoDiscussion, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(0)
-                .setFillAll()
-                .setAnchor(Anchors.BOTTOM_LEFT)
-                .setWeightColumn(0.03d)
-                .build()
-        );
-        this.add(this.txtComment, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(1)
-                .setFillAll()
-                .setAnchor(Anchors.BOTTOM)
-                .setWeightColumn(0.1d)
-                .build()
-        );
-        this.add(btnComment, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(2)
-                .setFillAll()
-                .setAnchor(Anchors.BOTTOM_RIGHT)
-                .setWeightColumn(0.01d)
-                .build()
-        );
-        // Add events
-        // Go back button
-        btnGotoDiscussion.addActionListener(e -> this.switchPage(new ForumPage(CloseEvents.EXIT_PROGRAM, account)));
-        // Comment button
-        btnComment.addActionListener(e -> {
-            if (isDataValid()) {
-                ForumDAO.addNewComment(account.email(), txtComment.getText(), discussion.discussionNumber());
-                this.switchPage(new ForumPostPage(discussion, CloseEvents.EXIT_PROGRAM, account));
-            }
-        });
         // Finalize the window
         this.buildWindow();
     }
@@ -117,17 +93,5 @@ public final class ForumPostPage extends GenericPage {
                 .build()
         );
         return commentHeader;
-    }
-
-    private boolean isDataValid() {
-        final int minSize = 4;
-        final int titleLengthLimit = 10000;
-        this.resetHighlights();
-        final String comment = this.txtComment.getText();
-        if (comment.length() > titleLengthLimit || comment.length() < minSize) {
-            GenericPage.highlightTextComponent(this.txtComment);
-            return false;
-        }
-        return true;
     }
 }

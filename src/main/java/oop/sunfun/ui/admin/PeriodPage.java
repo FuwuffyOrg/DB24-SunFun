@@ -4,8 +4,9 @@ import oop.sunfun.database.dao.PeriodDAO;
 import oop.sunfun.database.data.admin.PeriodData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
+import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.FormPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 import org.jdesktop.swingx.JXDatePicker;
 
@@ -22,29 +23,42 @@ import java.awt.GridBagLayout;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-public final class PeriodPage extends GenericPage {
+public final class PeriodPage extends FormPage {
 
     private static final String PAGE_NAME = "Gestione Periodi";
 
     private final AccountData accountData;
 
-    private final JXDatePicker dateInizio;
-    private final JXDatePicker dateFine;
+    private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
+    private static final JXDatePicker DATE_START;
+    private static final JXDatePicker DATE_END;
+
+    static {
+        FORM_COMPONENTS = new LinkedHashMap<>();
+        DATE_START = new JXDatePicker();
+        DATE_END = new JXDatePicker();
+        FORM_COMPONENTS.put(new JLabel("Inizio del periodo:"), new Pair<>(DATE_START, 0));
+        FORM_COMPONENTS.put(new JLabel("Fine del periodo:"), new Pair<>(DATE_END, 0));
+    }
 
     public PeriodPage(final CloseEvents closeEvent, final AccountData account) {
-        super(PAGE_NAME, closeEvent);
+        super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
+                () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
+                () -> {
+                    final Date startDate = DATE_START.getDate();
+                    final Date endDate = DATE_END.getDate();
+                    if (startDate.compareTo(endDate) < 0) {
+                        PeriodDAO.createPeriod(new PeriodData(startDate, endDate));
+                        getDatesBetween(startDate, endDate).forEach(PeriodDAO::createDate);
+                    }
+                });
         this.accountData = account;
-        // Add inputs to add a new period
-        final Component lblInizio = new JLabel("Data di inizio:");
-        final Component lblFine = new JLabel("Data di fine:");
-        this.dateInizio = new JXDatePicker();
-        this.dateFine = new JXDatePicker();
-        final AbstractButton btnAddPeriod = new JButton("Aggiungi il periodo");
-        final AbstractButton btnGoBack = new JButton("Torna alla dashboard");
         // Create the period table
         this.add(this.getPeriodTable(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
@@ -52,50 +66,6 @@ public final class PeriodPage extends GenericPage {
                 .setFillAll()
                 .build()
         );
-        this.add(lblInizio, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(lblFine, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        this.add(dateInizio, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(dateFine, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        this.add(btnAddPeriod, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(2)
-                .setFillAll()
-                .build()
-        );
-        this.add(btnGoBack, new GridBagConstraintBuilder()
-                .setRow(3).setColumn(0)
-                .setWidth(3)
-                .setFillAll()
-                .build()
-        );
-        // Add events
-        // Return to the landing page
-        btnGoBack.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
-        // Try to add the period
-        btnAddPeriod.addActionListener(e -> {
-            if (isDataValid()) {
-                final Date startDate = this.dateInizio.getDate();
-                final Date endDate = this.dateFine.getDate();
-                PeriodDAO.createPeriod(new PeriodData(startDate, endDate));
-                getDatesBetween(startDate, endDate).forEach(PeriodDAO::createDate);
-                this.switchPage(new PeriodPage(CloseEvents.EXIT_PROGRAM, account));
-            }
-        });
         // Finalize the window
         this.buildWindow();
     }
@@ -158,11 +128,5 @@ public final class PeriodPage extends GenericPage {
             startCalendar.add(Calendar.DATE, 1);
         }
         return datesInRange;
-    }
-
-    private boolean isDataValid() {
-        final Date startDate = this.dateInizio.getDate();
-        final Date endDate = this.dateFine.getDate();
-        return startDate.compareTo(endDate) < 0;
     }
 }

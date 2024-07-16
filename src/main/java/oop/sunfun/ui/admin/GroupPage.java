@@ -6,7 +6,7 @@ import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.FormPage;
+import oop.sunfun.ui.util.pages.FormPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
@@ -21,7 +21,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -34,16 +34,16 @@ public final class GroupPage extends FormPage {
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
-    private static final JComponent TXT_NOME;
+    private static final JComponent TXT_NAME;
     private static final JComponent TXT_ETA_MIN;
     private static final JComponent TXT_ETA_MAX;
 
     static {
-        FORM_COMPONENTS = new HashMap<>();
-        TXT_NOME = new JTextField();
+        FORM_COMPONENTS = new LinkedHashMap<>();
+        TXT_NAME = new JTextField();
         TXT_ETA_MIN = new JTextField();
         TXT_ETA_MAX = new JTextField();
-        FORM_COMPONENTS.put(new JLabel("Nome del gruppo:"), new Pair<>(TXT_NOME, 20));
+        FORM_COMPONENTS.put(new JLabel("Nome del gruppo:"), new Pair<>(TXT_NAME, 20));
         FORM_COMPONENTS.put(new JLabel("Eta minima:"), new Pair<>(TXT_ETA_MIN, 1));
         FORM_COMPONENTS.put(new JLabel("Eta massima:"), new Pair<>(TXT_ETA_MAX, 1));
     }
@@ -51,7 +51,7 @@ public final class GroupPage extends FormPage {
     public GroupPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
                 () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
-                () -> GroupDAO.createGroup(new GroupData(((JTextComponent) TXT_NOME).getText(),
+                () -> GroupDAO.createGroup(new GroupData(((JTextComponent) TXT_NAME).getText(),
                             Integer.parseInt(((JTextComponent) TXT_ETA_MIN).getText()),
                             Integer.parseInt(((JTextComponent) TXT_ETA_MAX).getText()))));
         this.accountData = account;

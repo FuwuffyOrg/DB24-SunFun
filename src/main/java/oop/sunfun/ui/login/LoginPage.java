@@ -4,7 +4,7 @@ import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
@@ -16,6 +16,7 @@ import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.util.Optional;
 
+// TODO: Change to form, need to change form functionality tho
 public final class LoginPage extends GenericPage {
     private static final String PAGE_NAME = "Login";
 

@@ -1,12 +1,15 @@
-package oop.sunfun.ui.util.layout;
+package oop.sunfun.ui.util.pages;
 
 import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
+import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.text.JTextComponent;
-import java.awt.*;
-import java.util.HashMap;
+import java.awt.Component;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,8 +18,9 @@ import java.util.stream.IntStream;
 
 public abstract class FormPage extends GenericPage {
 
-    private static final int MIN_INPUT_SIZE = 1;
-
+    /**
+     * All the inputs of the page, with the maximum length of the text.
+     */
     private final Map<JComponent, Integer> inputs;
 
     /**
@@ -32,7 +36,7 @@ public abstract class FormPage extends GenericPage {
                     final Map<Component, Pair<JComponent, Integer>> components, final Supplier<GenericPage> returnPage,
                     final Runnable confirmEvent) {
         super(title, closeEvent);
-        this.inputs = new HashMap<>();
+        this.inputs = new LinkedHashMap<>();
         // Add the various inputs to the page
         final List<Entry<Component, Pair<JComponent, Integer>>> componentList = components.entrySet().stream().toList();
         IntStream.range(0, components.size()).forEach(i -> {
@@ -85,11 +89,15 @@ public abstract class FormPage extends GenericPage {
         this(title, closeEvent, 0, components, returnPage, confirmEvent);
     }
 
-    private boolean isDataValid() {
+    /**
+     * Method to check data validity.
+     * @return True when the input values are valid, false otherwise.
+     */
+    protected boolean isDataValid() {
         this.resetHighlights();
         for (final Entry<JComponent, Integer> input : this.inputs.entrySet()) {
             if (input.getKey() instanceof JTextComponent textInput) {
-                if (textInput.getText().length() < MIN_INPUT_SIZE || textInput.getText().length() > input.getValue()) {
+                if (textInput.getText().isEmpty() || textInput.getText().length() > input.getValue()) {
                     highlightTextComponent(textInput);
                     return false;
                 }

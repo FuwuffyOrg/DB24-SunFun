@@ -44,13 +44,13 @@ public final class ParentDAO extends AbstractDAO {
         }
     }
 
-    public static void createParticipant(final ParticipantData participant, final String accountEmail) {
+    public static void createParticipant(final ParticipantData participant) {
         try {
             DB_CONNECTION.openConnection();
             final String group = participant.group().isPresent() ? participant.group().get() : null;
             final String diet = participant.dieta().isPresent() ? participant.dieta().get() : null;
-            DB_CONNECTION.setQueryData(CREATE_PARTICIPANT, participant.codiceFiscale(), accountEmail, diet, group,
-                    participant.name(), participant.surname(), participant.dateOfBirth());
+            DB_CONNECTION.setQueryData(CREATE_PARTICIPANT, participant.codiceFiscale(), participant.accountEmail(),
+                    diet, group, participant.name(), participant.surname(), participant.dateOfBirth());
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't create the new participant", err);
             DB_CONNECTION.closeConnection();

@@ -1,4 +1,4 @@
-package oop.sunfun.ui.util.layout;
+package oop.sunfun.ui.util.pages;
 
 import oop.sunfun.ui.util.behavior.CloseEvents;
 

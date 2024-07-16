@@ -6,7 +6,7 @@ import oop.sunfun.database.data.food.AllergenData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.person.ParticipantData;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+// TODO: Maybe form?
 public final class ParticipantDietPage extends GenericPage {
 
     private static final String PAGE_NAME = "Gestione Diete ";

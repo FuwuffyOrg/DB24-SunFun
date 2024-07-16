@@ -4,28 +4,28 @@ import oop.sunfun.database.dao.ActivityDAO;
 import oop.sunfun.database.data.activity.ActivityData;
 import oop.sunfun.database.data.activity.ReviewData;
 import oop.sunfun.database.data.login.AccountData;
-import oop.sunfun.ui.LandingPage;
+import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.FormPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.GridBagLayout;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
-public final class ActivityReviewPage extends GenericPage {
+public final class ActivityReviewPage extends FormPage {
 
     private static final String PAGE_NAME = "Recensioni dell'attivita: ";
 
@@ -33,21 +33,32 @@ public final class ActivityReviewPage extends GenericPage {
 
     private final ActivityData activityData;
 
-    private final JComboBox<Integer> comboGrade;
+    private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
-    private final JTextComponent txtDescription;
+    private static final JComboBox<Integer> COMBO_GRADE;
+    private static final JComponent TXT_DESCRIPTION;
+
+    static {
+        FORM_COMPONENTS = new LinkedHashMap<>();
+        COMBO_GRADE = new JComboBox<>();
+        IntStream.range(0, MAX_GRADE + 1).forEach(COMBO_GRADE::addItem);
+        TXT_DESCRIPTION = new JTextField();
+        FORM_COMPONENTS.put(new JLabel("Voto:"), new Pair<>(COMBO_GRADE, 0));
+        FORM_COMPONENTS.put(new JLabel("Descrizione:"), new Pair<>(TXT_DESCRIPTION, 10000));
+    }
 
     public ActivityReviewPage(final CloseEvents closeEvent, final AccountData account, final ActivityData activity) {
-        super(PAGE_NAME + activity.name(), closeEvent);
+        super(PAGE_NAME + activity.name(), closeEvent, 1, FORM_COMPONENTS,
+                () -> new ActivityPage(CloseEvents.EXIT_PROGRAM, account),
+                () -> {
+                    final Integer grade = (Integer) COMBO_GRADE.getSelectedItem();
+                    if (grade == null) {
+                        throw new IllegalStateException("No grade selected for the review.");
+                    }
+                    ActivityDAO.createNewReviewForActivity(grade, ((JTextComponent) TXT_DESCRIPTION).getText(),
+                            activity.name(), account.email());
+                });
         this.activityData = activity;
-        // Create the components to add to the page
-        final Component lblGrade = new JLabel("Voto:");
-        final Component lblDescription = new JLabel("Descrizione:");
-        this.comboGrade = new JComboBox<>();
-        this.txtDescription = new JTextArea();
-        final AbstractButton btnAddReview = new JButton("Aggiungi recensione");
-        final AbstractButton btnGotoDashboard = new JButton("Torna alla dashboard");
-        IntStream.range(0, MAX_GRADE + 1).forEach(this.comboGrade::addItem);
         // Add the components to the page
         this.add(getReviewsTable(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
@@ -55,51 +66,6 @@ public final class ActivityReviewPage extends GenericPage {
                 .setFillAll()
                 .build()
         );
-        this.add(lblGrade, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(lblDescription, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(this.comboGrade, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        this.add(this.txtDescription, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        this.add(btnAddReview, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(2)
-                .setHeight(2)
-                .setFillAll()
-                .build()
-        );
-        this.add(btnGotoDashboard, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(3)
-                .setHeight(2)
-                .setFillAll()
-                .build()
-        );
-        // Handle events
-        btnGotoDashboard.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
-        btnAddReview.addActionListener(e -> {
-            if (isDataValid()) {
-                final Integer grade = (Integer) this.comboGrade.getSelectedItem();
-                if (grade == null) {
-                    throw new IllegalStateException("No grade selected for the review.");
-                }
-                ActivityDAO.createNewReviewForActivity(grade, txtDescription.getText(), activityData.name(),
-                        account.email());
-                this.switchPage(new ActivityReviewPage(CloseEvents.EXIT_PROGRAM, account, activity));
-            }
-        });
         // Finalize the window
         this.buildWindow();
     }
@@ -149,18 +115,5 @@ public final class ActivityReviewPage extends GenericPage {
         // Add the table to the panel
         return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    }
-
-    private boolean isDataValid() {
-        final int minSize = 4;
-        final int descriptionLimit = 10000;
-        this.resetHighlights();
-        final String description = this.txtDescription.getText();
-        final Integer gradeValue = (Integer) this.comboGrade.getSelectedItem();
-        if (description.length() > descriptionLimit || description.length() < minSize) {
-            highlightTextComponent(this.txtDescription);
-            return false;
-        }
-        return gradeValue != null;
     }
 }

@@ -6,7 +6,7 @@ import oop.sunfun.database.data.food.DietData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
@@ -24,6 +24,7 @@ import java.awt.GridBagLayout;
 import java.util.List;
 import java.util.stream.IntStream;
 
+// TODO: Make into form
 public final class AllergiesPage extends GenericPage {
 
     private static final String PAGE_NAME = "Gestione Allergie/Intolleranze";

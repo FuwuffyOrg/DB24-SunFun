@@ -3,8 +3,9 @@ package oop.sunfun.ui.parent;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.person.ParticipantData;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.GenericPage;
 
+// TODO: Make form
 public final class ParticipantRollcallPage extends GenericPage {
 
     private static final String PAGE_NAME = "Appello";

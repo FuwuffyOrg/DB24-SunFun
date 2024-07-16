@@ -8,7 +8,7 @@ import oop.sunfun.database.data.person.EducatorData;
 import oop.sunfun.database.data.person.VoluntaryData;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
@@ -52,6 +52,7 @@ public class EducatorPage extends GenericPage {
                 .build()
         );
         // Set action events
+        // TODO: add possibility to add educator and voluntary
         btnGoBack.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
         // Finalize page
         this.buildWindow();

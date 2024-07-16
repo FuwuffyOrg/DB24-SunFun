@@ -10,7 +10,7 @@ import oop.sunfun.ui.admin.PeriodPage;
 import oop.sunfun.ui.parent.ManageParticipantPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.forum.ForumPage;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;

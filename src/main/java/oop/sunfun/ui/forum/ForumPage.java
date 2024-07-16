@@ -7,7 +7,7 @@ import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.Anchors;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;

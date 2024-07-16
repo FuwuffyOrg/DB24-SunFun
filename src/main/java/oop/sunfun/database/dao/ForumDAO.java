@@ -24,7 +24,7 @@ public final class ForumDAO extends AbstractDAO {
     private static final String GET_COMMENTS_FROM_ID = "SELECT r.num_risposta, r.testo, a.nome, a.cognome "
             + "FROM `risposta` r, `account_data` a WHERE r.fk_discussione = ?";
 
-    private static final String CREATE_FORUM_POST = "INSERT INTO `discussione`(`titolo`, `description`, "
+    private static final String CREATE_FORUM_POST = "INSERT INTO `discussione`(`titolo`, `descrizione`, "
             + "`fk_categoria`, `fk_account`) VALUES (?,?,?,?)";
 
     private static final String CREATE_COMMENT_POST = "INSERT INTO `risposta`(`testo`, `fk_discussione`, "
