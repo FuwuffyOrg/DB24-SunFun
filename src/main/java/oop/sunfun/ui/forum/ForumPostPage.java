@@ -38,6 +38,7 @@ public final class ForumPostPage extends FormPage {
 
     public ForumPostPage(final DiscussionData discussion, final CloseEvents closeEvent, final AccountData account) {
         super(discussion.title(), closeEvent, 2, FORM_COMPONENTS,
+                () -> new ForumPostPage(discussion,  CloseEvents.EXIT_PROGRAM, account),
                 () -> new ForumPage(CloseEvents.EXIT_PROGRAM, account),
                 () -> ForumDAO.addNewComment(account.email(), ((JTextComponent) TXT_COMMENT).getText(),
                         discussion.discussionNumber()));

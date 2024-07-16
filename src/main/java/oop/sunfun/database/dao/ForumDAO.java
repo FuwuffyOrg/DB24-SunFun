@@ -18,11 +18,13 @@ public final class ForumDAO extends AbstractDAO {
 
     private static final String FIND_ALL_CATEGORIES = "SELECT `categoria`.`nome` FROM `categoria`";
 
-    private static final String GET_ALL_POSTS_FROM_CATEGORY = "SELECT d.*, a.nome, a.cognome FROM discussione d, "
-            + "account_data a WHERE d.fk_categoria = ? ORDER BY d.num_discussione";
+    private static final String GET_ALL_POSTS_FROM_CATEGORY = "SELECT `d`.*, `a`.`nome`, "
+            + "`a`.`cognome` FROM `discussione` `d` JOIN `account_data` `a` ON `d`.`fk_account` = `a`.`email` "
+            + "WHERE `d`.`fk_categoria`=? ORDER BY `d`.`num_discussione`";
 
-    private static final String GET_COMMENTS_FROM_ID = "SELECT r.num_risposta, r.testo, a.nome, a.cognome "
-            + "FROM `risposta` r, `account_data` a WHERE r.fk_discussione = ?";
+    private static final String GET_COMMENTS_FROM_ID = "SELECT `r`.`num_risposta`, `r`.`testo`, `a`.`nome`, "
+            + "`a`.`cognome` FROM `risposta` `r` JOIN `account_data` `a` ON `r`.`fk_account` = `a`.`email` "
+            + "WHERE `r`.`fk_discussione`=?";
 
     private static final String CREATE_FORUM_POST = "INSERT INTO `discussione`(`titolo`, `descrizione`, "
             + "`fk_categoria`, `fk_account`) VALUES (?,?,?,?)";
