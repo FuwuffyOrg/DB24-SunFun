@@ -96,11 +96,10 @@ public abstract class FormPage extends GenericPage {
     protected boolean isDataValid() {
         this.resetHighlights();
         for (final Entry<JComponent, Integer> input : this.inputs.entrySet()) {
-            if (input.getKey() instanceof JTextComponent textInput) {
-                if (textInput.getText().isEmpty() || textInput.getText().length() > input.getValue()) {
-                    highlightTextComponent(textInput);
-                    return false;
-                }
+            if (input.getKey() instanceof JTextComponent textInput && (textInput.getText().isEmpty()
+                    || textInput.getText().length() > input.getValue())) {
+                highlightTextComponent(textInput);
+                return false;
             }
         }
         return true;
