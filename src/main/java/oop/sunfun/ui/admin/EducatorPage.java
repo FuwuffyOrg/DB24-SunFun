@@ -2,15 +2,26 @@ package oop.sunfun.ui.admin;
 
 import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.dao.EducatorDAO;
+import oop.sunfun.database.dao.GroupDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.person.EducatorData;
 import oop.sunfun.database.data.person.VoluntaryData;
+import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.ScrollPaneConstants;
+import java.awt.Component;
+import java.awt.GridBagLayout;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -23,6 +34,7 @@ public class EducatorPage extends GenericPage {
     public EducatorPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
         this.accountData = account;
+        final AbstractButton btnGoBack = new JButton("Torna alla dashboard");
         this.add(getEducatorTable(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setFillAll()
@@ -33,6 +45,14 @@ public class EducatorPage extends GenericPage {
                 .setFillAll()
                 .build()
         );
+        this.add(btnGoBack, new GridBagConstraintBuilder()
+                .setRow(1).setColumn(0)
+                .setWidth(2)
+                .setFillAll()
+                .build()
+        );
+        // Set action events
+        btnGoBack.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
         // Finalize page
         this.buildWindow();
     }
@@ -51,7 +71,11 @@ public class EducatorPage extends GenericPage {
             final Component lblSurname = new JLabel(String.valueOf(educator.surname()));
             final Component lblEmail = new JLabel(String.valueOf(educator.accountEmail()));
             final Component lblNumber = new JLabel(String.valueOf(educator.phoneNumber()));
-            // TODO: add group
+            final JComboBox<String> comboGroup = new JComboBox<>();
+            comboGroup.addItem(null);
+            GroupDAO.getAllGroups().forEach(p -> comboGroup.addItem(p.name()));
+            educator.group().ifPresent(comboGroup::setSelectedItem);
+            final AbstractButton btnChangeEducatorGroup = new JButton("Aggiorna Gruppo");
             final AbstractButton btnDeleteEducator = new JButton("Elimina");
             // Add them to the panel
             tablePanel.add(lblCodFisc, new GridBagConstraintBuilder()
@@ -79,18 +103,32 @@ public class EducatorPage extends GenericPage {
                     .setFillAll()
                     .build()
             );
-            tablePanel.add(btnDeleteEducator, new GridBagConstraintBuilder()
+            tablePanel.add(comboGroup, new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(5)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(btnChangeEducatorGroup, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(6)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(btnDeleteEducator, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(7)
                     .setFillAll()
                     .build()
             );
             tablePanel.add(new JSeparator(), new GridBagConstraintBuilder()
                     .setRow((i * 2) + 1).setColumn(0)
-                    .setWidth(6)
+                    .setWidth(8)
                     .setFillAll()
                     .build()
             );
             // Add delete event
+            btnChangeEducatorGroup.addActionListener(e -> {
+                EducatorDAO.changeEducatorGroup(educator, (String) comboGroup.getSelectedItem());
+                this.switchPage(new EducatorPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+            });
             btnDeleteEducator.addActionListener(e -> {
                 AccountDAO.eraseAccount(educator.accountEmail());
                 this.switchPage(new EducatorPage(CloseEvents.EXIT_PROGRAM, this.accountData));

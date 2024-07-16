@@ -17,6 +17,9 @@ public final class EducatorDAO extends AbstractDAO {
     private static final String GET_ALL_VOLUNTARY = "SELECT `v`.`codice_fiscale`, `v`.`nome`, `v`.`cognome`, "
             + "`v`.`fk_account` FROM `volontario` `v`";
 
+    private static final String UPDATE_EDUCATOR_GROUP = "UPDATE `educatore` SET `fk_gruppo`=? WHERE "
+            + "`educatore`.`codice_fiscale`=?";
+
     public static Set<EducatorData> getAllEducators() {
         final Set<EducatorData> educators = new HashSet<>();
         try {
@@ -50,5 +53,24 @@ public final class EducatorDAO extends AbstractDAO {
             DB_CONNECTION.closeConnection();
         }
         return voluntaries;
+    }
+
+    public static void changeEducatorGroup(final EducatorData educatorData, final String groupName) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(UPDATE_EDUCATOR_GROUP, groupName, educatorData.codiceFiscale());
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't update the group of " + educatorData.name() + " "
+                    + educatorData.surname(), err);
+            DB_CONNECTION.closeConnection();
+        }
+    }
+
+    public static void createEducator(final EducatorData educatorData) {
+
+    }
+
+    public static void createVoluntary(final VoluntaryData voluntaryData) {
+
     }
 }

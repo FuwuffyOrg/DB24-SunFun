@@ -1,8 +1,8 @@
 package oop.sunfun;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import oop.sunfun.ui.login.LoginPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.login.RegisterPage;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -51,7 +51,7 @@ public final class Main {
     public static void main(final String[] args) {
         Main.setupTheme();
 
-        final JFrame registerPage = new RegisterPage(CloseEvents.EXIT_PROGRAM);
-        registerPage.setVisible(true);
+        final JFrame loginPage = new LoginPage(CloseEvents.EXIT_PROGRAM);
+        loginPage.setVisible(true);
     }
 }
