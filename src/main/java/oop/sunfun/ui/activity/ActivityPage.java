@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
 
 public final class ActivityPage extends FormPage {
 
-    private static final String PAGE_NAME = "Gestione Attivitá";
+    private static final String PAGE_NAME = "Gestione Attivita";
 
     private final AccountData accountData;
 
@@ -47,6 +47,7 @@ public final class ActivityPage extends FormPage {
 
     public ActivityPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
+                () -> new ActivityPage(CloseEvents.EXIT_PROGRAM, account),
                 () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
                 () -> ActivityDAO.createNewActivity(new ActivityData(((JTextComponent) TXT_NAME).getText(),
                         ((JTextComponent) TXT_DESCRIPTION).getText(), 0.0f)));

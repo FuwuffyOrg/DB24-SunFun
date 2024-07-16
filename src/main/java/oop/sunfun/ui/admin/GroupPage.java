@@ -44,8 +44,8 @@ public final class GroupPage extends FormPage {
         TXT_ETA_MIN = new JTextField();
         TXT_ETA_MAX = new JTextField();
         FORM_COMPONENTS.put(new JLabel("Nome del gruppo:"), new Pair<>(TXT_NAME, 20));
-        FORM_COMPONENTS.put(new JLabel("Eta minima:"), new Pair<>(TXT_ETA_MIN, 1));
-        FORM_COMPONENTS.put(new JLabel("Eta massima:"), new Pair<>(TXT_ETA_MAX, 1));
+        FORM_COMPONENTS.put(new JLabel("Eta minima:"), new Pair<>(TXT_ETA_MIN, 3));
+        FORM_COMPONENTS.put(new JLabel("Eta massima:"), new Pair<>(TXT_ETA_MAX, 3));
     }
 
     public GroupPage(final CloseEvents closeEvent, final AccountData account) {

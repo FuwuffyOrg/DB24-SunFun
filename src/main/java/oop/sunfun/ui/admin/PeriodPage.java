@@ -126,6 +126,8 @@ public final class PeriodPage extends FormPage {
             datesInRange.add(result);
             startCalendar.add(Calendar.DATE, 1);
         }
+        final Date result = startCalendar.getTime();
+        datesInRange.add(result);
         return datesInRange;
     }
 

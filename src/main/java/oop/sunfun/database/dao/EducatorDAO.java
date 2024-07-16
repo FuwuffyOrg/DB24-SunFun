@@ -16,7 +16,7 @@ public final class EducatorDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(EducatorDAO.class.getName());
 
     private static final String GET_ALL_EDUCATORS = "SELECT `e`.`codice_fiscale`, `e`.`nome`, `e`.`cognome`, "
-            + "`e`.`cellulare`, `e`.`fk_account` FROM `educatore` `e`";
+            + "`e`.`cellulare`, `e`.`fk_account`, `e`.`fk_gruppo` FROM `educatore` `e`";
 
     private static final String GET_ALL_VOLUNTARY = "SELECT `v`.`codice_fiscale`, `v`.`nome`, `v`.`cognome`, "
             + "`v`.`fk_account` FROM `volontario` `v`";
@@ -35,11 +35,11 @@ public final class EducatorDAO extends AbstractDAO {
         try {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_EDUCATORS);
-            for (final Map<String, Object> allergen : queryData) {
-                educators.add(new EducatorData((String) allergen.get("codice_fiscale"),
-                        (String) allergen.get("nome"), (String) allergen.get("cognome"),
-                        (String) allergen.get("fk_account"), (String) allergen.get("cellulare"),
-                        Optional.ofNullable((String) allergen.get("fk_gruppo"))));
+            for (final Map<String, Object> educator : queryData) {
+                educators.add(new EducatorData((String) educator.get("codice_fiscale"),
+                        (String) educator.get("nome"), (String) educator.get("cognome"),
+                        (String) educator.get("fk_account"), (String) educator.get("cellulare"),
+                        Optional.ofNullable((String) educator.get("fk_gruppo"))));
             }
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all the educators", err);
@@ -53,10 +53,10 @@ public final class EducatorDAO extends AbstractDAO {
         try {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_VOLUNTARY);
-            for (final Map<String, Object> allergen : queryData) {
-                voluntaries.add(new VoluntaryData((String) allergen.get("codice_fiscale"),
-                        (String) allergen.get("fk_account"), (String) allergen.get("nome"),
-                        (String) allergen.get("cognome")));
+            for (final Map<String, Object> voluntary : queryData) {
+                voluntaries.add(new VoluntaryData((String) voluntary.get("codice_fiscale"),
+                        (String) voluntary.get("fk_account"), (String) voluntary.get("nome"),
+                        (String) voluntary.get("cognome")));
             }
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all the voluntaries", err);
