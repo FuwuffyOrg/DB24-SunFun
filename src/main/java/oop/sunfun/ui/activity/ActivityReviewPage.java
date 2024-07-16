@@ -50,14 +50,8 @@ public final class ActivityReviewPage extends FormPage {
     public ActivityReviewPage(final CloseEvents closeEvent, final AccountData account, final ActivityData activity) {
         super(PAGE_NAME + activity.name(), closeEvent, 1, FORM_COMPONENTS,
                 () -> new ActivityPage(CloseEvents.EXIT_PROGRAM, account),
-                () -> {
-                    final Integer grade = (Integer) COMBO_GRADE.getSelectedItem();
-                    if (grade == null) {
-                        throw new IllegalStateException("No grade selected for the review.");
-                    }
-                    ActivityDAO.createNewReviewForActivity(grade, ((JTextComponent) TXT_DESCRIPTION).getText(),
-                            activity.name(), account.email());
-                });
+                () -> ActivityDAO.createNewReviewForActivity((int) COMBO_GRADE.getSelectedItem(),
+                        ((JTextComponent) TXT_DESCRIPTION).getText(), activity.name(), account.email()));
         this.activityData = activity;
         // Add the components to the page
         this.add(getReviewsTable(), new GridBagConstraintBuilder()
@@ -115,5 +109,14 @@ public final class ActivityReviewPage extends FormPage {
         // Add the table to the panel
         return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    }
+
+    @Override
+    protected boolean isDataValid() {
+        final Integer grade = (Integer) COMBO_GRADE.getSelectedItem();
+        if (grade == null) {
+            throw new IllegalStateException("No grade selected for the review.");
+        }
+        return super.isDataValid();
     }
 }

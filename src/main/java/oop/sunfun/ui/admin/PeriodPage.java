@@ -53,10 +53,8 @@ public final class PeriodPage extends FormPage {
                 () -> {
                     final Date startDate = DATE_START.getDate();
                     final Date endDate = DATE_END.getDate();
-                    if (startDate.compareTo(endDate) < 0) {
-                        PeriodDAO.createPeriod(new PeriodData(startDate, endDate));
-                        getDatesBetween(startDate, endDate).forEach(PeriodDAO::createDate);
-                    }
+                    PeriodDAO.createPeriod(new PeriodData(startDate, endDate));
+                    getDatesBetween(startDate, endDate).forEach(PeriodDAO::createDate);
                 });
         this.accountData = account;
         // Create the period table
@@ -128,5 +126,12 @@ public final class PeriodPage extends FormPage {
             startCalendar.add(Calendar.DATE, 1);
         }
         return datesInRange;
+    }
+
+    @Override
+    protected boolean isDataValid() {
+        final Date startDate = DATE_START.getDate();
+        final Date endDate = DATE_END.getDate();
+        return super.isDataValid() && startDate.compareTo(endDate) < 0;
     }
 }
