@@ -276,3 +276,6 @@ ALTER TABLE `svolgimento`
 ALTER TABLE `volontario`
   ADD CONSTRAINT `FK Account Volontario` FOREIGN KEY (`fk_account`) REFERENCES `account` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
+
+INSERT INTO `account`(`email`, `password`, `tipologia`) VALUES ('admin@admin.com','admin','Educatore');
+INSERT INTO `educatore`(`codice_fiscale`, `nome`, `cognome`, `cellulare`, `fk_account`) VALUES ('DMNDMN73H24E506X','Admin','Adminson','0000000000','admin@admin.com');
