@@ -55,7 +55,8 @@ public final class PeriodPage extends FormPage {
                     final Date startDate = DATE_START.getDate();
                     final Date endDate = DATE_END.getDate();
                     PeriodDAO.createPeriod(new PeriodData(startDate, endDate));
-                    getDatesBetween(startDate, endDate).forEach(PeriodDAO::createDate);
+                    getDatesBetween(startDate, endDate).forEach(d -> PeriodDAO.createDate(d,
+                            new PeriodData(startDate, endDate)));
                 });
         this.accountData = account;
         // Create the period table

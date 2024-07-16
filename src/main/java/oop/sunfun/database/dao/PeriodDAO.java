@@ -22,7 +22,8 @@ public final class PeriodDAO extends AbstractDAO {
 
     private static final String GET_ALL_DATES = "SELECT * FROM `giornata` ORDER BY `data`";
 
-    private static final String CREATE_DATE = "INSERT INTO `giornata`(`data`) VALUES (?)";
+    private static final String CREATE_DATE = "INSERT INTO `giornata`(`data`, `fk_periodo_inizio`, `fk_periodo_fine`) "
+            + "VALUES (?,?,?)";
 
     private static final String ERASE_DATES_BETWEEN = "DELETE FROM `giornata` WHERE `data`>=? AND `data`<=?";
 
@@ -80,10 +81,10 @@ public final class PeriodDAO extends AbstractDAO {
         return dates;
     }
 
-    public static void createDate(final Date date) {
+    public static void createDate(final Date date, final PeriodData period) {
         try {
             DB_CONNECTION.openConnection();
-            DB_CONNECTION.setQueryData(CREATE_DATE, date);
+            DB_CONNECTION.setQueryData(CREATE_DATE, date, period.startDate(), period.endDate());
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't create the new date", err);
             DB_CONNECTION.closeConnection();
