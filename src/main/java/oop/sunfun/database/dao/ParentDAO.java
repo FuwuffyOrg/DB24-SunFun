@@ -65,7 +65,7 @@ public final class ParentDAO extends AbstractDAO {
                     parentCodiceFiscale);
             for (final Map<String, Object> participant : queryData) {
                 final String codiceFiscale = (String) participant.get("codice_fiscale");
-                final String dieta = (String) participant.get("dieta");
+                final String dieta = (String) participant.get("fk_dieta");
                 final String gruppo = (String) participant.get("fk_gruppo");
                 final String name = (String) participant.get("nome");
                 final String surname = (String) participant.get("cognome");
