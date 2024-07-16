@@ -15,9 +15,9 @@ public final class GroupDAO extends AbstractDAO {
 
     private static final String GET_ALL_GROUPS = "SELECT * FROM `gruppo`";
 
-    private static final String CREATE_GROUP = "INSERT INTO `gruppo`(`name`, `eta_min`, `eta_max`) VALUES (?,?,?)";
+    private static final String CREATE_GROUP = "INSERT INTO `gruppo`(`nome`, `eta_min`, `eta_max`) VALUES (?,?,?)";
 
-    private static final String ERASE_GROUP = "DELETE FROM `gruppo` WHERE `name`=?";
+    private static final String ERASE_GROUP = "DELETE FROM `gruppo` WHERE `nome`=?";
 
     public static Set<GroupData> getAllGroups() {
         final Set<GroupData> categories = new HashSet<>();
@@ -25,7 +25,7 @@ public final class GroupDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_GROUPS);
             for (final Map<String, Object> category : queryData) {
-                categories.add(new GroupData((String) category.get("name"), (Integer) category.get("eta_min"),
+                categories.add(new GroupData((String) category.get("nome"), (Integer) category.get("eta_min"),
                         (Integer) category.get("eta_max")));
             }
         } catch (final SQLException err) {

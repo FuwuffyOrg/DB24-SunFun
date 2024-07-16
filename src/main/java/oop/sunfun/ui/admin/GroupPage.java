@@ -4,8 +4,9 @@ import oop.sunfun.database.dao.GroupDAO;
 import oop.sunfun.database.data.admin.GroupData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
+import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.layout.FormPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
@@ -20,31 +21,40 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.GridBagLayout;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
-public final class GroupPage extends GenericPage {
+public final class GroupPage extends FormPage {
 
     private static final String PAGE_NAME = "Gestione Gruppi";
 
     private final AccountData accountData;
 
-    private final JTextComponent txtNome;
-    private final JTextComponent txtEtaMin;
-    private final JTextComponent txtEtaMax;
+    private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
+
+    private static final JComponent TXT_NOME;
+    private static final JComponent TXT_ETA_MIN;
+    private static final JComponent TXT_ETA_MAX;
+
+    static {
+        FORM_COMPONENTS = new HashMap<>();
+        TXT_NOME = new JTextField();
+        TXT_ETA_MIN = new JTextField();
+        TXT_ETA_MAX = new JTextField();
+        FORM_COMPONENTS.put(new JLabel("Nome del gruppo:"), new Pair<>(TXT_NOME, 20));
+        FORM_COMPONENTS.put(new JLabel("Eta minima:"), new Pair<>(TXT_ETA_MIN, 1));
+        FORM_COMPONENTS.put(new JLabel("Eta massima:"), new Pair<>(TXT_ETA_MAX, 1));
+    }
 
     public GroupPage(final CloseEvents closeEvent, final AccountData account) {
-        super(PAGE_NAME, closeEvent);
+        super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
+                () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
+                () -> GroupDAO.createGroup(new GroupData(((JTextComponent) TXT_NOME).getText(),
+                            Integer.parseInt(((JTextComponent) TXT_ETA_MIN).getText()),
+                            Integer.parseInt(((JTextComponent) TXT_ETA_MAX).getText()))));
         this.accountData = account;
-        // Add inputs to add a new group
-        final Component lblNome = new JLabel("Nome del gruppo:");
-        final Component lblEtaMin = new JLabel("Etá minima:");
-        final Component lblEtaMax = new JLabel("Etá massima:");
-        this.txtNome = new JTextField();
-        this.txtEtaMin = new JTextField();
-        this.txtEtaMax = new JTextField();
-        final AbstractButton btnAddGroup = new JButton("Aggiungi il gruppo");
-        final AbstractButton btnGoBack = new JButton("Torna alla dashboard");
         // Create the group table
         this.add(this.getGroupTable(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
@@ -52,58 +62,6 @@ public final class GroupPage extends GenericPage {
                 .setFillAll()
                 .build()
         );
-        this.add(lblNome, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(lblEtaMin, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        this.add(lblEtaMax, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(2)
-                .setFillAll()
-                .build()
-        );
-        this.add(this.txtNome, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(this.txtEtaMin, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        this.add(this.txtEtaMax, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(2)
-                .setFillAll()
-                .build()
-        );
-        this.add(btnAddGroup, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(3)
-                .setFillAll()
-                .build()
-        );
-        this.add(btnGoBack, new GridBagConstraintBuilder()
-                .setRow(3).setColumn(0)
-                .setWidth(4)
-                .setFillAll()
-                .build()
-        );
-        // Add events
-        // Return to the landing page
-        btnGoBack.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
-        // Try to add the group
-        btnAddGroup.addActionListener(e -> {
-            if (isDataValid()) {
-                GroupDAO.createGroup(new GroupData(txtNome.getText(), Integer.parseInt(txtEtaMin.getText()),
-                        Integer.parseInt(txtEtaMax.getText())));
-                this.switchPage(new GroupPage(CloseEvents.EXIT_PROGRAM, account));
-            }
-        });
         // Finalize the window
         this.buildWindow();
     }
@@ -157,30 +115,5 @@ public final class GroupPage extends GenericPage {
         // Add the table to the panel
         return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    }
-
-    private boolean isDataValid() {
-        final int minSize = 2;
-        final int nameLengthLimit = 20;
-        final String isAgeNumberRegex = "\\b(0*(?:[1-9][0-9]?|100))\\b";
-        this.resetHighlights();
-        if (txtNome.getText().length() > nameLengthLimit || txtNome.getText().length() < minSize) {
-            GenericPage.highlightTextComponent(txtNome);
-            return false;
-        } else if (!txtEtaMin.getText().matches(isAgeNumberRegex)) {
-            GenericPage.highlightTextComponent(txtEtaMin);
-            return false;
-        } else if (!txtEtaMax.getText().matches(isAgeNumberRegex)) {
-            GenericPage.highlightTextComponent(txtEtaMax);
-            return false;
-        }
-        final int etaMin = Integer.parseInt(txtEtaMin.getText());
-        final int etaMax = Integer.parseInt(txtEtaMax.getText());
-        if (etaMin > etaMax) {
-            GenericPage.highlightTextComponent(txtEtaMin);
-            GenericPage.highlightTextComponent(txtEtaMax);
-            return false;
-        }
-        return true;
     }
 }

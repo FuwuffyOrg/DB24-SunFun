@@ -67,10 +67,10 @@ public final class EducatorDAO extends AbstractDAO {
     }
 
     public static void createEducator(final EducatorData educatorData) {
-
+        // TODO
     }
 
     public static void createVoluntary(final VoluntaryData voluntaryData) {
-
+        // TODO
     }
 }
