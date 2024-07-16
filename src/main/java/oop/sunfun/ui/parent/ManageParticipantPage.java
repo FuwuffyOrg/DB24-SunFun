@@ -1,5 +1,6 @@
 package oop.sunfun.ui.parent;
 
+import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.dao.ParentDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.person.ParticipantData;
@@ -113,7 +114,7 @@ public final class ManageParticipantPage extends GenericPage {
             btnMembership.addActionListener(e -> this.switchPage(new ParticipantMembershipPage(CloseEvents.EXIT_PROGRAM,
                     this.accountData, participant)));
             btnUnsubscribe.addActionListener(e -> {
-                ParentDAO.eraseParticipantAccount(participant);
+                AccountDAO.eraseAccount(participant.accountEmail());
                 this.switchPage(new ManageParticipantPage(CloseEvents.EXIT_PROGRAM, this.accountData));
             });
         });

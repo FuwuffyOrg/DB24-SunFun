@@ -21,11 +21,8 @@ public final class ParentDAO extends AbstractDAO {
     private static final String CREATE_PARTICIPANT = "INSERT INTO `partecipante`(`codice_fiscale`, `fk_account`, "
             + "`fk_dieta`, `fk_gruppo`, `nome`, `cognome`, `data_di_nascita`) VALUES (?,?,?,?,?,?,?)";
 
-    private static final String DELETE_PARTICIPANT = "DELETE a FROM account a JOIN account_data ad ON a.email = "
-            + "ad.email WHERE ad.codice_fiscale=?";
-
     private static final String GET_ALL_PARTICIPANTS_FROM_PARENT = "SELECT p.codice_fiscale, d.email, p.fk_dieta, "
-            + "p.fk_gruppo, p.nome, p.cognome, p.data_di_nascita FROM partecipante p JOIN account_data d "
+            + "p.fk_gruppo, p.nome, p.cognome, p.data_di_nascita, p.fk_account FROM partecipante p JOIN account_data d "
             + "ON p.codice_fiscale = d.codice_fiscale JOIN ritiro r ON p.codice_fiscale = r.fk_partecipante WHERE "
             + "r.fk_parente=?";
 
@@ -60,17 +57,6 @@ public final class ParentDAO extends AbstractDAO {
         }
     }
 
-    public static void eraseParticipantAccount(final ParticipantData participantData) {
-        try {
-            DB_CONNECTION.openConnection();
-            DB_CONNECTION.setQueryData(DELETE_PARTICIPANT, participantData.codiceFiscale());
-        } catch (final SQLException err) {
-            bracedLog(LOGGER, Level.SEVERE, "Couldn't erase the participant " + participantData.codiceFiscale(),
-                    err);
-            DB_CONNECTION.closeConnection();
-        }
-    }
-
     public static List<ParticipantData> getAllParticipantsFromParent(final String parentCodiceFiscale) {
         final List<ParticipantData> participants = new ArrayList<>();
         try {
@@ -83,9 +69,9 @@ public final class ParentDAO extends AbstractDAO {
                 final String gruppo = (String) participant.get("fk_gruppo");
                 final String name = (String) participant.get("nome");
                 final String surname = (String) participant.get("cognome");
+                final String email = (String) participant.get("fk_account");
                 final Date dateOfBirth = (Date) participant.get("data_di_nascita");
-                // TODO: add account
-                participants.add(new ParticipantData(codiceFiscale, "", Optional.ofNullable(dieta),
+                participants.add(new ParticipantData(codiceFiscale, email, Optional.ofNullable(dieta),
                         Optional.ofNullable(gruppo), name, surname, dateOfBirth));
             }
         } catch (final SQLException err) {

@@ -1,0 +1,160 @@
+package oop.sunfun.ui.admin;
+
+import oop.sunfun.database.dao.AccountDAO;
+import oop.sunfun.database.dao.EducatorDAO;
+import oop.sunfun.database.data.login.AccountData;
+import oop.sunfun.database.data.person.EducatorData;
+import oop.sunfun.database.data.person.VoluntaryData;
+import oop.sunfun.ui.util.behavior.CloseEvents;
+import oop.sunfun.ui.util.layout.GenericPage;
+import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+import java.util.stream.IntStream;
+
+public class EducatorPage extends GenericPage {
+
+    private static final String PAGE_NAME = "Gestione Educatori";
+
+    private final AccountData accountData;
+
+    public EducatorPage(final CloseEvents closeEvent, final AccountData account) {
+        super(PAGE_NAME, closeEvent);
+        this.accountData = account;
+        this.add(getEducatorTable(), new GridBagConstraintBuilder()
+                .setRow(0).setColumn(0)
+                .setFillAll()
+                .build()
+        );
+        this.add(getVoluntaryTable(), new GridBagConstraintBuilder()
+                .setRow(0).setColumn(1)
+                .setFillAll()
+                .build()
+        );
+        // Finalize page
+        this.buildWindow();
+    }
+
+    private Component getEducatorTable() {
+        // Create the panel
+        final JComponent tablePanel = new JPanel();
+        tablePanel.setLayout(new GridBagLayout());
+        // Get the groups
+        final List<EducatorData> educators = EducatorDAO.getAllEducators().stream().toList();
+        // Add the groups to the table
+        IntStream.range(0, educators.size()).forEach(i -> {
+            final EducatorData educator = educators.get(i);
+            final Component lblCodFisc = new JLabel(String.valueOf(educator.codiceFiscale()));
+            final Component lblName = new JLabel(educator.name());
+            final Component lblSurname = new JLabel(String.valueOf(educator.surname()));
+            final Component lblEmail = new JLabel(String.valueOf(educator.accountEmail()));
+            final Component lblNumber = new JLabel(String.valueOf(educator.phoneNumber()));
+            // TODO: add group
+            final AbstractButton btnDeleteEducator = new JButton("Elimina");
+            // Add them to the panel
+            tablePanel.add(lblCodFisc, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(0)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(lblName, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(1)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(lblSurname, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(2)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(lblEmail, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(3)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(lblNumber, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(4)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(btnDeleteEducator, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(5)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(new JSeparator(), new GridBagConstraintBuilder()
+                    .setRow((i * 2) + 1).setColumn(0)
+                    .setWidth(6)
+                    .setFillAll()
+                    .build()
+            );
+            // Add delete event
+            btnDeleteEducator.addActionListener(e -> {
+                AccountDAO.eraseAccount(educator.accountEmail());
+                this.switchPage(new EducatorPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+            });
+        });
+        // Add the table to the panel
+        return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    }
+
+    private Component getVoluntaryTable() {
+        // Create the panel
+        final JComponent tablePanel = new JPanel();
+        tablePanel.setLayout(new GridBagLayout());
+        // Get the groups
+        final List<VoluntaryData> voluntaries = EducatorDAO.getAllVoluntary().stream().toList();
+        // Add the groups to the table
+        IntStream.range(0, voluntaries.size()).forEach(i -> {
+            final VoluntaryData voluntary = voluntaries.get(i);
+            final Component lblCodFisc = new JLabel(String.valueOf(voluntary.codiceFiscale()));
+            final Component lblName = new JLabel(voluntary.name());
+            final Component lblSurname = new JLabel(String.valueOf(voluntary.surname()));
+            final Component lblEmail = new JLabel(String.valueOf(voluntary.accountEmail()));
+            final AbstractButton btnDeleteEducator = new JButton("Elimina");
+            // Add them to the panel
+            tablePanel.add(lblCodFisc, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(0)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(lblName, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(1)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(lblSurname, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(2)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(lblEmail, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(3)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(btnDeleteEducator, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(4)
+                    .setFillAll()
+                    .build()
+            );
+            tablePanel.add(new JSeparator(), new GridBagConstraintBuilder()
+                    .setRow((i * 2) + 1).setColumn(0)
+                    .setWidth(5)
+                    .setFillAll()
+                    .build()
+            );
+            // Add delete event
+            btnDeleteEducator.addActionListener(e -> {
+                AccountDAO.eraseAccount(voluntary.accountEmail());
+                this.switchPage(new EducatorPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+            });
+        });
+        // Add the table to the panel
+        return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    }
+}

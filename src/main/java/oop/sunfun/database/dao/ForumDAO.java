@@ -16,12 +16,12 @@ import java.util.logging.Logger;
 public final class ForumDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(ForumDAO.class.getName());
 
-    private static final String FIND_ALL_CATEGORIES = "SELECT `categoria`.name FROM `categoria`";
+    private static final String FIND_ALL_CATEGORIES = "SELECT `categoria`.`nome` FROM `categoria`";
 
-    private static final String GET_ALL_POSTS_FROM_CATEGORY = "SELECT d.*, a.name, a.cognome FROM discussione d, "
+    private static final String GET_ALL_POSTS_FROM_CATEGORY = "SELECT d.*, a.nome, a.cognome FROM discussione d, "
             + "account_data a WHERE d.fk_categoria = ? ORDER BY d.num_discussione";
 
-    private static final String GET_COMMENTS_FROM_ID = "SELECT r.num_risposta, r.testo, a.name, a.cognome "
+    private static final String GET_COMMENTS_FROM_ID = "SELECT r.num_risposta, r.testo, a.nome, a.cognome "
             + "FROM `risposta` r, `account_data` a WHERE r.fk_discussione = ?";
 
     private static final String CREATE_FORUM_POST = "INSERT INTO `discussione`(`titolo`, `description`, "
@@ -36,7 +36,7 @@ public final class ForumDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(FIND_ALL_CATEGORIES);
             for (final Map<String, Object> category : queryData) {
-                categories.add(new CategoryData((String) category.get("name")));
+                categories.add(new CategoryData((String) category.get("nome")));
             }
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the categories", err);
@@ -55,7 +55,7 @@ public final class ForumDAO extends AbstractDAO {
                 final int numDiscussion = (Integer) discussion.get("num_discussione");
                 final String title = (String) discussion.get("titolo");
                 final String description = (String) discussion.get("description");
-                final String name = (String) discussion.get("name");
+                final String name = (String) discussion.get("nome");
                 final String surname = (String) discussion.get("cognome");
                 categories.add(new DiscussionData(numDiscussion, title, description, name, surname));
             }
@@ -75,7 +75,7 @@ public final class ForumDAO extends AbstractDAO {
             for (final Map<String, Object> comment : queryData) {
                 final int numResponse = (Integer) comment.get("num_risposta");
                 final String text = (String) comment.get("testo");
-                final String name = (String) comment.get("name");
+                final String name = (String) comment.get("nome");
                 final String surname = (String) comment.get("cognome");
                 comments.add(new CommentData(numResponse, text, name, surname));
             }

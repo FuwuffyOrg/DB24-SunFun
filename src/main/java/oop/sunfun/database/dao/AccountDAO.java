@@ -19,6 +19,8 @@ public final class AccountDAO extends AbstractDAO {
     private static final String CREATE_ACCOUNT_BY_EMAIL_PASSOWRD = "INSERT INTO `account`(`email`, `password`, "
             + "`tipologia`) VALUES (?,?,?)";
 
+    private static final String DELETE_ACCOUNT_BY_EMAIL = "DELETE `a` FROM ACCOUNT `a` WHERE `a`.`email` = ?";
+
     public static Optional<AccountData> getAccount(final String email, final String password) {
         try {
             DB_CONNECTION.openConnection();
@@ -47,6 +49,16 @@ public final class AccountDAO extends AbstractDAO {
             DB_CONNECTION.setQueryData(CREATE_ACCOUNT_BY_EMAIL_PASSOWRD, email, password, accountType.getTextValue());
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the categories", err);
+            DB_CONNECTION.closeConnection();
+        }
+    }
+
+    public static void eraseAccount(final String email) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(DELETE_ACCOUNT_BY_EMAIL, email);
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't delete the account " + email, err);
             DB_CONNECTION.closeConnection();
         }
     }
