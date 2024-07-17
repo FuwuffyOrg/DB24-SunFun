@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS `account` (
 
 INSERT INTO `account` (`email`, `password`, `tipologia`) VALUES
 ('admin@admin.com', 'admin', 'Educatore');
-
 DROP VIEW IF EXISTS `account_data`;
 CREATE TABLE IF NOT EXISTS `account_data` (
 `email` varchar(256)
@@ -84,8 +83,8 @@ INSERT INTO `educatore` (`codice_fiscale`, `nome`, `cognome`, `cellulare`, `fk_g
 DROP TABLE IF EXISTS `giornata`;
 CREATE TABLE IF NOT EXISTS `giornata` (
   `data` date NOT NULL COMMENT 'La data della giornata.',
-  `fk_periodo_inizio` date NOT NULL,
-  `fk_periodo_fine` date NOT NULL,
+  `fk_periodo_inizio` date NOT NULL COMMENT 'Chiave esterna della data di inizio del periodo associato.',
+  `fk_periodo_fine` date NOT NULL COMMENT 'Chiave esterna della data di fine del periodo associato.',
   PRIMARY KEY (`data`),
   KEY `FK Periodo Giornata` (`fk_periodo_inizio`,`fk_periodo_fine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -153,18 +152,8 @@ CREATE TABLE IF NOT EXISTS `periodo` (
   PRIMARY KEY (`data_inizio`,`data_fine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `presenza_educatore`;
-CREATE TABLE IF NOT EXISTS `presenza_educatore` (
-  `presenza` tinyint(1) NOT NULL COMMENT 'Booleano per controllare che l''educatore sia presente.',
-  `fk_educatore` varchar(16) NOT NULL COMMENT 'Chiave esterna dell''educatore per la presenza.',
-  `fk_giornata` date NOT NULL COMMENT 'Chiave esterna della giornata durante la quale l''educatore é presente.',
-  PRIMARY KEY (`fk_educatore`,`fk_giornata`),
-  KEY `FK Giornata Presenza Educatore` (`fk_giornata`),
-  KEY `FK Educatore Presenza Educatore` (`fk_educatore`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-DROP TABLE IF EXISTS `presenza_partecipante`;
-CREATE TABLE IF NOT EXISTS `presenza_partecipante` (
+DROP TABLE IF EXISTS `presenza`;
+CREATE TABLE IF NOT EXISTS `presenza` (
   `entrata` tinyint(1) NOT NULL COMMENT 'Booleano per controllare che un partecipante sia entrato nel centro estivo (per l''appello).',
   `uscita` tinyint(1) NOT NULL COMMENT 'Booleano per controllare che un partecipante sia uscito dal centro estivo (per l''appello).',
   `fk_partecipante` varchar(16) NOT NULL COMMENT 'Chiave esterna del partecipante per controllare la presenza.',
@@ -260,11 +249,7 @@ ALTER TABLE `partecipante`
   ADD CONSTRAINT `FK Dieta` FOREIGN KEY (`fk_dieta`) REFERENCES `dieta` (`nome`) ON UPDATE CASCADE,
   ADD CONSTRAINT `FK Gruppo` FOREIGN KEY (`fk_gruppo`) REFERENCES `gruppo` (`nome`) ON UPDATE CASCADE;
 
-ALTER TABLE `presenza_educatore`
-  ADD CONSTRAINT `FK Educatore Presenza Educatore` FOREIGN KEY (`fk_educatore`) REFERENCES `educatore` (`codice_fiscale`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK Giornata Presenza Educatore` FOREIGN KEY (`fk_giornata`) REFERENCES `giornata` (`data`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE `presenza_partecipante`
+ALTER TABLE `presenza`
   ADD CONSTRAINT `FK Giornata Presenza Partecipante` FOREIGN KEY (`fk_giornata`) REFERENCES `giornata` (`data`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK Partecipante Presenza Partecipante` FOREIGN KEY (`fk_partecipante`) REFERENCES `partecipante` (`codice_fiscale`) ON DELETE CASCADE ON UPDATE CASCADE;
 
