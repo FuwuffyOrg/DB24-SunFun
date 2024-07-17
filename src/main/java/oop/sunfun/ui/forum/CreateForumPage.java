@@ -3,7 +3,6 @@ package oop.sunfun.ui.forum;
 import oop.sunfun.database.dao.ForumDAO;
 import oop.sunfun.database.data.forum.CategoryData;
 import oop.sunfun.database.data.login.AccountData;
-import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.pages.FormPage;
@@ -11,6 +10,7 @@ import oop.sunfun.ui.util.pages.FormPage;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
@@ -30,7 +30,7 @@ public final class CreateForumPage extends FormPage {
     static {
         FORM_COMPONENTS = new LinkedHashMap<>();
         TXT_TITLE = new JTextField();
-        TXT_DESCRIPTION = new JTextField();
+        TXT_DESCRIPTION = new JTextArea();
         COMBO_CATEGORY = new JComboBox<>();
         ForumDAO.getAllCategories().forEach(c -> {
             COMBO_CATEGORY.addItem(c.name());
