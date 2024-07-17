@@ -14,10 +14,10 @@ public final class AccountDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(AccountDAO.class.getName());
 
     private static final String FIND_ACCOUNT_BY_EMAIL_PASSWORD = "SELECT * FROM `account_data` WHERE `email` = ? "
-            + "AND password = ?";
+            + "AND password = PASSWORD(?)";
 
     private static final String CREATE_ACCOUNT_BY_EMAIL_PASSOWRD = "INSERT INTO `account`(`email`, `password`, "
-            + "`tipologia`) VALUES (?,?,?)";
+            + "`tipologia`) VALUES (?,PASSWORD(?),?)";
 
     private static final String DELETE_ACCOUNT_BY_EMAIL = "DELETE `a` FROM ACCOUNT `a` WHERE `a`.`email` = ?";
 
