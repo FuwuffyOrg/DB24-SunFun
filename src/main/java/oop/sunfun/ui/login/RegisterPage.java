@@ -51,8 +51,8 @@ public final class RegisterPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Cognome:"), new Pair<>(TXT_SURNAME, 36));
         FORM_COMPONENTS.put(new JLabel("Telefono:"), new Pair<>(TXT_PHONE, 10));
         FORM_COMPONENTS.put(new JLabel("Email:"), new Pair<>(TXT_EMAIL, 256));
+        FORM_COMPONENTS.put(new JLabel("Tipologia parente:"), new Pair<>(COMBO_PARENT_TYPE, 0));
         FORM_COMPONENTS.put(new JLabel("Password:"), new Pair<>(TXT_PASSWORD, 24));
-        FORM_COMPONENTS.put(new JLabel("Conferma Password:"), new Pair<>(COMBO_PARENT_TYPE, 0));
         FORM_COMPONENTS.put(new JLabel("Conferma Password:"), new Pair<>(TXT_PASSWORD_CONFIRM, 24));
     }
 
