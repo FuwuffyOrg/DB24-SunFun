@@ -23,8 +23,8 @@ public final class PeriodDAO extends AbstractDAO {
 
     private static final String GET_ALL_DATES = "SELECT * FROM `giornata` ORDER BY `data`";
 
-    private static final String DELETE_MEMBERSHIP = "DELETE FROM `modalita` `m` WHERE `m`.`fk_data_inizio` = ? AND "
-            + "`m`.`fk_data_fine` = ? AND `m`.`fk_partecipante` = ?";
+    private static final String DELETE_MEMBERSHIP = "DELETE FROM `modalita` WHERE `fk_data_inizio` = ? AND "
+            + "`fk_data_fine` = ? AND `fk_partecipante` = ?";
 
     private static final String ADD_MEMBERSHIP = "INSERT INTO `modalita`(`tempo_pieno`, `pasti`, `fk_data_inizio`, "
             + "`fk_data_fine`, `fk_partecipante`) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE `tempo_pieno` = "
