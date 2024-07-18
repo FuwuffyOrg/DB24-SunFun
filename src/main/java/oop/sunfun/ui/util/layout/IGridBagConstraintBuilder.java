@@ -46,13 +46,6 @@ public interface IGridBagConstraintBuilder {
     IGridBagConstraintBuilder setHeight(int height);
 
     /**
-     * Sets the anchor to link the element to display.
-     * @param anchorIn The side of the page to link it to.
-     * @return The current builder.
-     */
-    IGridBagConstraintBuilder setAnchor(Anchors anchorIn);
-
-    /**
      * Sets the margin from the top from the other elements of the element to display.
      * @param margin The amount of the margin to set.
      * @return The current builder.

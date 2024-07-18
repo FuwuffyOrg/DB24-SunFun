@@ -37,11 +37,6 @@ public final class GridBagConstraintBuilder implements IGridBagConstraintBuilder
     private int fill;
 
     /**
-     * Where the base element will be connected to.
-     */
-    private Anchors anchor;
-
-    /**
      * Provides the margin from the other elements.
      */
     private final Insets inset;
@@ -54,7 +49,6 @@ public final class GridBagConstraintBuilder implements IGridBagConstraintBuilder
         this.dimensions = new Pair<>(1, 1);
         this.weights = new Pair<>(BASE_WEIGHT, BASE_WEIGHT);
         this.padding = new Pair<>(0, 0);
-        this.anchor = Anchors.CENTER;
         this.inset = new Insets(0, 0, 0, 0);
     }
 
@@ -91,12 +85,6 @@ public final class GridBagConstraintBuilder implements IGridBagConstraintBuilder
     @Override
     public IGridBagConstraintBuilder setHeight(final int height) {
         this.dimensions = new Pair<>(this.dimensions.x(), height);
-        return this;
-    }
-
-    @Override
-    public IGridBagConstraintBuilder setAnchor(final Anchors anchorIn) {
-        this.anchor = anchorIn;
         return this;
     }
 
@@ -205,7 +193,7 @@ public final class GridBagConstraintBuilder implements IGridBagConstraintBuilder
     public GridBagConstraints build() {
         return new GridBagConstraints(
                 this.position.x(), this.position.y(), this.dimensions.x(), this.dimensions.y(),
-                this.weights.x(), this.weights.y(), this.anchor.getAnchorValue(), this.fill, this.inset,
+                this.weights.x(), this.weights.y(), GridBagConstraints.LINE_START, this.fill, this.inset,
                 this.padding.x(), this.padding.y());
     }
 }
