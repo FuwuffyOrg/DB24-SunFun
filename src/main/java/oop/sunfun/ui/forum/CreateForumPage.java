@@ -32,9 +32,6 @@ public final class CreateForumPage extends FormPage {
         TXT_TITLE = new JTextField();
         TXT_DESCRIPTION = new JTextArea();
         COMBO_CATEGORY = new JComboBox<>();
-        ForumDAO.getAllCategories().forEach(c -> {
-            COMBO_CATEGORY.addItem(c.name());
-        });
         FORM_COMPONENTS.put(new JLabel("Titolo del post:"), new Pair<>(TXT_TITLE, 50));
         FORM_COMPONENTS.put(new JLabel("Descrizione:"), new Pair<>(TXT_DESCRIPTION, 10000));
         FORM_COMPONENTS.put(new JLabel("Categoria:"), new Pair<>(COMBO_CATEGORY, 0));
@@ -46,6 +43,10 @@ public final class CreateForumPage extends FormPage {
                 () -> ForumDAO.addNewDiscussion(((JTextComponent) TXT_TITLE).getText(),
                         ((JTextComponent) TXT_DESCRIPTION).getText(),
                         new CategoryData((String) COMBO_CATEGORY.getSelectedItem()), account.email()));
+        // Reload categories just in case
+        ForumDAO.getAllCategories().forEach(c -> {
+            COMBO_CATEGORY.addItem(c.name());
+        });
         // Finalize the window
         this.buildWindow();
     }

@@ -4,7 +4,12 @@ import oop.sunfun.database.data.admin.GroupData;
 import oop.sunfun.database.data.person.ParticipantData;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,7 +52,7 @@ public final class GroupDAO extends AbstractDAO {
                 final String dieta = (String) participant.get("fk_dieta");
                 final String gruppo = (String) participant.get("fk_gruppo");
                 final String name = (String) participant.get("nome");
-                final String surname = (String) participant.get("cognome");
+                final String surname = (String) participant.get("surname");
                 final String email = (String) participant.get("fk_account");
                 final Date dateOfBirth = (Date) participant.get("data_di_nascita");
                 participants.add(new ParticipantData(codiceFiscale, email, Optional.ofNullable(dieta),

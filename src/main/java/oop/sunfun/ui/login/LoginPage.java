@@ -36,8 +36,8 @@ public final class LoginPage extends FormPage {
     // A bit weird but works, have to do the same query twice but clean code
     public LoginPage(final CloseEvents closeEvent) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
-                () -> new LandingPage(CloseEvents.EXIT_PROGRAM, AccountDAO.getAccount(((JTextComponent) TXT_EMAIL).getText(),
-                        ((JTextComponent) TXT_PASSWORD).getText()).get()),
+                () -> new LandingPage(CloseEvents.EXIT_PROGRAM, AccountDAO.getAccount(
+                        ((JTextComponent) TXT_EMAIL).getText(), ((JTextComponent) TXT_PASSWORD).getText()).get()),
                 () -> new RegisterPage(CloseEvents.EXIT_PROGRAM),
                 () -> {});
         // Finish the window.

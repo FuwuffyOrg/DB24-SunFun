@@ -60,7 +60,8 @@ public final class ManageParticipantPage extends GenericPage {
     private Component createParticipantTable() {
         final JComponent participantPanel = new JPanel();
         participantPanel.setLayout(new GridBagLayout());
-        final List<ParticipantData> participants = ParentDAO.getAllParticipantsFromParent(accountData.codFisc());
+        final List<ParticipantData> participants = ParentDAO.getAllParticipantsFromParent(accountData.codFisc())
+                .stream().toList();
         IntStream.range(0, participants.size()).forEach(i -> {
             final ParticipantData participant = participants.get(i);
             final Component lblName = new JLabel(participant.name());

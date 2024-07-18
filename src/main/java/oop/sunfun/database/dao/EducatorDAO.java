@@ -15,20 +15,20 @@ import java.util.logging.Logger;
 public final class EducatorDAO extends AbstractDAO {
     private static final Logger LOGGER = Logger.getLogger(EducatorDAO.class.getName());
 
-    private static final String GET_ALL_EDUCATORS = "SELECT `e`.`codice_fiscale`, `e`.`nome`, `e`.`cognome`, "
+    private static final String GET_ALL_EDUCATORS = "SELECT `e`.`codice_fiscale`, `e`.`nome`, `e`.`surname`, "
             + "`e`.`cellulare`, `e`.`fk_account`, `e`.`fk_gruppo` FROM `educatore` `e`";
 
-    private static final String GET_ALL_VOLUNTARY = "SELECT `v`.`codice_fiscale`, `v`.`nome`, `v`.`cognome`, "
+    private static final String GET_ALL_VOLUNTARY = "SELECT `v`.`codice_fiscale`, `v`.`nome`, `v`.`surname`, "
             + "`v`.`fk_account` FROM `volontario` `v`";
 
     private static final String UPDATE_EDUCATOR_GROUP = "UPDATE `educatore` SET `fk_gruppo`=? WHERE "
             + "`educatore`.`codice_fiscale`=?";
 
-    private static final String CREATE_EDUCATOR = "INSERT INTO `educatore`(`codice_fiscale`, `nome`, `cognome`, "
+    private static final String CREATE_EDUCATOR = "INSERT INTO `educatore`(`codice_fiscale`, `nome`, `surname`, "
             + "`cellulare`, `fk_account`) VALUES (?,?,?,?,?)";
 
     private static final String CREATE_VOLUNTARY = "INSERT INTO `volontario`(`codice_fiscale`, `fk_account`, `nome`, "
-            + "`cognome`) VALUES (?,?,?,?)";
+            + "`surname`) VALUES (?,?,?,?)";
 
     public static Set<EducatorData> getAllEducators() {
         final Set<EducatorData> educators = new HashSet<>();
@@ -37,7 +37,7 @@ public final class EducatorDAO extends AbstractDAO {
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_EDUCATORS);
             for (final Map<String, Object> educator : queryData) {
                 educators.add(new EducatorData((String) educator.get("codice_fiscale"),
-                        (String) educator.get("nome"), (String) educator.get("cognome"),
+                        (String) educator.get("nome"), (String) educator.get("surname"),
                         (String) educator.get("fk_account"), (String) educator.get("cellulare"),
                         Optional.ofNullable((String) educator.get("fk_gruppo"))));
             }
@@ -56,7 +56,7 @@ public final class EducatorDAO extends AbstractDAO {
             for (final Map<String, Object> voluntary : queryData) {
                 voluntaries.add(new VoluntaryData((String) voluntary.get("codice_fiscale"),
                         (String) voluntary.get("fk_account"), (String) voluntary.get("nome"),
-                        (String) voluntary.get("cognome")));
+                        (String) voluntary.get("surname")));
             }
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all the voluntaries", err);

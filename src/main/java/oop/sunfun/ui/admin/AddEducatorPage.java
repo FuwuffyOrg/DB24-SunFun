@@ -10,7 +10,13 @@ import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.pages.FormPage;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.util.LinkedHashMap;
@@ -32,7 +38,6 @@ public class AddEducatorPage extends FormPage {
     private static final JComponent TXT_PASSWORD_CONFIRM;
     private static final AbstractButton RADIO_EDUCATOR;
     private static final AbstractButton RADIO_VOLUNTARY;
-    // TODO: radio button?
 
     static {
         FORM_COMPONENTS = new LinkedHashMap<>();

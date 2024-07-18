@@ -58,7 +58,8 @@ public class EducatorPage extends GenericPage {
         );
         // Set action events
         btnGoBack.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
-        btnAddNewEducator.addActionListener(e -> this.switchPage(new AddEducatorPage(CloseEvents.EXIT_PROGRAM, account)));
+        btnAddNewEducator.addActionListener(e -> this.switchPage(new AddEducatorPage(CloseEvents.EXIT_PROGRAM,
+                account)));
         // Finalize page
         this.buildWindow();
     }

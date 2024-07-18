@@ -22,7 +22,7 @@ public final class ActivityDAO extends AbstractDAO {
 
     private static final String DELETE_ACTIVITY = "DELETE FROM `attivita` WHERE `nome`=?";
 
-    private static final String GET_ACTIVITY_REVIEWS = "SELECT r.voto, r.descrizione, a.nome, a.cognome FROM "
+    private static final String GET_ACTIVITY_REVIEWS = "SELECT r.voto, r.descrizione, a.nome, a.surname FROM "
             + "recensione r JOIN account_data a ON r.fk_account = a.email WHERE r.fk_attivita=?;";
 
     private static final String CREATE_ACTIVITY_REVIEW = "INSERT INTO `recensione`(`voto`, `descrizione`, "
@@ -72,7 +72,7 @@ public final class ActivityDAO extends AbstractDAO {
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ACTIVITY_REVIEWS, activityName);
             for (final Map<String, Object> review : queryData) {
                 reviews.add(new ReviewData((int) review.get("voto"), (String) review.get("descrizione"),
-                        (String) review.get("nome"), (String) review.get("cognome")));
+                        (String) review.get("nome"), (String) review.get("surname")));
             }
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all the reviews for the activity " + activityName, err);

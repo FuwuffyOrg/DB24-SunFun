@@ -4,21 +4,18 @@ import oop.sunfun.database.dao.AccountDAO;
 import oop.sunfun.database.dao.ParentDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.login.AccountType;
-import oop.sunfun.database.data.person.ParentType;
 import oop.sunfun.database.data.person.ParticipantData;
 import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.pages.FormPage;
 import org.jdesktop.swingx.JXDatePicker;
 
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
-import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -38,7 +35,6 @@ public final class AddParticipantPage extends FormPage {
     private static final JXDatePicker DATE_BIRTH;
     private static final JComponent TXT_PASSWORD;
     private static final JComponent TXT_PASSWORD_CONFIRM;
-    private static final JComboBox<String> COMBO_PARENT_TYPE;
 
     static {
         FORM_COMPONENTS = new LinkedHashMap<>();
@@ -50,8 +46,6 @@ public final class AddParticipantPage extends FormPage {
         DATE_BIRTH = new JXDatePicker();
         TXT_PASSWORD = new JPasswordField();
         TXT_PASSWORD_CONFIRM = new JPasswordField();
-        COMBO_PARENT_TYPE = new JComboBox<>();
-        EnumSet.allOf(ParentType.class).forEach(p -> COMBO_PARENT_TYPE.addItem(p.getTextValue()));
         FORM_COMPONENTS.put(new JLabel("Codice fiscale:"), new Pair<>(TXT_COD_FISC, 16));
         FORM_COMPONENTS.put(new JLabel("Nome:"), new Pair<>(TXT_NAME, 36));
         FORM_COMPONENTS.put(new JLabel("Cognome:"), new Pair<>(TXT_SURNAME, 36));
