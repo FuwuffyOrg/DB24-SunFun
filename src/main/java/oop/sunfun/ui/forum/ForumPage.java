@@ -6,7 +6,6 @@ import oop.sunfun.database.data.forum.DiscussionData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.Anchors;
 import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
@@ -38,7 +37,6 @@ public final class ForumPage extends GenericPage {
         this.add(this.createTabs(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setWidth(2)
-                .setAnchor(Anchors.TOP)
                 .setFillAll()
                 .build()
         );

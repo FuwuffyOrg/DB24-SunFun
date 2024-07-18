@@ -1,5 +1,6 @@
 package oop.sunfun.database.dao;
 
+import oop.sunfun.database.data.admin.MembershipType;
 import oop.sunfun.database.data.admin.PeriodData;
 
 import java.sql.SQLException;
@@ -21,6 +22,13 @@ public final class PeriodDAO extends AbstractDAO {
     private static final String ERASE_PERIOD = "DELETE FROM `periodo` WHERE `data_inizio`=? AND `data_fine`=?";
 
     private static final String GET_ALL_DATES = "SELECT * FROM `giornata` ORDER BY `data`";
+
+    private static final String DELETE_MEMBERSHIP = "DELETE FROM `modalita` `m` WHERE `m`.`fk_data_inizio` = ? AND "
+            + "`m`.`fk_data_fine` = ? AND `m`.`fk_partecipante` = ?";
+
+    private static final String ADD_MEMBERSHIP = "INSERT INTO `modalita`(`tempo_pieno`, `pasti`, `fk_data_inizio`, "
+            + "`fk_data_fine`, `fk_partecipante`) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE `tempo_pieno` = "
+            + "VALUES(`tempo_pieno`), `pasti` = VALUES(`pasti`);";
 
     private static final String CREATE_DATE = "INSERT INTO `giornata`(`data`, `fk_periodo_inizio`, `fk_periodo_fine`) "
             + "VALUES (?,?,?)";
@@ -87,6 +95,24 @@ public final class PeriodDAO extends AbstractDAO {
             DB_CONNECTION.setQueryData(CREATE_DATE, date, period.startDate(), period.endDate());
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't create the new date", err);
+            DB_CONNECTION.closeConnection();
+        }
+    }
+
+    public static void addOrUpdateMembership(final String participantCodFisc, final boolean food,
+                                             final PeriodData periodData, final MembershipType membership) {
+        try {
+            DB_CONNECTION.openConnection();
+            if (membership == MembershipType.NONE) {
+                DB_CONNECTION.setQueryData(DELETE_MEMBERSHIP, periodData.startDate(),
+                        periodData.endDate(), participantCodFisc);
+            } else {
+                DB_CONNECTION.setQueryData(ADD_MEMBERSHIP, membership == MembershipType.FULL_TIME, food,
+                        periodData.startDate(), periodData.endDate(), participantCodFisc);
+            }
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't add or update the membership for "
+                    + participantCodFisc, err);
             DB_CONNECTION.closeConnection();
         }
     }

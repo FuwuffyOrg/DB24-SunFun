@@ -6,7 +6,6 @@ import oop.sunfun.database.data.forum.DiscussionData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.layout.Anchors;
 import oop.sunfun.ui.util.pages.FormPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
@@ -46,14 +45,12 @@ public final class ForumPostPage extends FormPage {
         this.add(new JLabel(discussion.description()), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setWidth(3)
-                .setAnchor(Anchors.TOP)
                 .setFillAll()
                 .build()
         );
         this.add(this.getCommentArea(discussion), new GridBagConstraintBuilder()
                 .setRow(1).setColumn(0)
                 .setWidth(3)
-                .setAnchor(Anchors.CENTER)
                 .setFillAll()
                 .build()
         );
