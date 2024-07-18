@@ -20,13 +20,13 @@ public final class ParentDAO extends AbstractDAO {
     private static final String GET_ALL_PARENTS = "SELECT * FROM `parente`";
 
     private static final String CREATE_PARENTE = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
-            + "`nome`, `surname`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
+            + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
 
     private static final String CREATE_PARTICIPANT = "INSERT INTO `partecipante`(`codice_fiscale`, `fk_account`, "
-            + "`fk_dieta`, `fk_gruppo`, `nome`, `surname`, `data_di_nascita`) VALUES (?,?,?,?,?,?,?)";
+            + "`fk_dieta`, `fk_gruppo`, `nome`, `cognome`, `data_di_nascita`) VALUES (?,?,?,?,?,?,?)";
 
     private static final String GET_ALL_PARTICIPANTS_FROM_PARENT = "SELECT p.codice_fiscale, d.email, p.fk_dieta, "
-            + "p.fk_gruppo, p.nome, p.surname, p.data_di_nascita, p.fk_account FROM partecipante p JOIN account_data d "
+            + "p.fk_gruppo, p.nome, p.cognome, p.data_di_nascita, p.fk_account FROM partecipante p JOIN account_data d "
             + "ON p.codice_fiscale = d.codice_fiscale JOIN ritiro r ON p.codice_fiscale = r.fk_partecipante WHERE "
             + "r.fk_parente=?";
 
@@ -44,7 +44,7 @@ public final class ParentDAO extends AbstractDAO {
             for (final Map<String, Object> parent : queryData) {
                 final String codiceFiscale = (String) parent.get("codice_fiscale");
                 final String name = (String) parent.get("nome");
-                final String surname = (String) parent.get("surname");
+                final String surname = (String) parent.get("cognome");
                 final String phone = (String) parent.get("cellulare");
                 final ParentType parentType = ParentType.getFromString((String) parent.get("grado_di_parentela"));
                 final String email = (String) parent.get("fk_account");
@@ -94,7 +94,7 @@ public final class ParentDAO extends AbstractDAO {
                 final String dieta = (String) participant.get("fk_dieta");
                 final String gruppo = (String) participant.get("fk_gruppo");
                 final String name = (String) participant.get("nome");
-                final String surname = (String) participant.get("surname");
+                final String surname = (String) participant.get("cognome");
                 final String email = (String) participant.get("fk_account");
                 final Date dateOfBirth = (Date) participant.get("data_di_nascita");
                 participants.add(new ParticipantData(codiceFiscale, email, Optional.ofNullable(dieta),
