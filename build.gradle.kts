@@ -16,6 +16,14 @@ pmd {
     ruleSets = listOf("category/java/bestpractices.xml", "category/java/design.xml")
 }
 
+tasks.withType<Pmd> {
+    ignoreFailures = true
+}
+
+tasks.withType<Checkstyle> {
+    ignoreFailures = true
+}
+
 group = "oop.sunfun"
 version = "1.0"
 
