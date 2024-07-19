@@ -29,9 +29,6 @@ dependencies {
     // Connection to sql
     implementation("com.mysql:mysql-connector-j:9.0.0")
 
-    // Java minifier for smaller file size
-    implementation("com.guardsquare:proguard-gradle:7.5.0")
-
     // Used to keep the database connection's info secure
     implementation("io.github.cdimascio:dotenv-java:3.0.1")
     // Other useful java swing components
@@ -47,25 +44,4 @@ val main: String by project
 
 application {
     mainClass.set(main)
-}
-
-tasks {
-    val proguardConfigFile = file("proguard-rules.pro")
-    val shadowJar = named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar")
-    val proguardTask = register<JavaExec>("proguard") {
-        group = "build"
-        description = "Runs ProGuard to shrink and obfuscate the JAR"
-        classpath = configurations.runtimeClasspath.get()
-        mainClass.set("proguard.ProGuard")
-        args(
-            "-injars", shadowJar.get().archiveFile.get().asFile.absolutePath,
-            "-outjars", "${layout.buildDirectory.get()}/libs/${project.name}-${project.version}-min.jar",
-            "@${proguardConfigFile.absolutePath}"
-        )
-        dependsOn(shadowJar)
-    }
-
-    named("build") {
-        dependsOn(proguardTask)
-    }
 }

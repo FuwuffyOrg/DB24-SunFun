@@ -30,10 +30,11 @@ public class GroupManagementPage extends GenericPage {
 
     public GroupManagementPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
+        final AbstractButton btnGenerateGroups = new JButton("Genera I gruppi");
         final AbstractButton btnGoBack = new JButton("Torna alla dashboard");
         this.add(createTabs(), new GridBagConstraintBuilder()
-                .setRow(0)
-                .setColumn(0)
+                .setRow(0).setColumn(0)
+                .setWidth(2)
                 .setFillAll()
                 .build()
         );
@@ -42,8 +43,16 @@ public class GroupManagementPage extends GenericPage {
                 .setFillAll()
                 .build()
         );
+        this.add(btnGenerateGroups, new GridBagConstraintBuilder()
+                .setRow(1).setColumn(1)
+                .setFillAll()
+                .build()
+        );
         // Set events
         btnGoBack.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
+        btnGenerateGroups.addActionListener(e -> {
+
+        });
         // Finalize the page
         this.buildWindow();
     }
@@ -58,7 +67,6 @@ public class GroupManagementPage extends GenericPage {
         return pane;
     }
 
-    // TODO: gestisci gruppi ora :D
     private Component createGroupPanel(final GroupData group) {
         // Create the stuff to display
         final JComponent panel = new JPanel();
