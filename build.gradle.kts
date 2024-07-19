@@ -29,9 +29,11 @@ dependencies {
     // Connection to sql
     implementation("com.mysql:mysql-connector-j:9.0.0")
 
+    // Java minifier for smaller file size
+    implementation("com.guardsquare:proguard-gradle:7.5.0")
+
     // Used to keep the database connection's info secure
     implementation("io.github.cdimascio:dotenv-java:3.0.1")
-
     // Other useful java swing components
     implementation("org.swinglabs.swingx:swingx-all:1.6.5-1")
 
