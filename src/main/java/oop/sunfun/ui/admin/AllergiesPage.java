@@ -58,8 +58,6 @@ public final class AllergiesPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Allergene"), new Pair<>(RADIO_ALLERGEN, 0));
     }
 
-
-
     public AllergiesPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
                 () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM, account),
@@ -92,10 +90,8 @@ public final class AllergiesPage extends FormPage {
     private Component createDietsPanel() {
         final JComponent dietsPanel = new JPanel();
         final JComponent listDietsPanel = new JPanel();
-        final JComponent addDietPanel = new JPanel();
         dietsPanel.setLayout(new GridBagLayout());
         listDietsPanel.setLayout(new GridBagLayout());
-        addDietPanel.setLayout(new GridBagLayout());
         // Get all the diets for the diet panel
         final List<DietData> diets = FoodDAO.getAllDiets().stream().toList();
         IntStream.range(0, diets.size()).forEach(i -> {
@@ -138,21 +134,14 @@ public final class AllergiesPage extends FormPage {
                 .setFillAll()
                 .build()
         );
-        dietsPanel.add(addDietPanel, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(0)
-                .setFillAll()
-                .build()
-        );
         return dietsPanel;
     }
 
     private Component createSubstancesPanel() {
         final JComponent substancesPanel = new JPanel();
         final JComponent listSubstancesPanel = new JPanel();
-        final JComponent addSubstancePanel = new JPanel();
         substancesPanel.setLayout(new GridBagLayout());
         listSubstancesPanel.setLayout(new GridBagLayout());
-        addSubstancePanel.setLayout(new GridBagLayout());
         // Get all the diets for the diet panel
         final List<AllergenData> allergens = FoodDAO.getAllAllergens().stream().toList();
         IntStream.range(0, allergens.size()).forEach(i -> {
@@ -192,11 +181,6 @@ public final class AllergiesPage extends FormPage {
         substancesPanel.add(new JScrollPane(listSubstancesPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        substancesPanel.add(addSubstancePanel, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(0)
                 .setFillAll()
                 .build()
         );
