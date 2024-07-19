@@ -122,8 +122,8 @@ public final class ManageParticipantPage extends GenericPage {
             btnMembership.addActionListener(e -> this.switchPage(new ParticipantMembershipPage(CloseEvents.EXIT_PROGRAM,
                     this.accountData, participant)));
             btnGroupActivities.setEnabled(false);
-            participant.group().ifPresent(v -> btnGroupActivities.addActionListener(e -> this.switchPage(new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM,
-                    this.accountData, v))));
+            participant.group().ifPresent(v -> btnGroupActivities.addActionListener(e ->
+                    this.switchPage(new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM, this.accountData, v))));
             btnUnsubscribe.addActionListener(e -> {
                 AccountDAO.eraseAccount(participant.accountEmail());
                 this.switchPage(new ManageParticipantPage(CloseEvents.EXIT_PROGRAM, this.accountData));

@@ -64,8 +64,8 @@ public final class ParticipantRollcallPage extends GenericPage {
             // Add them to the pane
             final AtomicReference<Pair<Boolean, Boolean>> presence =
                     new AtomicReference<>(new Pair<>(false, false));
-            final Optional<Pair<Boolean, Boolean>> presenceData = ParticipantDAO.checkPresence(participantData.codFisc(),
-                    date);
+            final Optional<Pair<Boolean, Boolean>> presenceData = ParticipantDAO.checkPresence(
+                    participantData.codFisc(), date);
             presenceData.ifPresent(presence::set);
             tablePanel.add(new JLabel(date.toString()), new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(0)

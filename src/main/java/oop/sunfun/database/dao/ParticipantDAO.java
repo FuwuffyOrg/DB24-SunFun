@@ -4,7 +4,12 @@ import oop.sunfun.database.data.person.ParticipantData;
 import oop.sunfun.ui.util.Pair;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,9 +24,9 @@ public final class ParticipantDAO extends AbstractDAO {
     private static final String CHECK_PRESENCE = "SELECT * FROM `presenza` `p` JOIN `partecipante` `pa` ON "
             + "`p`.`fk_partecipante`=? WHERE `p`.`fk_giornata`=?";
 
-    private static final String GET_ALL_ENROLLED_DATES_FROM_PARTICIPANT = "SELECT * FROM `giornata` `g` JOIN `modalita` "
-            + "`m` ON `g`.`fk_periodo_inizio` = `m`.`fk_data_inizio` AND `g`.`fk_periodo_fine` = `m`.`fk_data_fine` "
-            + "WHERE `m`.`fk_partecipante`=?";
+    private static final String GET_ALL_ENROLLED_DATES_FROM_PARTICIPANT = "SELECT * FROM `giornata` `g` JOIN "
+            + "`modalita` `m` ON `g`.`fk_periodo_inizio` = `m`.`fk_data_inizio` AND `g`.`fk_periodo_fine` = "
+            + "`m`.`fk_data_fine` WHERE `m`.`fk_partecipante`=?";
 
     public static Set<ParticipantData> getAllParticipants() {
         final Set<ParticipantData> participants = new HashSet<>();
