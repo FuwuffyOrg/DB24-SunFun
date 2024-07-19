@@ -54,7 +54,7 @@ public class LandingPage extends GenericPage {
                 final Optional<String> edGroup = GroupDAO.getEducatorGroup(account.codFisc());
                 edGroup.ifPresent(g -> {
                     reachablePages.put("Appello del gruppo", () -> new GroupRollcallPage(CloseEvents.EXIT_PROGRAM,
-                            this.accountData, g));
+                            this.accountData, g, Optional.empty()));
                     reachablePages.put("Attivitá del gruppo", () -> new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM,
                             this.accountData, g));
                 });
@@ -74,7 +74,7 @@ public class LandingPage extends GenericPage {
                 break;
             case AccountType.VOLONTARIO:
                 reachablePages.put("Appello del gruppo", () -> new GroupRollcallPage(CloseEvents.EXIT_PROGRAM, account,
-                        (String) comboGroup.getSelectedItem()));
+                        (String) comboGroup.getSelectedItem(), Optional.empty()));
                 reachablePages.put("Attivitá del gruppo", () -> new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM,
                         account, (String) comboGroup.getSelectedItem()));
                 reachablePages.put("Gestione Allergie", () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM,

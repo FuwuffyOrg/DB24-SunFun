@@ -6,7 +6,7 @@ import oop.sunfun.ui.util.pages.GenericPage;
 
 public final class GroupActivityManagementPage extends GenericPage {
 
-    private static final String PAGE_NAME = "Gestione attivitá dei gruppi ";
+    private static final String PAGE_NAME = "Gestione attivita dei gruppi";
 
     public GroupActivityManagementPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);

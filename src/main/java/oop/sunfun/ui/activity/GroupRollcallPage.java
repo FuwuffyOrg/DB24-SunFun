@@ -61,6 +61,7 @@ public final class GroupRollcallPage extends FormPage {
             this.add(getRollCallTable(d, groupName), new GridBagConstraintBuilder()
                     .setRow(0).setColumn(0)
                     .setWidth(2)
+                    .setFillAll()
                     .build()
             )
         );

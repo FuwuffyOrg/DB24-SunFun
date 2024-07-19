@@ -20,8 +20,7 @@ public final class GroupDAO extends AbstractDAO {
 
     private static final String GET_ALL_GROUPS = "SELECT * FROM `gruppo`";
 
-    private static final String GET_PARTICIPANTS_IN_GROUP = "SELECT `a`.`email` FROM `partecipante` `p` WHERE "
-            + "`p`.`fk_gruppo`=?";
+    private static final String GET_PARTICIPANTS_IN_GROUP = "SELECT * FROM `partecipante` `p` WHERE `p`.`fk_gruppo`=?";
 
     private static final String GET_PARTICIPANT_GROUP = "SELECT `fk_gruppo` FROM `partecipante` WHERE "
             + "`codice_fiscale`=?";
