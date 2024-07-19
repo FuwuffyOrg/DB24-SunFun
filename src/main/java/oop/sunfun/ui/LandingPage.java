@@ -1,8 +1,12 @@
 package oop.sunfun.ui;
 
+import oop.sunfun.database.dao.GroupDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.login.AccountType;
 import oop.sunfun.ui.activity.ActivityPage;
+import oop.sunfun.ui.activity.GroupActivityManagementPage;
+import oop.sunfun.ui.activity.GroupActivityViewPage;
+import oop.sunfun.ui.activity.GroupRollcallPage;
 import oop.sunfun.ui.admin.AllergiesPage;
 import oop.sunfun.ui.admin.EducatorPage;
 import oop.sunfun.ui.admin.GroupManagementPage;
@@ -14,12 +18,12 @@ import oop.sunfun.ui.forum.ForumPage;
 import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
@@ -32,10 +36,12 @@ public class LandingPage extends GenericPage {
     public LandingPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
         this.accountData = account;
+        // Combo box for the voluntary to choose the group
+        final JComboBox<String> comboGroup = new JComboBox<>();
+        GroupDAO.getAllGroups().forEach(g -> comboGroup.addItem(g.name()));
         // Set to contain all the pages reachable by that user.
         final Map<String, Supplier<GenericPage>> reachablePages = new HashMap<>();
         // Add the pages that need to be shown
-        // TODO: add attivitá del gruppo a tutti
         reachablePages.put("Forum", () -> new ForumPage(CloseEvents.EXIT_PROGRAM, this.accountData));
         switch (account.type()) {
             case AccountType.PARENTE:
@@ -43,6 +49,13 @@ public class LandingPage extends GenericPage {
                         this.accountData));
                 break;
             case AccountType.EDUCATORE:
+                final Optional<String> edGroup = GroupDAO.getEducatorGroup(account.codFisc());
+                edGroup.ifPresent(g -> {
+                    reachablePages.put("Appello del gruppo", () -> new GroupRollcallPage(CloseEvents.EXIT_PROGRAM,
+                            this.accountData, g));
+                    reachablePages.put("Attivitá del gruppo", () -> new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM,
+                            this.accountData, g));
+                });
                 reachablePages.put("Gestione Periodi", () -> new PeriodPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
                 reachablePages.put("Gestione Allergie", () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM,
@@ -52,16 +65,25 @@ public class LandingPage extends GenericPage {
                 reachablePages.put("Gestione Educatori", () -> new EducatorPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
                 reachablePages.put("Creazione Gruppi", () -> new GroupPage(CloseEvents.EXIT_PROGRAM, this.accountData));
+                reachablePages.put("Gestione attivitá gruppi", () -> new GroupActivityManagementPage(
+                        CloseEvents.EXIT_PROGRAM, this.accountData));
                 reachablePages.put("Popolazione Gruppi", () -> new GroupManagementPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
                 break;
             case AccountType.VOLONTARIO:
+                reachablePages.put("Appello del gruppo", () -> new GroupRollcallPage(CloseEvents.EXIT_PROGRAM, account,
+                        (String) comboGroup.getSelectedItem()));
+                reachablePages.put("Attivitá del gruppo", () -> new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM,
+                        account, (String) comboGroup.getSelectedItem()));
                 reachablePages.put("Gestione Allergie", () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
                 reachablePages.put("Gestione Attivita", () -> new ActivityPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
                 break;
             case AccountType.PARTECIPANTE:
+                final Optional<String> partGroup = GroupDAO.getParticipantGroup(account.codFisc());
+                partGroup.ifPresent(g -> reachablePages.put("Attivitá del gruppo", () -> new GroupActivityViewPage(
+                        CloseEvents.EXIT_PROGRAM, this.accountData, g)));
                 break;
             default:
                 throw new IllegalStateException("The account type is not valid!");
@@ -86,6 +108,14 @@ public class LandingPage extends GenericPage {
                 );
             }
         }));
+        if (account.type() == AccountType.VOLONTARIO) {
+            this.add(comboGroup, new GridBagConstraintBuilder()
+                    .setRow(rows).setColumn(0)
+                    .setWidth(cols)
+                    .setFillAll()
+                    .build()
+            );
+        }
         // Finalize the window
         this.buildWindow();
     }

@@ -5,6 +5,7 @@ import oop.sunfun.database.dao.ParentDAO;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.person.ParticipantData;
 import oop.sunfun.ui.LandingPage;
+import oop.sunfun.ui.activity.GroupActivityViewPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
@@ -68,8 +69,9 @@ public final class ManageParticipantPage extends GenericPage {
             final Component lblSurname = new JLabel(participant.surname());
             final AbstractButton btnRollcall = new JButton("Appello");
             final AbstractButton btnUnsubscribe = new JButton("Annulla iscrizione");
-            final AbstractButton btnDiets = new JButton("Gestisci diete");
-            final AbstractButton btnMembership = new JButton("Gestisci iscrizione");
+            final AbstractButton btnDiets = new JButton("Diete");
+            final AbstractButton btnGroupActivities = new JButton("Attivitá");
+            final AbstractButton btnMembership = new JButton("Iscrizione");
             // Add them to the panel
             participantPanel.add(lblName, new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(0)
@@ -96,6 +98,11 @@ public final class ManageParticipantPage extends GenericPage {
                     .setFillAll()
                     .build()
             );
+            participantPanel.add(btnGroupActivities, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(4)
+                    .setFillAll()
+                    .build()
+            );
             participantPanel.add(btnUnsubscribe, new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(5)
                     .setFillAll()
@@ -114,6 +121,9 @@ public final class ManageParticipantPage extends GenericPage {
                     this.accountData, participant)));
             btnMembership.addActionListener(e -> this.switchPage(new ParticipantMembershipPage(CloseEvents.EXIT_PROGRAM,
                     this.accountData, participant)));
+            btnGroupActivities.setEnabled(false);
+            participant.group().ifPresent(v -> btnGroupActivities.addActionListener(e -> this.switchPage(new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM,
+                    this.accountData, v))));
             btnUnsubscribe.addActionListener(e -> {
                 AccountDAO.eraseAccount(participant.accountEmail());
                 this.switchPage(new ManageParticipantPage(CloseEvents.EXIT_PROGRAM, this.accountData));

@@ -21,6 +21,11 @@ public final class GroupDAO extends AbstractDAO {
     private static final String GET_PARTICIPANTS_IN_GROUP = "SELECT `a`.`email` FROM `partecipante` `p` WHERE "
             + "`p`.`fk_gruppo`=?";
 
+    private static final String GET_PARTICIPANT_GROUP = "SELECT `fk_gruppo` FROM `partecipante` WHERE "
+            + "`codice_fiscale`=?";
+
+    private static final String GET_EDUCATOR_GROUP = "SELECT `fk_gruppo` FROM `educatore` WHERE `codice_fiscale`=?";
+
     private static final String CREATE_GROUP = "INSERT INTO `gruppo`(`nome`, `eta_min`, `eta_max`) VALUES (?,?,?)";
 
     private static final String ERASE_GROUP = "DELETE FROM `gruppo` WHERE `nome`=?";
@@ -73,6 +78,42 @@ public final class GroupDAO extends AbstractDAO {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't create the new group " + groupData.name(), err);
             DB_CONNECTION.closeConnection();
         }
+    }
+
+    public static Optional<String> getParticipantGroup(final String participantCodFisc) {
+        try {
+            DB_CONNECTION.openConnection();
+            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_PARTICIPANT_GROUP,
+                    participantCodFisc);
+            if (queryData.size() > 1) {
+                bracedLog(LOGGER, Level.WARNING, "There's two participants with the same codFisc");
+            } else if (queryData.isEmpty()) {
+                return Optional.empty();
+            }
+            return Optional.ofNullable((String) queryData.getFirst().get("fk_gruppo"));
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't get the group for " + participantCodFisc, err);
+            DB_CONNECTION.closeConnection();
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<String> getEducatorGroup(final String educatorCodFisc) {
+        try {
+            DB_CONNECTION.openConnection();
+            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_EDUCATOR_GROUP,
+                    educatorCodFisc);
+            if (queryData.size() > 1) {
+                bracedLog(LOGGER, Level.WARNING, "There's two educators with the same codFisc");
+            } else if (queryData.isEmpty()) {
+                return Optional.empty();
+            }
+            return Optional.ofNullable((String) queryData.getFirst().get("fk_gruppo"));
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't get the group for " + educatorCodFisc, err);
+            DB_CONNECTION.closeConnection();
+        }
+        return Optional.empty();
     }
 
     public static void deleteGroup(final String groupName) {
