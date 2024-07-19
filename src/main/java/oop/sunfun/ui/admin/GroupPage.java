@@ -59,7 +59,7 @@ public final class GroupPage extends FormPage {
         // Create the group table
         this.add(this.getGroupTable(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
-                .setWidth(4)
+                .setWidth(2)
                 .setFillAll()
                 .build()
         );

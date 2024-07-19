@@ -4,7 +4,7 @@ import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.pages.GenericPage;
 
-public class GroupActivityViewPage extends GenericPage {
+public final class GroupActivityViewPage extends GenericPage {
 
     private static final String PAGE_NAME = "Attivitá del gruppo ";
 

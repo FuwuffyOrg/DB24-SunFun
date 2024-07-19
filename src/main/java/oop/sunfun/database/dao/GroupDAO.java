@@ -1,6 +1,8 @@
 package oop.sunfun.database.dao;
 
 import oop.sunfun.database.data.admin.GroupData;
+import oop.sunfun.database.data.admin.MembershipType;
+import oop.sunfun.database.data.admin.PeriodData;
 import oop.sunfun.database.data.person.ParticipantData;
 
 import java.sql.SQLException;
@@ -29,6 +31,13 @@ public final class GroupDAO extends AbstractDAO {
     private static final String CREATE_GROUP = "INSERT INTO `gruppo`(`nome`, `eta_min`, `eta_max`) VALUES (?,?,?)";
 
     private static final String ERASE_GROUP = "DELETE FROM `gruppo` WHERE `nome`=?";
+
+    private static final String ERASE_PRESENCE = "DELETE FROM `presenza` WHERE `fk_partecipante`=? AND "
+            + "`fk_giornata`=?";
+
+    private static final String ADD_OR_UPDATE_PRESENCE = "INSERT INTO `presenza`(`entrata`, `uscita`, "
+            + "`fk_partecipante`, `fk_giornata`) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE `entrata` = "
+            + "VALUES(`entrata`), `uscita` = VALUES(`uscita`);";
 
     public static Set<GroupData> getAllGroups() {
         final Set<GroupData> categories = new HashSet<>();
@@ -122,6 +131,22 @@ public final class GroupDAO extends AbstractDAO {
             DB_CONNECTION.setQueryData(ERASE_GROUP, groupName);
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't erase the group " + groupName, err);
+            DB_CONNECTION.closeConnection();
+        }
+    }
+
+    public static void addOrUpdatePresence(final String participantCodFisc, final Date date,
+                                           final boolean entry, final boolean exit) {
+        try {
+            DB_CONNECTION.openConnection();
+            if (!entry && !exit) {
+                DB_CONNECTION.setQueryData(ERASE_PRESENCE, participantCodFisc, date);
+            } else {
+                DB_CONNECTION.setQueryData(ADD_OR_UPDATE_PRESENCE, entry, exit, participantCodFisc, date);
+            }
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't add or update the presence "
+                    + participantCodFisc + " at " + date, err);
             DB_CONNECTION.closeConnection();
         }
     }
