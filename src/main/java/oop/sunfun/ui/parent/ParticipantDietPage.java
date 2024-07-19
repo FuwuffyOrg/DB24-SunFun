@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-// TODO: Maybe form?
 public final class ParticipantDietPage extends GenericPage {
 
     private static final String PAGE_NAME = "Gestione Diete ";

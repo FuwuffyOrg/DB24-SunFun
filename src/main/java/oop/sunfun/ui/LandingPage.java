@@ -35,6 +35,7 @@ public class LandingPage extends GenericPage {
         // Set to contain all the pages reachable by that user.
         final Map<String, Supplier<GenericPage>> reachablePages = new HashMap<>();
         // Add the pages that need to be shown
+        // TODO: add attivitá del gruppo a tutti
         reachablePages.put("Forum", () -> new ForumPage(CloseEvents.EXIT_PROGRAM, this.accountData));
         switch (account.type()) {
             case AccountType.PARENTE:
@@ -61,7 +62,6 @@ public class LandingPage extends GenericPage {
                         this.accountData));
                 break;
             case AccountType.PARTECIPANTE:
-                // TODO: add attivitá del gruppo del partecipante
                 break;
             default:
                 throw new IllegalStateException("The account type is not valid!");

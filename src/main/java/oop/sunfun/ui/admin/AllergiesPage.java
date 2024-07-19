@@ -5,47 +5,75 @@ import oop.sunfun.database.data.food.AllergenData;
 import oop.sunfun.database.data.food.DietData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.LandingPage;
+import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
-import oop.sunfun.ui.util.pages.GenericPage;
+import oop.sunfun.ui.util.pages.FormPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
 import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.GridBagLayout;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
-// TODO: Make into form
-public final class AllergiesPage extends GenericPage {
+public final class AllergiesPage extends FormPage {
 
     private static final String PAGE_NAME = "Gestione Allergie/Intolleranze";
 
     private final AccountData accountData;
 
-    private final JTextComponent txtName;
+    private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
-    private final JTextComponent txtDescription;
+    private static final JComponent TXT_NAME;
+    private static final JComponent TXT_DESCRIPTION;
+    private static final AbstractButton RADIO_DIET;
+    private static final AbstractButton RADIO_ALLERGEN;
+
+    static {
+        FORM_COMPONENTS = new LinkedHashMap<>();
+        TXT_NAME = new JTextField();
+        TXT_DESCRIPTION = new JTextArea();
+        RADIO_DIET = new JRadioButton();
+        RADIO_ALLERGEN = new JRadioButton();
+        final ButtonGroup radioGroup = new ButtonGroup();
+        radioGroup.add(RADIO_DIET);
+        radioGroup.add(RADIO_ALLERGEN);
+        FORM_COMPONENTS.put(new JLabel("Nome:"), new Pair<>(TXT_NAME, 30));
+        FORM_COMPONENTS.put(new JLabel("Descrizione:"), new Pair<>(TXT_DESCRIPTION, 255));
+        FORM_COMPONENTS.put(new JLabel("Dieta"), new Pair<>(RADIO_DIET, 0));
+        FORM_COMPONENTS.put(new JLabel("Allergene"), new Pair<>(RADIO_ALLERGEN, 0));
+    }
+
+
 
     public AllergiesPage(final CloseEvents closeEvent, final AccountData account) {
-        super(PAGE_NAME, closeEvent);
+        super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
+                () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM, account),
+                () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
+                () -> {
+                    if (RADIO_DIET.isSelected()) {
+                        FoodDAO.createNewDiet(new DietData(((JTextComponent) TXT_NAME).getText(),
+                                ((JTextComponent) TXT_DESCRIPTION).getText()));
+                    } else if (RADIO_ALLERGEN.isSelected()) {
+                        FoodDAO.createNewAllergen(new AllergenData(((JTextComponent) TXT_NAME).getText(),
+                                ((JTextComponent) TXT_DESCRIPTION).getText()));
+                    }
+                });
         this.accountData = account;
-        // Create the elements to create a new food item
-        final Component lblName = new JLabel("Nome:");
-        final Component lblDescription = new JLabel("Descrizione:");
-        final AbstractButton btnAddDiet = new JButton("Aggiungi come dieta");
-        final AbstractButton btnAddAllergen = new JButton("Aggiungi come allergene");
-        final AbstractButton btnDashboard = new JButton("Torna alla dashboard");
-        this.txtName = new JTextField();
-        this.txtDescription = new JTextField();
         // Add the panels to the page
         this.add(createDietsPanel(), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
@@ -57,82 +85,8 @@ public final class AllergiesPage extends GenericPage {
                 .setFillAll()
                 .build()
         );
-        this.add(lblName, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(this.txtName, new GridBagConstraintBuilder()
-                .setRow(1).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        this.add(lblDescription, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        this.add(this.txtDescription, new GridBagConstraintBuilder()
-                .setRow(2).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        final JComponent btnPanel = new JPanel();
-        btnPanel.setLayout(new GridBagLayout());
-        btnPanel.add(btnAddDiet, new GridBagConstraintBuilder()
-                .setRow(0).setColumn(0)
-                .setFillAll()
-                .build()
-        );
-        btnPanel.add(btnDashboard, new GridBagConstraintBuilder()
-                .setRow(0).setColumn(1)
-                .setFillAll()
-                .build()
-        );
-        btnPanel.add(btnAddAllergen, new GridBagConstraintBuilder()
-                .setRow(0).setColumn(2)
-                .setFillAll()
-                .build()
-        );
-        this.add(btnPanel, new GridBagConstraintBuilder()
-                .setRow(3).setColumn(0)
-                .setWidth(2)
-                .setFillAll()
-                .build()
-        );
-        // Add the events
-        btnDashboard.addActionListener(e -> this.switchPage(new LandingPage(CloseEvents.EXIT_PROGRAM, account)));
-        btnAddDiet.addActionListener(e -> {
-            if (isDataValid()) {
-                FoodDAO.createNewDiet(new DietData(txtName.getText(), txtDescription.getText()));
-                this.switchPage(new AllergiesPage(CloseEvents.EXIT_PROGRAM, account));
-            }
-        });
-        btnAddAllergen.addActionListener(e -> {
-            if (isDataValid()) {
-                FoodDAO.createNewAllergen(new AllergenData(txtName.getText(), txtDescription.getText()));
-                this.switchPage(new AllergiesPage(CloseEvents.EXIT_PROGRAM, account));
-            }
-        });
         // Finalize the page
         this.buildWindow();
-    }
-
-    private boolean isDataValid() {
-        final int nameLengthLimit = 30;
-        final int descriptionLengthLimit = 255;
-        final int minSize = 4;
-        this.resetHighlights();
-        final String name = txtName.getText();
-        final String description = txtDescription.getText();
-        if (name.length() > nameLengthLimit || name.length() < minSize) {
-            highlightTextComponent(txtName);
-            return false;
-        } else if (description.length() > descriptionLengthLimit || description.length() < minSize) {
-            highlightTextComponent(txtDescription);
-            return false;
-        }
-        return true;
     }
 
     private Component createDietsPanel() {
