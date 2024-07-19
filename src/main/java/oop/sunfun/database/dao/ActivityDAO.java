@@ -2,10 +2,14 @@ package oop.sunfun.database.dao;
 
 import oop.sunfun.database.data.activity.ActivityData;
 import oop.sunfun.database.data.activity.ReviewData;
+import oop.sunfun.ui.util.Pair;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +31,11 @@ public final class ActivityDAO extends AbstractDAO {
 
     private static final String CREATE_ACTIVITY_REVIEW = "INSERT INTO `recensione`(`voto`, `descrizione`, "
             + "`fk_attivita`, `fk_account`) VALUES (?,?,?,?)";
+
+    private static final String GET_ACTIVITIES_GROUP_DATE = "SELECT *, AVG(r.`voto`) AS media_voto FROM `svolgimento` "
+            + "`s` JOIN `attivita` `a` ON `s`.`fk_attivita` = `a`.`nome` LEFT JOIN `recensione` `r` ON "
+            + "`r`.`fk_attivita` = `a`.`nome` WHERE `s`.`fk_gruppo`=? AND `s`.`fk_giornata`=? GROUP BY "
+            + "`s`.`ora_inizio`, `s`.`ora_fine`";
 
     public static Set<ActivityData> getAllActivities() {
         final Set<ActivityData> activities = new HashSet<>();
@@ -91,5 +100,25 @@ public final class ActivityDAO extends AbstractDAO {
                     + " for " + activity, err);
             DB_CONNECTION.closeConnection();
         }
+    }
+
+    public static Map<ActivityData, Pair<Time, Time>> getActivitiesDoneByGroupDuring(final String groupName,
+                                                                                     final Date date) {
+        final Map<ActivityData, Pair<Time, Time>> reviews = new LinkedHashMap<>();
+        try {
+            DB_CONNECTION.openConnection();
+            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ACTIVITIES_GROUP_DATE,
+                    groupName, date);
+            for (final Map<String, Object> activity : queryData) {
+                reviews.put(new ActivityData((String) activity.get("nome"), (String) activity.get("descrizione"),
+                        ((BigDecimal) activity.get("media_voto")).floatValue()),
+                        new Pair<>((Time) activity.get("ora_inizio"), (Time) activity.get("ora_fine")));
+            }
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all activities of " + groupName + " at "
+                    + date, err);
+            DB_CONNECTION.closeConnection();
+        }
+        return reviews;
     }
 }

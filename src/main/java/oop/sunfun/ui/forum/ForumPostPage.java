@@ -9,12 +9,7 @@ import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.pages.FormPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.GridBagLayout;
@@ -67,7 +62,12 @@ public final class ForumPostPage extends FormPage {
         IntStream.range(0, comments.size()).forEach(i -> {
             // Add the panel to the categories
             commentPanel.add(this.createCommentHeader(comments.get(i)), new GridBagConstraintBuilder()
-                    .setRow(i).setColumn(0)
+                    .setRow(i * 2).setColumn(0)
+                    .setFillAll()
+                    .build()
+            );
+            commentPanel.add(new JSeparator(), new GridBagConstraintBuilder()
+                    .setRow((i * 2) + 1).setColumn(0)
                     .setFillAll()
                     .build()
             );

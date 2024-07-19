@@ -13,13 +13,8 @@ import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.util.List;
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
+import javax.swing.*;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public final class ManageParticipantPage extends GenericPage {
@@ -123,12 +118,14 @@ public final class ManageParticipantPage extends GenericPage {
                     this.accountData, participant)));
             btnGroupActivities.setEnabled(false);
             participant.group().ifPresent(v -> btnGroupActivities.addActionListener(e ->
-                    this.switchPage(new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM, this.accountData, v))));
+                    this.switchPage(new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM, this.accountData, v,
+                            Optional.empty()))));
             btnUnsubscribe.addActionListener(e -> {
                 AccountDAO.eraseAccount(participant.accountEmail());
                 this.switchPage(new ManageParticipantPage(CloseEvents.EXIT_PROGRAM, this.accountData));
             });
         });
-        return new JScrollPane(participantPanel);
+        return new JScrollPane(participantPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     }
 }
