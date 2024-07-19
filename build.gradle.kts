@@ -48,3 +48,24 @@ val main: String by project
 application {
     mainClass.set(main)
 }
+
+tasks {
+    val proguardConfigFile = file("proguard-rules.pro")
+    val shadowJar = named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar")
+    val proguardTask = register<JavaExec>("proguard") {
+        group = "build"
+        description = "Runs ProGuard to shrink and obfuscate the JAR"
+        classpath = configurations.runtimeClasspath.get()
+        mainClass.set("proguard.ProGuard")
+        args(
+            "-injars", shadowJar.get().archiveFile.get().asFile.absolutePath,
+            "-outjars", "${layout.buildDirectory.get()}/libs/${project.name}-${project.version}-min.jar",
+            "@${proguardConfigFile.absolutePath}"
+        )
+        dependsOn(shadowJar)
+    }
+
+    named("build") {
+        dependsOn(proguardTask)
+    }
+}
