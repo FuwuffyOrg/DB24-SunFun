@@ -120,7 +120,6 @@ public final class ParentDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_PARENTS_FROM_PARTICIPANT,
                     participantCodFisc);
-            // TODO: Finish
             for (final Map<String, Object> participant : queryData) {
                 final String codiceFiscale = (String) participant.get("codice_fiscale");
                 final String name = (String) participant.get("nome");

@@ -1,6 +1,5 @@
 package oop.sunfun.ui.activity;
 
-import oop.sunfun.database.data.admin.GroupData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.pages.GenericPage;

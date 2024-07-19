@@ -18,7 +18,9 @@ import oop.sunfun.ui.forum.ForumPage;
 import oop.sunfun.ui.util.pages.GenericPage;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
