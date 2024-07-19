@@ -55,7 +55,9 @@ public final class GroupActivityViewPage extends FormPage {
                 () -> new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM, account, groupName,
                         Optional.ofNullable((Date) COMBO_DATE.getSelectedItem())),
                 () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
-                () -> {});
+                () -> {
+
+                });
         this.accountData = account;
         // Update the dates
         PeriodDAO.getAllDates().forEach(COMBO_DATE::addItem);

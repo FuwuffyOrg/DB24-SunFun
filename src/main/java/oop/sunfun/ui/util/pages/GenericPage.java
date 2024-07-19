@@ -12,7 +12,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
 
 public abstract class GenericPage extends JFrame {
     /**
@@ -86,13 +85,6 @@ public abstract class GenericPage extends JFrame {
         for (final Component c : this.contentPanel.getComponents()) {
             c.setBackground(UIManager.getColor("TextField.background"));
         }
-    }
-
-    /**
-     * Closes the window as if you pressed the X button, running the proper event.
-     */
-    public final void close() {
-        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
     /**

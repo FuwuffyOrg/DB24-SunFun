@@ -13,7 +13,14 @@ import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.ScrollPaneConstants;
 import java.util.Optional;
 import java.util.stream.IntStream;
 

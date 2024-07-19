@@ -52,7 +52,9 @@ public final class GroupRollcallPage extends FormPage {
                 () -> new GroupRollcallPage(CloseEvents.EXIT_PROGRAM, account, groupName,
                         Optional.ofNullable((Date) COMBO_DATE.getSelectedItem())),
                 () -> new LandingPage(CloseEvents.EXIT_PROGRAM, account),
-                () -> {});
+                () -> {
+
+                });
         this.accountData = account;
         // Update the dates in the combo box
         PeriodDAO.getAllDates().forEach(COMBO_DATE::addItem);

@@ -1,8 +1,6 @@
 package oop.sunfun.database.dao;
 
 import oop.sunfun.database.data.admin.GroupData;
-import oop.sunfun.database.data.admin.MembershipType;
-import oop.sunfun.database.data.admin.PeriodData;
 import oop.sunfun.database.data.person.ParticipantData;
 
 import java.sql.SQLException;
