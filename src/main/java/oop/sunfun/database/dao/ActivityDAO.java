@@ -26,7 +26,7 @@ public final class ActivityDAO extends AbstractDAO {
 
     private static final String DELETE_ACTIVITY = "DELETE FROM `attivita` WHERE `nome`=?";
 
-    private static final String GET_ACTIVITY_REVIEWS = "SELECT r.voto, r.descrizione, a.nome, a.surname FROM "
+    private static final String GET_ACTIVITY_REVIEWS = "SELECT r.voto, r.descrizione, a.nome, a.cognome FROM "
             + "recensione r JOIN account_data a ON r.fk_account = a.email WHERE r.fk_attivita=?;";
 
     private static final String CREATE_ACTIVITY_REVIEW = "INSERT INTO `recensione`(`voto`, `descrizione`, "
@@ -36,6 +36,9 @@ public final class ActivityDAO extends AbstractDAO {
             + "`s` JOIN `attivita` `a` ON `s`.`fk_attivita` = `a`.`nome` LEFT JOIN `recensione` `r` ON "
             + "`r`.`fk_attivita` = `a`.`nome` WHERE `s`.`fk_gruppo`=? AND `s`.`fk_giornata`=? GROUP BY "
             + "`s`.`ora_inizio`, `s`.`ora_fine`";
+
+    private static final String ADD_ACTIVITY_TO_GROUP = "INSERT INTO `svolgimento`(`ora_inizio`, `ora_fine`, "
+            + "`fk_attivita`, `fk_gruppo`, `fk_giornata`) VALUES (?,?,?,?,?)";
 
     public static Set<ActivityData> getAllActivities() {
         final Set<ActivityData> activities = new HashSet<>();
@@ -110,9 +113,10 @@ public final class ActivityDAO extends AbstractDAO {
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ACTIVITIES_GROUP_DATE,
                     groupName, date);
             for (final Map<String, Object> activity : queryData) {
+                final BigDecimal avgGrade = (BigDecimal) activity.get("media_voto");
                 reviews.put(new ActivityData((String) activity.get("nome"), (String) activity.get("descrizione"),
-                        ((BigDecimal) activity.get("media_voto")).floatValue()),
-                        new Pair<>((Time) activity.get("ora_inizio"), (Time) activity.get("ora_fine")));
+                                avgGrade != null ? avgGrade.floatValue() : 0.0f), new Pair<>(
+                                        (Time) activity.get("ora_inizio"), (Time) activity.get("ora_fine")));
             }
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch all activities of " + groupName + " at "
@@ -120,5 +124,16 @@ public final class ActivityDAO extends AbstractDAO {
             DB_CONNECTION.closeConnection();
         }
         return reviews;
+    }
+
+    public static void addActivityToGroup(final String groupName, final String activityName, final Date day,
+                                          final Time timeStart, final Time timeEnd) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(ADD_ACTIVITY_TO_GROUP, timeStart, timeEnd, activityName, groupName, day);
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't add the activity ... to the group ...", err);
+            DB_CONNECTION.closeConnection();
+        }
     }
 }

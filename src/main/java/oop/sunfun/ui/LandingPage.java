@@ -68,7 +68,7 @@ public class LandingPage extends GenericPage {
                         this.accountData));
                 reachablePages.put("Creazione Gruppi", () -> new GroupPage(CloseEvents.EXIT_PROGRAM, this.accountData));
                 reachablePages.put("Gestione attivita gruppi", () -> new GroupActivityManagementPage(
-                        CloseEvents.EXIT_PROGRAM, this.accountData));
+                        CloseEvents.EXIT_PROGRAM, this.accountData, Optional.empty()));
                 reachablePages.put("Popolazione Gruppi", () -> new GroupManagementPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
                 break;
