@@ -98,7 +98,7 @@ public final class ParticipantDietPage extends GenericPage {
         btnUpdateDiet.addActionListener(e -> {
             final String diet = (String) comboDiet.getSelectedItem();
             ParentDAO.updateParticipantDiet(diet, this.participantData);
-            final ParticipantData newParticipant = new ParticipantData(this.participantData.codiceFiscale(),
+            final ParticipantData newParticipant = new ParticipantData(this.participantData.codFisc(),
                     this.participantData.accountEmail(), Optional.ofNullable(diet), this.participantData.group(),
                     this.participantData.name(), this.participantData.surname(), this.participantData.dateOfBirth());
             this.switchPage(new ParticipantDietPage(CloseEvents.EXIT_PROGRAM, this.accountData, newParticipant));
@@ -110,7 +110,7 @@ public final class ParticipantDietPage extends GenericPage {
         final JComponent allergyPanel = new JPanel();
         allergyPanel.setLayout(new GridBagLayout());
         final List<AllergenData> currentAllergens = FoodDAO.getAllAllergensOfParticipant(
-                participantData.codiceFiscale()).stream().toList();
+                participantData.codFisc()).stream().toList();
         // Add the allergens to the table
         final JComponent currentAllergyPanel = new JPanel();
         currentAllergyPanel.setLayout(new GridBagLayout());
@@ -143,7 +143,7 @@ public final class ParticipantDietPage extends GenericPage {
             );
             // Add delete event
             btnDeleteIntolerance.addActionListener(e -> {
-                FoodDAO.deleteAllergenFromParticipant(allergen.name(), this.participantData.codiceFiscale());
+                FoodDAO.deleteAllergenFromParticipant(allergen.name(), this.participantData.codFisc());
                 this.switchPage(new ParticipantDietPage(CloseEvents.EXIT_PROGRAM, this.accountData,
                         this.participantData));
             });
@@ -187,7 +187,7 @@ public final class ParticipantDietPage extends GenericPage {
         );
         btnAddAllergen.addActionListener(e -> {
             FoodDAO.createAllergenForParticipant((String) comboAllergen.getSelectedItem(),
-                    this.participantData.codiceFiscale());
+                    this.participantData.codFisc());
             this.switchPage(new ParticipantDietPage(CloseEvents.EXIT_PROGRAM, this.accountData, this.participantData));
         });
         return allergyPanel;

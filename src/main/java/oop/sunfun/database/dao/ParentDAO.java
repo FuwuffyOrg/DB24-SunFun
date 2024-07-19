@@ -30,8 +30,14 @@ public final class ParentDAO extends AbstractDAO {
             + "ON p.codice_fiscale = d.codice_fiscale JOIN ritiro r ON p.codice_fiscale = r.fk_partecipante WHERE "
             + "r.fk_parente=?";
 
+    private static final String GET_ALL_PARENTS_FROM_PARTICIPANT = "SELECT * FROM `parente` `p` JOIN `ritiro` `r` ON "
+            + "`r`.`fk_parente`=`p`.`codice_fiscale` WHERE `r`.`fk_partecipante`=?";
+
     private static final String ADD_RITIRO_PARENTE = "INSERT INTO `ritiro`(`fk_parente`, `fk_partecipante`) "
             + "VALUES (?,?)";
+
+    private static final String DELETE_RITIRO_PARENTE = "DELETE FROM `ritiro` WHERE `fk_parente`=? AND "
+            + "`fk_partecipante`=?";
 
     private static final String UPDATE_PARTICIPANT_DIET = "UPDATE `partecipante` SET `fk_dieta`=? WHERE "
             + "`partecipante`.`codice_fiscale`=?";
@@ -75,7 +81,7 @@ public final class ParentDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             final String group = participant.group().isPresent() ? participant.group().get() : null;
             final String diet = participant.dieta().isPresent() ? participant.dieta().get() : null;
-            DB_CONNECTION.setQueryData(CREATE_PARTICIPANT, participant.codiceFiscale(), participant.accountEmail(),
+            DB_CONNECTION.setQueryData(CREATE_PARTICIPANT, participant.codFisc(), participant.accountEmail(),
                     diet, group, participant.name(), participant.surname(), participant.dateOfBirth());
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't create the new participant", err);
@@ -101,7 +107,33 @@ public final class ParentDAO extends AbstractDAO {
                         Optional.ofNullable(gruppo), name, surname, dateOfBirth));
             }
         } catch (final SQLException err) {
-            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the posts for the parent " + parentCodiceFiscale,
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch participants for the parent " + parentCodiceFiscale,
+                    err);
+            DB_CONNECTION.closeConnection();
+        }
+        return participants;
+    }
+
+    public static Set<ParentData> getAllParentsFromParticipant(final String participantCodFisc) {
+        final Set<ParentData> participants = new HashSet<>();
+        try {
+            DB_CONNECTION.openConnection();
+            final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_PARENTS_FROM_PARTICIPANT,
+                    participantCodFisc);
+            // TODO: Finish
+            for (final Map<String, Object> participant : queryData) {
+                final String codiceFiscale = (String) participant.get("codice_fiscale");
+                final String name = (String) participant.get("nome");
+                final String surname = (String) participant.get("cognome");
+                final String phone = (String) participant.get("cellulare");
+                final String email = (String) participant.get("fk_account");
+                final ParentType parentType = ParentType.getFromString((String)
+                        participant.get("grado_di_parentela"));
+                participants.add(new ParentData(codiceFiscale, email, name, surname, phone, parentType));
+            }
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the parents for the participant "
+                            + participantCodFisc,
                     err);
             DB_CONNECTION.closeConnection();
         }
@@ -119,10 +151,21 @@ public final class ParentDAO extends AbstractDAO {
         }
     }
 
+    public static void deleteRitiroParente(final String codFiscParente, final String codFiscPartecipante) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(DELETE_RITIRO_PARENTE, codFiscParente, codFiscPartecipante);
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't remove the ritiro for the participant "
+                    + codFiscPartecipante + " and for the parent " + codFiscParente, err);
+            DB_CONNECTION.closeConnection();
+        }
+    }
+
     public static void updateParticipantDiet(final String diet, final ParticipantData participantData) {
         try {
             DB_CONNECTION.openConnection();
-            DB_CONNECTION.setQueryData(UPDATE_PARTICIPANT_DIET, diet, participantData.codiceFiscale());
+            DB_CONNECTION.setQueryData(UPDATE_PARTICIPANT_DIET, diet, participantData.codFisc());
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't update the diet of " + participantData.name(), err);
             DB_CONNECTION.closeConnection();

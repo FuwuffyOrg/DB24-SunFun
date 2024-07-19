@@ -40,7 +40,7 @@ public final class ParticipantMembershipPage extends FormPage {
         super(PAGE_NAME + participant.name(), closeEvent, 1, FORM_COMPONENTS,
             () -> new ParticipantMembershipPage(CloseEvents.EXIT_PROGRAM, account, participant),
             () -> new ManageParticipantPage(closeEvent, account),
-            () -> ParentDAO.addRitiroParente((String) COMBO_PARENT.getSelectedItem(), participant.codiceFiscale()));
+            () -> ParentDAO.addRitiroParente((String) COMBO_PARENT.getSelectedItem(), participant.codFisc()));
         this.accountData = account;
         this.participantData = participant;
         // Update parents
@@ -106,7 +106,7 @@ public final class ParticipantMembershipPage extends FormPage {
                     .build()
             );
             buttonUpdate.addActionListener(e -> {
-                PeriodDAO.addOrUpdateMembership(participantData.codiceFiscale(), checkFood.isSelected(), period,
+                PeriodDAO.addOrUpdateMembership(participantData.codFisc(), checkFood.isSelected(), period,
                         (MembershipType) comboMembership.getSelectedItem());
                 this.switchPage(new ParticipantMembershipPage(CloseEvents.EXIT_PROGRAM, this.accountData,
                         this.participantData));
@@ -119,7 +119,39 @@ public final class ParticipantMembershipPage extends FormPage {
     private Component createPickupPage() {
         final JComponent pickupPanel = new JPanel();
         pickupPanel.setLayout(new GridBagLayout());
-        // TODO: get all pickups and add delete button
+        final List<ParentData> parents = ParentDAO.getAllParentsFromParticipant(participantData.codFisc())
+                .stream().toList();
+        IntStream.range(0, parents.size()).forEach(i -> {
+            final ParentData parent = parents.get(i);
+            final AbstractButton btnDelete = new JButton("Annulla ritiro");
+            // Add the panel to the categories
+            pickupPanel.add(new JLabel(parent.name()), new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(0)
+                    .setFillAll()
+                    .build()
+            );
+            pickupPanel.add(new JLabel(parent.surname()), new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(1)
+                    .setFillAll()
+                    .build()
+            );
+            pickupPanel.add(btnDelete, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(2)
+                    .setFillAll()
+                    .build()
+            );
+            pickupPanel.add(new JSeparator(), new GridBagConstraintBuilder()
+                    .setRow((i * 2) + 1).setColumn(0)
+                    .setWidth(3)
+                    .setFillAll()
+                    .build()
+            );
+            btnDelete.addActionListener(e -> {
+                ParentDAO.deleteRitiroParente(parent.codFisc(), participantData.codFisc());
+                this.switchPage(new ParticipantMembershipPage(CloseEvents.EXIT_PROGRAM, this.accountData,
+                        this.participantData));
+            });
+        });
         return new JScrollPane(pickupPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     }
