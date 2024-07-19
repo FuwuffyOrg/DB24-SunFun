@@ -11,7 +11,6 @@ public class GroupActivityViewPage extends GenericPage {
     public GroupActivityViewPage(final CloseEvents closeEvent, final AccountData account, final String groupName) {
         super(PAGE_NAME + groupName, closeEvent);
         // TODO: Finish this page to look at the activities of a group during a given day
-        // TODO: Connect to everyone
 
         // Finalize the window
         this.buildWindow();

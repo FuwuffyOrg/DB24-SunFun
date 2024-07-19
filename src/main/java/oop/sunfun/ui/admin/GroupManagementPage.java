@@ -6,7 +6,6 @@ import oop.sunfun.database.data.admin.GroupData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.person.ParticipantData;
 import oop.sunfun.ui.LandingPage;
-import oop.sunfun.ui.util.Pair;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.util.layout.GridBagConstraintBuilder;
 import oop.sunfun.ui.util.pages.GenericPage;
@@ -14,10 +13,8 @@ import oop.sunfun.ui.util.pages.GenericPage;
 import javax.swing.*;
 import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.time.Period;
 import java.util.*;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GroupManagementPage extends GenericPage {
@@ -50,30 +47,7 @@ public class GroupManagementPage extends GenericPage {
         btnGenerateGroups.addActionListener(e -> {
             final Set<ParticipantData> participants = ParticipantDAO.getAllParticipants();
             final Set<GroupData> groups = GroupDAO.getAllGroups();
-            final Set<Pair<String, Integer>> participantsAge = participants.stream().map(p -> {
-                // Calculating the age of someone is pain
-                final Calendar birthDateCalendar = Calendar.getInstance();
-                birthDateCalendar.setTime(p.dateOfBirth());
-                final Calendar currentDateCalendar = Calendar.getInstance();
-                currentDateCalendar.setTime(new Date());
-                int age = currentDateCalendar.get(Calendar.YEAR) - birthDateCalendar.get(Calendar.YEAR);
-                if (currentDateCalendar.get(Calendar.MONTH) < birthDateCalendar.get(Calendar.MONTH) ||
-                        (currentDateCalendar.get(Calendar.MONTH) == birthDateCalendar.get(Calendar.MONTH) &&
-                                currentDateCalendar.get(Calendar.DAY_OF_MONTH) <
-                                        birthDateCalendar.get(Calendar.DAY_OF_MONTH))) {
-                    age--;
-                }
-                return new Pair<>(p.codFisc(), age);
-            }).collect(Collectors.toSet());
-            // Map the groups to possible participants
-            final Map<GroupData, Set<Pair<String, Integer>>> groupsToParticipants = groups.stream()
-                    .collect(Collectors.toMap(
-                            gr -> gr,
-                            gr -> participantsAge.stream()
-                                    .filter(p -> gr.maxAge() <= p.y() && gr.minAge() >= p.y())
-                                    .collect(Collectors.toSet())
-                    ));
-            // TODO: Finish or redo this method fully
+            // TODO: Finish this method fully
         });
         // Finalize the page
         this.buildWindow();

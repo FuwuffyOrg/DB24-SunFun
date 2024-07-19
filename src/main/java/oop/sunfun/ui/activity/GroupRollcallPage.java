@@ -11,7 +11,6 @@ public class GroupRollcallPage extends GenericPage {
     public GroupRollcallPage(final CloseEvents closeEvent, final AccountData account, final String groupName) {
         super(PAGE_NAME + groupName, closeEvent);
         // TODO: Finish this page for the rollcall of a group and presences for any given day
-        // TODO: Connect to voluntary and educator
 
         // Finalize the window
         this.buildWindow();
