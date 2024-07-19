@@ -2,13 +2,11 @@ package oop.sunfun.database.connection;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-import java.util.Optional;
-
 public final class SunFunDatabase extends DatabaseConnection {
     /**
      * Attribute to keep the singleton instance of this class.
      */
-    private static Optional<IDatabaseConnection> singletonInstance = Optional.empty();
+    private static IDatabaseConnection singletonInstance;
 
     /**
      * The database's name within the server.
@@ -47,9 +45,9 @@ public final class SunFunDatabase extends DatabaseConnection {
      * @return The database's object instance.
      */
     public static IDatabaseConnection getDatabaseInstance() {
-        if (SunFunDatabase.singletonInstance.isEmpty()) {
-            SunFunDatabase.singletonInstance = Optional.of(new SunFunDatabase());
+        if (singletonInstance == null) {
+            singletonInstance = new SunFunDatabase();
         }
-        return SunFunDatabase.singletonInstance.get();
+        return singletonInstance;
     }
 }

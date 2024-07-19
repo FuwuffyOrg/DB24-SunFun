@@ -4,8 +4,8 @@ import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import oop.sunfun.ui.login.LoginPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 
-import javax.swing.JFrame;
 import javax.swing.UIManager;
+import java.awt.Component;
 import java.awt.Insets;
 
 public final class Main {
@@ -50,8 +50,7 @@ public final class Main {
      */
     public static void main(final String[] args) {
         Main.setupTheme();
-
-        final JFrame loginPage = new LoginPage(CloseEvents.EXIT_PROGRAM);
+        final Component loginPage = new LoginPage(CloseEvents.EXIT_PROGRAM);
         loginPage.setVisible(true);
     }
 }
