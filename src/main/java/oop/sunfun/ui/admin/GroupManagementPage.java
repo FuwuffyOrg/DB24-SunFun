@@ -14,12 +14,9 @@ import javax.swing.*;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 public class GroupManagementPage extends GenericPage {
-    private static final Logger LOGGER = Logger.getLogger(GroupManagementPage.class.getName());
-
     private static final String PAGE_NAME = "Gestione Gruppi";
 
     public GroupManagementPage(final CloseEvents closeEvent, final AccountData account) {

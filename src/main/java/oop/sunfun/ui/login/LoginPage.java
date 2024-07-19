@@ -39,7 +39,9 @@ public final class LoginPage extends FormPage {
                 () -> new LandingPage(CloseEvents.EXIT_PROGRAM, AccountDAO.getAccount(
                         ((JTextComponent) TXT_EMAIL).getText(), ((JTextComponent) TXT_PASSWORD).getText()).get()),
                 () -> new RegisterPage(CloseEvents.EXIT_PROGRAM),
-                () -> {});
+                () -> {
+
+                });
         // Finish the window.
         this.buildWindow();
     }
