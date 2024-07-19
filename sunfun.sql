@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `giornata` (
   `data` date NOT NULL COMMENT 'La data della giornata.',
   `fk_periodo_inizio` date NOT NULL COMMENT 'Chiave esterna della data di inizio del periodo associato.',
   `fk_periodo_fine` date NOT NULL COMMENT 'Chiave esterna della data di fine del periodo associato.',
-  PRIMARY KEY (`data`),
+  PRIMARY KEY (`data`,`fk_periodo_inizio`,`fk_periodo_fine`) USING BTREE,
   KEY `FK Periodo Giornata` (`fk_periodo_inizio`,`fk_periodo_fine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
