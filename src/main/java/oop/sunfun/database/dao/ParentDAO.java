@@ -28,7 +28,7 @@ public final class ParentDAO extends AbstractDAO {
     /**
      * Query to create a new parent.
      */
-    private static final String CREATE_PARENTE = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
+    private static final String CREATE_PARENT = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
             + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
 
     /**
@@ -91,19 +91,19 @@ public final class ParentDAO extends AbstractDAO {
     }
 
     /**
-     * TODO: missing javadoc
-     * @param codiceFiscale
-     * @param accountEmail
-     * @param name
-     * @param surname
-     * @param phoneNumber
-     * @param parentType
+     * Creates a parent within the database.
+     * @param codiceFiscale The code of the parent.
+     * @param accountEmail The mail related to the parent's account.
+     * @param name The parent's name.
+     * @param surname The parent's surname.
+     * @param phoneNumber The parent's phone numbers.
+     * @param parentType The grade of kinship of the parent.
      */
     public static void createParent(final String codiceFiscale, final String accountEmail, final String name,
                                     final String surname, final String phoneNumber, final ParentType parentType) {
         try {
             DB_CONNECTION.openConnection();
-            DB_CONNECTION.setQueryData(CREATE_PARENTE, codiceFiscale, accountEmail, name,
+            DB_CONNECTION.setQueryData(CREATE_PARENT, codiceFiscale, accountEmail, name,
                     surname, phoneNumber, parentType.getTextValue());
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't create the new parent", err);

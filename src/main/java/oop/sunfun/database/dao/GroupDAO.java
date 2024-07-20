@@ -46,7 +46,7 @@ public final class GroupDAO extends AbstractDAO {
     private static final String CREATE_GROUP = "INSERT INTO `gruppo`(`nome`, `eta_min`, `eta_max`) VALUES (?,?,?)";
 
     /**
-     * Query to delete a new group.
+     * Query to delete a group.
      */
     private static final String ERASE_GROUP = "DELETE FROM `gruppo` WHERE `nome`=?";
 
