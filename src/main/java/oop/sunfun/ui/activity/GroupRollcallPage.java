@@ -31,7 +31,9 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public final class GroupRollcallPage extends FormPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Appello del Gruppo ";
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
@@ -44,6 +46,9 @@ public final class GroupRollcallPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Data:"), new Pair<>(COMBO_DATE, 0));
     }
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
 
     public GroupRollcallPage(final CloseEvents closeEvent, final AccountData account,

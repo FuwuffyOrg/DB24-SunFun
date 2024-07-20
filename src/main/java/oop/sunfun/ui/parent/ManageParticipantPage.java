@@ -25,9 +25,14 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public final class ManageParticipantPage extends GenericPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Gestione Partecipanti";
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
 
     public ManageParticipantPage(final CloseEvents closeEvent, final AccountData account) {

@@ -27,9 +27,14 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public final class ActivityPage extends FormPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Gestione Attivita";
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;

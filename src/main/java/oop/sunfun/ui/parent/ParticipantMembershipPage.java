@@ -32,7 +32,9 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public final class ParticipantMembershipPage extends FormPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Gestione Iscrizione ";
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
@@ -45,7 +47,14 @@ public final class ParticipantMembershipPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Parente:"), new Pair<>(COMBO_PARENT, 0));
     }
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
+
+    /**
+     * The participant data on the page.
+     */
     private final ParticipantData participantData;
 
     public ParticipantMembershipPage(final CloseEvents closeEvent, final AccountData account,

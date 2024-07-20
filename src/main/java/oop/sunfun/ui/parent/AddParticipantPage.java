@@ -22,7 +22,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class AddParticipantPage extends FormPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Aggiungi un partecipante";
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;

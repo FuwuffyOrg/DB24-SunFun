@@ -30,9 +30,14 @@ import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 public class LandingPage extends GenericPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Landing Page";
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
 
     public LandingPage(final CloseEvents closeEvent, final AccountData account) {

@@ -18,7 +18,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class CreateForumPage extends FormPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Create A Post";
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;

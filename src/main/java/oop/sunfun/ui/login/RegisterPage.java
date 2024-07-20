@@ -22,6 +22,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class RegisterPage extends FormPage {
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Register";
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;

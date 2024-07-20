@@ -26,11 +26,16 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public final class ActivityReviewPage extends FormPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Recensioni dell'attivita: ";
 
     private static final int MAX_GRADE = 5;
 
+    /**
+     * The account data on the page.
+     */
     private final ActivityData activityData;
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;

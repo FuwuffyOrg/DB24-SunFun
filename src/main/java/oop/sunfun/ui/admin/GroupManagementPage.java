@@ -33,8 +33,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GroupManagementPage extends GenericPage {
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Gestione Gruppi";
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
 
     public GroupManagementPage(final CloseEvents closeEvent, final AccountData account) {

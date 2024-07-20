@@ -26,9 +26,14 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class EducatorPage extends GenericPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Gestione Educatori";
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
 
     public EducatorPage(final CloseEvents closeEvent, final AccountData account) {

@@ -24,9 +24,14 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public final class ParticipantDietPage extends GenericPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Gestione Diete ";
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
 
     private final ParticipantData participantData;

@@ -25,9 +25,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
 public final class ParticipantRollcallPage extends GenericPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Appello di ";
 
+    /**
+     * The participant data on the page.
+     */
     private final ParticipantData participantData;
 
     public ParticipantRollcallPage(final CloseEvents closeEvent, final AccountData account,

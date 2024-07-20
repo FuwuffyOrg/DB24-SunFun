@@ -25,11 +25,21 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public final class ForumPage extends GenericPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Forums";
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
 
+    /**
+     * Constructor of the forum page.
+     * @param closeEvent Event that happens when the page closes.
+     * @param account The account used to open this page.
+     */
     public ForumPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
         this.accountData = account;
@@ -59,6 +69,10 @@ public final class ForumPage extends GenericPage {
         this.buildWindow();
     }
 
+    /**
+     * Method to create the tabs for all the categories of the forum.
+     * @return A panel with all the tabs.
+     */
     private JComponent createTabs() {
         // Create the basic stuff for the query and display
         final JComponent pane = new JTabbedPane();
@@ -69,6 +83,11 @@ public final class ForumPage extends GenericPage {
         return pane;
     }
 
+    /**
+     * Creates a panel with the posts of a given category.
+     * @param category The category to use.
+     * @return The panel with the posts.
+     */
     private Component createPanelCategory(final CategoryData category) {
         // Create the stuff to display
         final JComponent panel = new JPanel();
@@ -93,18 +112,22 @@ public final class ForumPage extends GenericPage {
         return scrollPanel;
     }
 
+    /**
+     * Creates a row of the table based on the discussion data.
+     * @param discussion The discussion data to use.
+     * @return The row of the table with the data.
+     */
     private JComponent createDiscussionHeader(final DiscussionData discussion) {
         final JComponent discussionHeader = new JPanel();
         discussionHeader.setLayout(new GridBagLayout());
-        final Component lblPerson = new JLabel(discussion.name() + " " + discussion.surname());
-        final Component lblTitle = new JLabel(discussion.title());
         final AbstractButton btnEnterDiscussion = new JButton("Enter Discussion");
-        discussionHeader.add(lblPerson, new GridBagConstraintBuilder()
+        discussionHeader.add(new JLabel(discussion.name() + " " + discussion.surname()),
+                new GridBagConstraintBuilder()
                 .setRow(0).setColumn(0)
                 .setMarginAll(2)
                 .setFillAll()
                 .build());
-        discussionHeader.add(lblTitle, new GridBagConstraintBuilder()
+        discussionHeader.add(new JLabel(discussion.title()), new GridBagConstraintBuilder()
                 .setRow(0).setColumn(1)
                 .setMarginAll(2)
                 .setFillAll()

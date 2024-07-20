@@ -24,7 +24,9 @@ import java.util.Map;
 import java.util.Optional;
 
 public class AddEducatorPage extends FormPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Aggiunta Educatori";
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;

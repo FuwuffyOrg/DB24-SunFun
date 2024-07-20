@@ -34,7 +34,9 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public final class GroupActivityManagementPage extends FormPage {
-
+    /**
+     * The title of the page.
+     */
     private static final String PAGE_NAME = "Gestione attivita dei gruppi";
 
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
@@ -66,6 +68,9 @@ public final class GroupActivityManagementPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Fine:"), new Pair<>(COMBO_TIME_END, 0));
     }
 
+    /**
+     * The account data on the page.
+     */
     private final AccountData accountData;
 
     public GroupActivityManagementPage(final CloseEvents closeEvent, final AccountData account,
