@@ -1,7 +1,6 @@
 package oop.sunfun.ui.parent;
 
 import oop.sunfun.database.dao.FoodDAO;
-import oop.sunfun.database.dao.ParentDAO;
 import oop.sunfun.database.data.food.AllergenData;
 import oop.sunfun.database.data.login.AccountData;
 import oop.sunfun.database.data.person.ParticipantData;
@@ -97,7 +96,7 @@ public final class ParticipantDietPage extends GenericPage {
         // Add button event
         btnUpdateDiet.addActionListener(e -> {
             final String diet = (String) comboDiet.getSelectedItem();
-            ParentDAO.updateParticipantDiet(diet, this.participantData);
+            FoodDAO.updateParticipantDiet(diet, this.participantData);
             final ParticipantData newParticipant = new ParticipantData(this.participantData.codFisc(),
                     this.participantData.accountEmail(), Optional.ofNullable(diet), this.participantData.group(),
                     this.participantData.name(), this.participantData.surname(), this.participantData.dateOfBirth());

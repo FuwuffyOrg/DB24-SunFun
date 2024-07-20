@@ -63,11 +63,6 @@ public final class ParentDAO extends AbstractDAO {
     private static final String DELETE_RITIRO_PARENTE = "DELETE FROM `ritiro` WHERE `fk_parente`=? AND "
             + "`fk_partecipante`=?";
 
-    /**
-     * Query to update a participant's diet.
-     */
-    private static final String UPDATE_PARTICIPANT_DIET = "UPDATE `partecipante` SET `fk_dieta`=? WHERE "
-            + "`partecipante`.`codice_fiscale`=?";
 
     /**
      * Fetches all the parents within the database.
@@ -96,7 +91,7 @@ public final class ParentDAO extends AbstractDAO {
     }
 
     /**
-     *
+     * TODO: missing javadoc
      * @param codiceFiscale
      * @param accountEmail
      * @param name
@@ -221,21 +216,6 @@ public final class ParentDAO extends AbstractDAO {
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't remove the ritiro for the participant "
                     + codFiscPartecipante + " and for the parent " + codFiscParente, err);
-            DB_CONNECTION.closeConnection();
-        }
-    }
-
-    /**
-     * Updates a participant's diet value.
-     * @param diet The diet to change it to.
-     * @param participantData The participant to set the diet of.
-     */
-    public static void updateParticipantDiet(final String diet, final ParticipantData participantData) {
-        try {
-            DB_CONNECTION.openConnection();
-            DB_CONNECTION.setQueryData(UPDATE_PARTICIPANT_DIET, diet, participantData.codFisc());
-        } catch (final SQLException err) {
-            bracedLog(LOGGER, Level.SEVERE, "Couldn't update the diet of " + participantData.name(), err);
             DB_CONNECTION.closeConnection();
         }
     }

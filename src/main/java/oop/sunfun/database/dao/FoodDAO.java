@@ -2,6 +2,7 @@ package oop.sunfun.database.dao;
 
 import oop.sunfun.database.data.food.DietData;
 import oop.sunfun.database.data.food.AllergenData;
+import oop.sunfun.database.data.person.ParticipantData;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -34,18 +35,18 @@ public final class FoodDAO extends AbstractDAO {
     private static final String GET_ALL_DIETS = "SELECT * FROM `dieta`";
 
     /**
-     * Query to get all the diets a participant follows.
+     * Query to add an intollerance that a participant is susceptible to.
      */
     private static final String CREATE_INTOLLERANCE_FOR_PARTICIPANT = "INSERT INTO `intolleranza`(`fk_partecipante`, "
             + "`fk_allergene`) VALUES (?,?)";
 
     /**
-     * Query to create and add a new allergen to the database.
+     * Query to create a new allergen to the database.
      */
     private static final String CREATE_ALLERGEN = "INSERT INTO `allergene`(`nome`, `descrizione`) VALUES (?,?)";
 
     /**
-     * Query to create and add a new diet to the database.
+     * Query to create a new diet to the database.
      */
     private static final String CREATE_DIET = "INSERT INTO `dieta`(`nome`, `descrizione`) VALUES (?,?)";
 
@@ -64,6 +65,12 @@ public final class FoodDAO extends AbstractDAO {
      * Query to create and delete a diet from the database.
      */
     private static final String DELETE_DIET = "DELETE FROM `dieta` WHERE `nome`=?";
+
+    /**
+     * Query to update a participant's diet.
+     */
+    private static final String UPDATE_PARTICIPANT_DIET = "UPDATE `partecipante` SET `fk_dieta`=? WHERE "
+            + "`partecipante`.`codice_fiscale`=?";
 
     /**
      * Gets all the allergens from the database.
@@ -208,6 +215,21 @@ public final class FoodDAO extends AbstractDAO {
             DB_CONNECTION.setQueryData(DELETE_DIET, dietData.name());
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't delete the diet " + dietData.name(), err);
+            DB_CONNECTION.closeConnection();
+        }
+    }
+
+    /**
+     * Updates a participant's diet value.
+     * @param diet The diet to change it to.
+     * @param participantData The participant to set the diet of.
+     */
+    public static void updateParticipantDiet(final String diet, final ParticipantData participantData) {
+        try {
+            DB_CONNECTION.openConnection();
+            DB_CONNECTION.setQueryData(UPDATE_PARTICIPANT_DIET, diet, participantData.codFisc());
+        } catch (final SQLException err) {
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't update the diet of " + participantData.name(), err);
             DB_CONNECTION.closeConnection();
         }
     }
