@@ -34,8 +34,17 @@ public final class ParticipantDietPage extends GenericPage {
      */
     private final AccountData accountData;
 
+    /**
+     * The data of the participants to manage the diets of.
+     */
     private final ParticipantData participantData;
 
+    /**
+     * Constructor of the page to manage a participant's food related stuff.
+     * @param closeEvent The event that happens when you close the page.
+     * @param account The account that called this page.
+     * @param participant The participants to manage the food of.
+     */
     public ParticipantDietPage(final CloseEvents closeEvent, final AccountData account,
                                final ParticipantData participant) {
         super(PAGE_NAME + participant.name() + " " + participant.surname(), closeEvent);
@@ -69,6 +78,10 @@ public final class ParticipantDietPage extends GenericPage {
         this.buildWindow();
     }
 
+    /**
+     * Section of the page to manage the diet and update it.
+     * @return The panel containing the diet section.
+     */
     private Component getDietPanel() {
         final JComponent dietsPanel = new JPanel();
         dietsPanel.setLayout(new GridBagLayout());
@@ -110,6 +123,10 @@ public final class ParticipantDietPage extends GenericPage {
         return dietsPanel;
     }
 
+    /**
+     * Section of the page to add the allergies and remove them.
+     * @return The panel containing the allergies section.
+     */
     private Component getAllergyPanel() {
         final JComponent allergyPanel = new JPanel();
         allergyPanel.setLayout(new GridBagLayout());

@@ -35,6 +35,11 @@ public final class ManageParticipantPage extends GenericPage {
      */
     private final AccountData accountData;
 
+    /**
+     * Constructor for the participant management page for the parent.
+     * @param closeEvent The event that happens when you close the page.
+     * @param account The account that called this page.
+     */
     public ManageParticipantPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
         this.accountData = account;
@@ -65,6 +70,10 @@ public final class ManageParticipantPage extends GenericPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a table containing all the parent's participants.
+     * @return The table with the participant's information.
+     */
     private Component createParticipantTable() {
         final JComponent participantPanel = new JPanel();
         participantPanel.setLayout(new GridBagLayout());

@@ -42,6 +42,9 @@ public final class ParticipantMembershipPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Combobox to keep the parent that can pick up this participant.
+     */
     private static final JComboBox<String> COMBO_PARENT;
 
     static {
@@ -60,6 +63,12 @@ public final class ParticipantMembershipPage extends FormPage {
      */
     private final ParticipantData participantData;
 
+    /**
+     * Constructor for the membership page for a participant.
+     * @param closeEvent The event that happens when you close the page.
+     * @param account The account used to call this page.
+     * @param participant The participant to add the membership to.
+     */
     public ParticipantMembershipPage(final CloseEvents closeEvent, final AccountData account,
                                      final ParticipantData participant) {
         super(PAGE_NAME + participant.name(), closeEvent, 1, FORM_COMPONENTS,
@@ -87,6 +96,10 @@ public final class ParticipantMembershipPage extends FormPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a panel with all the periods the user has been enrolled to.
+     * @return A table with the periods of enrollment.
+     */
     private Component createPeriodPanel() {
         final JComponent periodPanel = new JPanel();
         periodPanel.setLayout(new GridBagLayout());
@@ -141,6 +154,10 @@ public final class ParticipantMembershipPage extends FormPage {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     }
 
+    /**
+     * Section of the page to check whether a parent can or can not pick up a participant.
+     * @return A component with the pick up information.
+     */
     private Component createPickupPage() {
         final JComponent pickupPanel = new JPanel();
         pickupPanel.setLayout(new GridBagLayout());

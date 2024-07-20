@@ -28,8 +28,19 @@ public final class CreateForumPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Textbox that keeps the forum's title for addition.
+     */
     private static final JComponent TXT_TITLE;
+
+    /**
+     * Textbox to keep the forum's description.
+     */
     private static final JComponent TXT_DESCRIPTION;
+
+    /**
+     * Combobox to choose the forum's category.
+     */
     private static final JComboBox<String> COMBO_CATEGORY;
 
     static {
@@ -42,6 +53,11 @@ public final class CreateForumPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Categoria:"), new Pair<>(COMBO_CATEGORY, 0));
     }
 
+    /**
+     * Constructor for the forum creation page.
+     * @param closeEvent The event that happens when you close the page.
+     * @param account The account that called this page.
+     */
     public CreateForumPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, FORM_COMPONENTS,
                 () -> new ForumPage(CloseEvents.EXIT_PROGRAM, account),

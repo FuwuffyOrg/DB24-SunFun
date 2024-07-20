@@ -41,6 +41,9 @@ public final class GroupRollcallPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Combobox to choose the date on which to do the roll call.
+     */
     private static final JComboBox<Date> COMBO_DATE;
 
     static {
@@ -54,6 +57,13 @@ public final class GroupRollcallPage extends FormPage {
      */
     private final AccountData accountData;
 
+    /**
+     * Constructor for the group rollcall page.
+     * @param closeEvent The event that happens when you close the page.
+     * @param account The account that called this page.
+     * @param groupName The group that needs to be roll called.
+     * @param date A valid optional if a date has been selected for this page.
+     */
     public GroupRollcallPage(final CloseEvents closeEvent, final AccountData account,
                              final String groupName, final Optional<Date> date) {
         super(PAGE_NAME + groupName, closeEvent, 1, FORM_COMPONENTS,
@@ -79,6 +89,12 @@ public final class GroupRollcallPage extends FormPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a table with the rollcall information.
+     * @param d The date on which to do the rollcall.
+     * @param group The group on which to check the rollcall.
+     * @return A table with rollcall information.
+     */
     private Component getRollCallTable(final Date d, final String group) {
         // Create the panel
         final JComponent tablePanel = new JPanel();
