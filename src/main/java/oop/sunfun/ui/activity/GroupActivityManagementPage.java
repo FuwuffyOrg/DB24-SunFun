@@ -39,6 +39,9 @@ public final class GroupActivityManagementPage extends FormPage {
      */
     private static final String PAGE_NAME = "Gestione attivita dei gruppi";
 
+    /**
+     * Components of the form used by the FormPage class.
+     */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
     private static final JComboBox<Date> COMBO_DATE;

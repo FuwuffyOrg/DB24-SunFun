@@ -25,7 +25,9 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public final class ForumPostPage extends FormPage {
-
+    /**
+     * Components of the form used by the FormPage class.
+     */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
     private static final JComponent TXT_COMMENT;

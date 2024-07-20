@@ -35,6 +35,12 @@ public final class ParticipantRollcallPage extends GenericPage {
      */
     private final ParticipantData participantData;
 
+    /**
+     * Constructor of the participant roll call page.
+     * @param closeEvent The event that happens when the page closes.
+     * @param account The account of the user that opened this page.
+     * @param participant The participant to check the roll call off.
+     */
     public ParticipantRollcallPage(final CloseEvents closeEvent, final AccountData account,
                                    final ParticipantData participant) {
         super(PAGE_NAME + participant.name() + " " + participant.surname(), closeEvent);
@@ -57,6 +63,10 @@ public final class ParticipantRollcallPage extends GenericPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a table with all the presences of the participant in the database.
+     * @return The table with the presences.
+     */
     private Component getAllPresences() {
         // Create the panel
         final JComponent tablePanel = new JPanel();

@@ -38,6 +38,9 @@ public final class ActivityReviewPage extends FormPage {
      */
     private final ActivityData activityData;
 
+    /**
+     * Components of the form used by the FormPage class.
+     */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
     private static final JComboBox<Integer> COMBO_GRADE;

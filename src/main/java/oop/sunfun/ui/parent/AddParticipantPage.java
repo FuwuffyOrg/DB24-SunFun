@@ -27,6 +27,9 @@ public final class AddParticipantPage extends FormPage {
      */
     private static final String PAGE_NAME = "Aggiungi un partecipante";
 
+    /**
+     * Components of the form used by the FormPage class.
+     */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
     private static final JComponent TXT_COD_FISC;

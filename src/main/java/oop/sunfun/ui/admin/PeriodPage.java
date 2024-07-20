@@ -40,6 +40,9 @@ public final class PeriodPage extends FormPage {
      */
     private final AccountData accountData;
 
+    /**
+     * Components of the form used by the FormPage class.
+     */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
     private static final JXDatePicker DATE_START;
     private static final JXDatePicker DATE_END;

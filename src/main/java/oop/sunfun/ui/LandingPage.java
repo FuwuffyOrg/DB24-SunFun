@@ -40,6 +40,11 @@ public class LandingPage extends GenericPage {
      */
     private final AccountData accountData;
 
+    /**
+     * Creates a landing page with the different levels of permission based on the account.
+     * @param closeEvent The event that happens when the page closes.
+     * @param account The account that called the page.
+     */
     public LandingPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
         this.accountData = account;

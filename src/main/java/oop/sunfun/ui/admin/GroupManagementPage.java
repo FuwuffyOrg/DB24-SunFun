@@ -43,6 +43,11 @@ public class GroupManagementPage extends GenericPage {
      */
     private final AccountData accountData;
 
+    /**
+     * Creates a page to manage the group's participants.
+     * @param closeEvent The event that happens when the page closes.
+     * @param account The account that called this page.
+     */
     public GroupManagementPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
         this.accountData = account;
@@ -84,8 +89,8 @@ public class GroupManagementPage extends GenericPage {
                             // Adjust age if the birthdate hasn't occurred yet this year
                             if (today.get(Calendar.MONTH) < birthCalendar.get(Calendar.MONTH)
                                     || (today.get(Calendar.MONTH) == birthCalendar.get(Calendar.MONTH)
-                                    && today.get(Calendar.DAY_OF_MONTH) <
-                                    birthCalendar.get(Calendar.DAY_OF_MONTH))) {
+                                    && today.get(Calendar.DAY_OF_MONTH)
+                                    < birthCalendar.get(Calendar.DAY_OF_MONTH))) {
                                 age--;
                             }
                             return new Pair<>(p.codFisc(), age);
@@ -117,6 +122,10 @@ public class GroupManagementPage extends GenericPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates the tabs for all the groups in the db.
+     * @return A pane with all the tabs of the groups.
+     */
     private JComponent createTabs() {
         // Create the basic stuff for the query and display
         final JComponent pane = new JTabbedPane();
@@ -127,6 +136,11 @@ public class GroupManagementPage extends GenericPage {
         return pane;
     }
 
+    /**
+     * Creates a table with the group and all the participants that are in it.
+     * @param group The group to check the participants from.
+     * @return The table with all the participants of a group.
+     */
     private Component createGroupPanel(final GroupData group) {
         // Create the stuff to display
         final JComponent panel = new JPanel();

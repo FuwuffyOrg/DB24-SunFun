@@ -37,6 +37,9 @@ public final class ActivityPage extends FormPage {
      */
     private final AccountData accountData;
 
+    /**
+     * Components of the form used by the FormPage class.
+     */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
     private static final JComponent TXT_NAME;
