@@ -28,7 +28,14 @@ public final class LoginPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Textbox to keep the email of the user.
+     */
     private static final JComponent TXT_EMAIL;
+
+    /**
+     * Textbox to keep the password of the user.
+     */
     private static final JComponent TXT_PASSWORD;
 
     static {
@@ -39,7 +46,10 @@ public final class LoginPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Password:"), new Pair<>(TXT_PASSWORD, 24));
     }
 
-    // A bit weird but works, have to do the same query twice but clean code
+    /**
+     * Constructor of the login page to log in to the application.
+     * @param closeEvent The event that happens when you close the window.
+     */
     public LoginPage(final CloseEvents closeEvent) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
                 () -> new LandingPage(CloseEvents.EXIT_PROGRAM, AccountDAO.getAccount(

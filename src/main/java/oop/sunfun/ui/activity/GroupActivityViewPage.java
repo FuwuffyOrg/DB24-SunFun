@@ -44,6 +44,9 @@ public final class GroupActivityViewPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Combo box to select the date to check the activities during it.
+     */
     private static final JComboBox<Date> COMBO_DATE;
 
     static {
@@ -57,6 +60,13 @@ public final class GroupActivityViewPage extends FormPage {
      */
     private final AccountData accountData;
 
+    /**
+     * Constructor for a page to check a group's activity timetable.
+     * @param closeEvent The event that happens when you close the window.
+     * @param account The account that called this window.
+     * @param groupName The name of the group to check the activities from.
+     * @param currentDate A valid optional if a date has been selected for this page.
+     */
     public GroupActivityViewPage(final CloseEvents closeEvent, final AccountData account, final String groupName,
                                  final Optional<Date> currentDate) {
         super(PAGE_NAME + groupName, closeEvent, 1, FORM_COMPONENTS,
@@ -80,6 +90,12 @@ public final class GroupActivityViewPage extends FormPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates tabs per each day with the activities they will do.
+     * @param d The starting day to check the activities during.
+     * @param groupName The name of the group to check activities for.
+     * @return The tabs of seven days worth of activities.
+     */
     private Component getActivitiesTabs(final Date d, final String groupName) {
         final int dateCount = 7;
         final JComponent tabs = new JTabbedPane();
@@ -96,6 +112,12 @@ public final class GroupActivityViewPage extends FormPage {
         return tabs;
     }
 
+    /**
+     * Creates a table with all the activities a group has to attend to.
+     * @param d The date to check the activities.
+     * @param groupName The name of the group to check them.
+     * @return The table with the activities info.
+     */
     private Component getActivitiesPanel(final Date d, final String groupName) {
         // Create a panel
         final JComponent datePanel = new JPanel();

@@ -44,7 +44,15 @@ public final class PeriodPage extends FormPage {
      * Components of the form used by the FormPage class.
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
+
+    /**
+     * Date picker to choose the start date of the period.
+     */
     private static final JXDatePicker DATE_START;
+
+    /**
+     * Date picker to choose the end date of the period.
+     */
     private static final JXDatePicker DATE_END;
 
     static {
@@ -55,6 +63,11 @@ public final class PeriodPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Fine del periodo:"), new Pair<>(DATE_END, 0));
     }
 
+    /**
+     * Constructor for the period management page.
+     * @param closeEvent The event that happens when you close the page.
+     * @param account The account that called the page.
+     */
     public PeriodPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
                 () -> new PeriodPage(CloseEvents.EXIT_PROGRAM, account),
@@ -78,6 +91,10 @@ public final class PeriodPage extends FormPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a table with all the period's data.
+     * @return A table with the periods.
+     */
     private Component getPeriodTable() {
         // Create the panel
         final JComponent tablePanel = new JPanel();
@@ -124,6 +141,12 @@ public final class PeriodPage extends FormPage {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
+    /**
+     * Method to get all the dates between two given dates.
+     * @param startDate The starting date of the period.
+     * @param endDate The ending date of the period.
+     * @return A set with all the dates between startDate and endDate.
+     */
     private static Set<Date> getDatesBetween(final Date startDate, final Date endDate) {
         final Set<Date> datesInRange = new HashSet<>();
         final Calendar startCalendar = Calendar.getInstance();
