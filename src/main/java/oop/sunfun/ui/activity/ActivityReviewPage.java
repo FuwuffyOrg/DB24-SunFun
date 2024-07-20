@@ -31,6 +31,9 @@ public final class ActivityReviewPage extends FormPage {
      */
     private static final String PAGE_NAME = "Recensioni dell'attivita: ";
 
+    /**
+     * Counts the different types of grades you can give (0-5).
+     */
     private static final int MAX_GRADE = 5;
 
     /**
@@ -43,7 +46,14 @@ public final class ActivityReviewPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Combobox to choose the activity's grade.
+     */
     private static final JComboBox<Integer> COMBO_GRADE;
+
+    /**
+     * Textbox to write a description to that review.
+     */
     private static final JComponent TXT_DESCRIPTION;
 
     static {
@@ -55,6 +65,12 @@ public final class ActivityReviewPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Descrizione:"), new Pair<>(TXT_DESCRIPTION, 10000));
     }
 
+    /**
+     * Constructor of the page to add a review to an activity.
+     * @param closeEvent Event that happens when you close the window.
+     * @param account The account that called this page.
+     * @param activity The activity to write this review for.
+     */
     public ActivityReviewPage(final CloseEvents closeEvent, final AccountData account, final ActivityData activity) {
         super(PAGE_NAME + activity.name(), closeEvent, 1, FORM_COMPONENTS,
                 () -> new ActivityReviewPage(CloseEvents.EXIT_PROGRAM, account, activity),
@@ -73,6 +89,10 @@ public final class ActivityReviewPage extends FormPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a panel with a table with all the reviews made on this activity.
+     * @return A table with all the reviews of the activity.
+     */
     private Component getReviewsTable() {
         // Create the panel
         final JComponent tablePanel = new JPanel();

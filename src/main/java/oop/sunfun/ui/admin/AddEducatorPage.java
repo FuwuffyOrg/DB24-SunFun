@@ -34,14 +34,49 @@ public class AddEducatorPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Textbox to keep the code of the educator.
+     */
     private static final JComponent TXT_COD_FISC;
+
+    /**
+     * Textbox to keep the name of the educator.
+     */
     private static final JComponent TXT_NAME;
+
+    /**
+     * Textbox to keep the surname of the educator.
+     */
     private static final JComponent TXT_SURNAME;
+
+    /**
+     * Textbox to keep the phone number of the educator.
+     */
     private static final JComponent TXT_PHONE;
+
+    /**
+     * Textbox to keep the email of the educator.
+     */
     private static final JComponent TXT_EMAIL;
+
+    /**
+     * Textbox to keep the password of the educator.
+     */
     private static final JComponent TXT_PASSWORD;
+
+    /**
+     * Textbox to keep the password confirmation of the educator.
+     */
     private static final JComponent TXT_PASSWORD_CONFIRM;
+
+    /**
+     * Radio to check if you want to add an educator or not.
+     */
     private static final AbstractButton RADIO_EDUCATOR;
+
+    /**
+     * Radio to check if you want to add an voluntary or not.
+     */
     private static final AbstractButton RADIO_VOLUNTARY;
 
     static {
@@ -69,6 +104,11 @@ public class AddEducatorPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Conferma Password:"), new Pair<>(TXT_PASSWORD_CONFIRM, 24));
     }
 
+    /**
+     * Constructor for the educator registry page.
+     * @param closeEvent The event that happens when you close the page.
+     * @param account The account that called this window.
+     */
     public AddEducatorPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, FORM_COMPONENTS,
                 () -> new EducatorPage(CloseEvents.EXIT_PROGRAM, account),

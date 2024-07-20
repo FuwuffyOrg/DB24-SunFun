@@ -32,13 +32,44 @@ public final class RegisterPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Textbox to keep the code of the parent.
+     */
     private static final JComponent TXT_COD_FISC;
+
+    /**
+     * Textbox to keep the name of the parent.
+     */
     private static final JComponent TXT_NAME;
+
+    /**
+     * Textbox to keep the surname of the parent.
+     */
     private static final JComponent TXT_SURNAME;
+
+    /**
+     * Textbox to keep the phone number of the parent.
+     */
     private static final JComponent TXT_PHONE;
+
+    /**
+     * Textbox to keep the email of the parent.
+     */
     private static final JComponent TXT_EMAIL;
+
+    /**
+     * Textbox to keep the password of the parent.
+     */
     private static final JComponent TXT_PASSWORD;
+
+    /**
+     * Textbox to keep the password confirmation of the parent.
+     */
     private static final JComponent TXT_PASSWORD_CONFIRM;
+
+    /**
+     * Combobox to check what kind of kinship this parent is to their participant.
+     */
     private static final JComboBox<String> COMBO_PARENT_TYPE;
 
     static {
@@ -62,6 +93,10 @@ public final class RegisterPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Conferma Password:"), new Pair<>(TXT_PASSWORD_CONFIRM, 24));
     }
 
+    /**
+     * Constructor of the registry page for the parent.
+     * @param closeEvent The event that happens when you close the page.
+     */
     public RegisterPage(final CloseEvents closeEvent) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
                 () -> new LoginPage(CloseEvents.EXIT_PROGRAM),

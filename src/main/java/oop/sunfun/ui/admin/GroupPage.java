@@ -42,8 +42,19 @@ public final class GroupPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Textbox to keep the group's name in for the form.
+     */
     private static final JComponent TXT_NAME;
+
+    /**
+     * Textbox to keep the group's minimum age for the form.
+     */
+
     private static final JComponent TXT_ETA_MIN;
+    /**
+     * Textbox to keep the group's maximum age for the form.
+     */
     private static final JComponent TXT_ETA_MAX;
 
     static {
@@ -56,6 +67,11 @@ public final class GroupPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Eta massima:"), new Pair<>(TXT_ETA_MAX, 3));
     }
 
+    /**
+     * Constructor for the page to manage existing groups.
+     * @param closeEvent The event that happens when you close the page.
+     * @param account The account that called this page.
+     */
     public GroupPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
                 () -> new GroupPage(CloseEvents.EXIT_PROGRAM, account),
@@ -75,6 +91,10 @@ public final class GroupPage extends FormPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a table with all the current group's information.
+     * @return The table with the groups.
+     */
     private Component getGroupTable() {
         // Create the panel
         final JComponent tablePanel = new JPanel();
@@ -84,22 +104,19 @@ public final class GroupPage extends FormPage {
         // Add the groups to the table
         IntStream.range(0, groups.size()).forEach(i -> {
             final GroupData group = groups.get(i);
-            final Component lblName = new JLabel(group.name());
-            final Component lblEtaMin = new JLabel(String.valueOf(group.minAge()));
-            final Component lblEtaMax = new JLabel(String.valueOf(group.maxAge()));
             final AbstractButton btnDeleteGroup = new JButton("Elimina");
             // Add them to the panel
-            tablePanel.add(lblName, new GridBagConstraintBuilder()
+            tablePanel.add(new JLabel(group.name()), new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(0)
                     .setFillAll()
                     .build()
             );
-            tablePanel.add(lblEtaMin, new GridBagConstraintBuilder()
+            tablePanel.add(new JLabel(String.valueOf(group.minAge())), new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(1)
                     .setFillAll()
                     .build()
             );
-            tablePanel.add(lblEtaMax, new GridBagConstraintBuilder()
+            tablePanel.add(new JLabel(String.valueOf(group.maxAge())), new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(2)
                     .setFillAll()
                     .build()

@@ -46,9 +46,24 @@ public final class AllergiesPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Textbox to keep the name of the new allergy or diet.
+     */
     private static final JComponent TXT_NAME;
+
+    /**
+     * Textbox to keep the description of the new allergy or diet.
+     */
     private static final JComponent TXT_DESCRIPTION;
+
+    /**
+     * Radio button to select to add a diet.
+     */
     private static final AbstractButton RADIO_DIET;
+
+    /**
+     * Radio button to select to add an allergen.
+     */
     private static final AbstractButton RADIO_ALLERGEN;
 
     static {
@@ -66,6 +81,11 @@ public final class AllergiesPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Allergene"), new Pair<>(RADIO_ALLERGEN, 0));
     }
 
+    /**
+     * Constructor for the food related management page.
+     * @param closeEvent Event that happens when you close the page.
+     * @param account The account used to call this page.
+     */
     public AllergiesPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
                 () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM, account),
@@ -95,6 +115,10 @@ public final class AllergiesPage extends FormPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a panel with all the diet's information.
+     * @return The panel with all the diets.
+     */
     private Component createDietsPanel() {
         final JComponent listDietsPanel = new JPanel();
         listDietsPanel.setLayout(new GridBagLayout());
@@ -137,6 +161,10 @@ public final class AllergiesPage extends FormPage {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     }
 
+    /**
+     * Creates a panel with all the substance's information.
+     * @return The panel with all the substances.
+     */
     private Component createSubstancesPanel() {
         final JComponent listSubstancesPanel = new JPanel();
         listSubstancesPanel.setLayout(new GridBagLayout());

@@ -36,6 +36,11 @@ public class EducatorPage extends GenericPage {
      */
     private final AccountData accountData;
 
+    /**
+     * Constructor of a page to manage the educators and voluntaries in the page.
+     * @param closeEvent The event that happens when you close the page.
+     * @param account The account that called this page.
+     */
     public EducatorPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent);
         this.accountData = account;
@@ -69,6 +74,10 @@ public class EducatorPage extends GenericPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a table with all the educator's information.
+     * @return A table with all the educators.
+     */
     private Component getEducatorTable() {
         // Create the panel
         final JComponent tablePanel = new JPanel();
@@ -151,6 +160,10 @@ public class EducatorPage extends GenericPage {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
+    /**
+     * Creates a table with all the voluntary's information.
+     * @return A table with all the voluntaries.
+     */
     private Component getVoluntaryTable() {
         // Create the panel
         final JComponent tablePanel = new JPanel();

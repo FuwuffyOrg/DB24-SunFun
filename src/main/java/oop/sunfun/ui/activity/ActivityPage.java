@@ -42,7 +42,14 @@ public final class ActivityPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Textbox to keep the activity's name.
+     */
     private static final JComponent TXT_NAME;
+
+    /**
+     * Textbox to keep the activity's description.
+     */
     private static final JComponent TXT_DESCRIPTION;
 
     static {
@@ -53,6 +60,11 @@ public final class ActivityPage extends FormPage {
         FORM_COMPONENTS.put(new JLabel("Descrizione:"), new Pair<>(TXT_DESCRIPTION, 10000));
     }
 
+    /**
+     * Constructor for the activity management of this database.
+     * @param closeEvent The event that happens when you close the window.
+     * @param account The account that called this window.
+     */
     public ActivityPage(final CloseEvents closeEvent, final AccountData account) {
         super(PAGE_NAME, closeEvent, 1, FORM_COMPONENTS,
                 () -> new ActivityPage(CloseEvents.EXIT_PROGRAM, account),
@@ -71,6 +83,10 @@ public final class ActivityPage extends FormPage {
         this.buildWindow();
     }
 
+    /**
+     * Creates a table with all the activities in the database.
+     * @return The table with the activities of the database.
+     */
     private Component getActivityTable() {
         // Create the panel
         final JComponent tablePanel = new JPanel();

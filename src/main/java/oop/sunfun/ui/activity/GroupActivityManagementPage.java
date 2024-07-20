@@ -44,10 +44,29 @@ public final class GroupActivityManagementPage extends FormPage {
      */
     private static final Map<Component, Pair<JComponent, Integer>> FORM_COMPONENTS;
 
+    /**
+     * Combobox to keep the date of the activity management.
+     */
     private static final JComboBox<Date> COMBO_DATE;
+
+    /**
+     * Combobox to keep the group to add the activity to.
+     */
     private static final JComboBox<String> COMBO_GROUP;
+
+    /**
+     * Combobox to keep the activity to add to said group.
+     */
     private static final JComboBox<String> COMBO_ACTIVITY;
+
+    /**
+     * Combobox to choose the start time of the activity.
+     */
     private static final JComboBox<Time> COMBO_TIME_START;
+
+    /**
+     * Combobox to choose the end time of the activity.
+     */
     private static final JComboBox<Time> COMBO_TIME_END;
 
     static {
@@ -76,6 +95,12 @@ public final class GroupActivityManagementPage extends FormPage {
      */
     private final AccountData accountData;
 
+    /**
+     * Constructor for the group-activity management page.
+     * @param closeEvent The event that happens when you close the window.
+     * @param account The account that called this window.
+     * @param currentDate date A valid optional if a date has been selected for this page.
+     */
     public GroupActivityManagementPage(final CloseEvents closeEvent, final AccountData account,
                                        final Optional<Date> currentDate) {
         super(PAGE_NAME, closeEvent, 2, FORM_COMPONENTS,
@@ -116,6 +141,11 @@ public final class GroupActivityManagementPage extends FormPage {
         this.buildWindow();
     }
 
+    /**
+     * Panel to add tabs for all groups within a day.
+     * @param d The day to check the activities during.
+     * @return The tabs of all the groups within that day.
+     */
     private Component getGroupTabs(final Date d) {
         final JComponent tabs = new JTabbedPane();
         final Set<GroupData> groups = GroupDAO.getAllGroups();
@@ -123,6 +153,12 @@ public final class GroupActivityManagementPage extends FormPage {
         return tabs;
     }
 
+    /**
+     * Creates a panel with all the activities done by a group in a day.
+     * @param d The day to check.
+     * @param group The group to check activities for.
+     * @return A panel containing all the activities the group does.
+     */
     private Component getActivitiesPanel(final Date d, final GroupData group) {
         // Create a panel
         final JComponent activitiesPanel = new JPanel();
