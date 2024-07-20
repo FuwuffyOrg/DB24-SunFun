@@ -14,28 +14,59 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class GroupDAO extends AbstractDAO {
+    /**
+     * Logger to help diagnose sql and database errors.
+     */
     private static final Logger LOGGER = Logger.getLogger(GroupDAO.class.getName());
 
+    /**
+     * Query to fetch all groups within the database.
+     */
     private static final String GET_ALL_GROUPS = "SELECT * FROM `gruppo`";
 
+    /**
+     * Query to fetch all the participants in a group within the database.
+     */
     private static final String GET_PARTICIPANTS_IN_GROUP = "SELECT * FROM `partecipante` `p` WHERE `p`.`fk_gruppo`=?";
 
+    /**
+     * Query to fetch a group from a participant.
+     */
     private static final String GET_PARTICIPANT_GROUP = "SELECT `fk_gruppo` FROM `partecipante` WHERE "
             + "`codice_fiscale`=?";
 
+    /**
+     * Query to fetch a group from an educator.
+     */
     private static final String GET_EDUCATOR_GROUP = "SELECT `fk_gruppo` FROM `educatore` WHERE `codice_fiscale`=?";
 
+    /**
+     * Query to create a new group.
+     */
     private static final String CREATE_GROUP = "INSERT INTO `gruppo`(`nome`, `eta_min`, `eta_max`) VALUES (?,?,?)";
 
+    /**
+     * Query to delete a new group.
+     */
     private static final String ERASE_GROUP = "DELETE FROM `gruppo` WHERE `nome`=?";
 
+    /**
+     * Query to delete a presence of a participant.
+     */
     private static final String ERASE_PRESENCE = "DELETE FROM `presenza` WHERE `fk_partecipante`=? AND "
             + "`fk_giornata`=?";
 
+    /**
+     * Query to add or update a presence of a participant.
+     */
     private static final String ADD_OR_UPDATE_PRESENCE = "INSERT INTO `presenza`(`entrata`, `uscita`, "
             + "`fk_partecipante`, `fk_giornata`) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE `entrata` = "
             + "VALUES(`entrata`), `uscita` = VALUES(`uscita`);";
 
+    /**
+     * Fetches all the groups from the database.
+     * @return All the groups within the database.
+     */
     public static Set<GroupData> getAllGroups() {
         final Set<GroupData> categories = new HashSet<>();
         try {
@@ -52,6 +83,11 @@ public final class GroupDAO extends AbstractDAO {
         return categories;
     }
 
+    /**
+     * Fetches all the participants within a group.
+     * @param groupName The group to fetch the participants from.
+     * @return The list of participants in that group.
+     */
     public static Set<ParticipantData> getParticipantsFromGroup(final String groupName) {
         final Set<ParticipantData> participants = new HashSet<>();
         try {
@@ -76,6 +112,10 @@ public final class GroupDAO extends AbstractDAO {
         return participants;
     }
 
+    /**
+     * Creates a group with the given data.
+     * @param groupData The data of the group.
+     */
     public static void createGroup(final GroupData groupData) {
         try {
             DB_CONNECTION.openConnection();
@@ -86,6 +126,11 @@ public final class GroupDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Fetches the group from a participant.
+     * @param participantCodFisc The participant's id.
+     * @return A valid optional if the participant is in a group.
+     */
     public static Optional<String> getParticipantGroup(final String participantCodFisc) {
         try {
             DB_CONNECTION.openConnection();
@@ -104,6 +149,11 @@ public final class GroupDAO extends AbstractDAO {
         return Optional.empty();
     }
 
+    /**
+     * Fetches the group from an educator.
+     * @param educatorCodFisc The educator's id.
+     * @return A valid optional if the educator is in a group.
+     */
     public static Optional<String> getEducatorGroup(final String educatorCodFisc) {
         try {
             DB_CONNECTION.openConnection();
@@ -122,6 +172,10 @@ public final class GroupDAO extends AbstractDAO {
         return Optional.empty();
     }
 
+    /**
+     * Deletes a given group from the database.
+     * @param groupName The group to erase from the database.
+     */
     public static void deleteGroup(final String groupName) {
         try {
             DB_CONNECTION.openConnection();
@@ -132,6 +186,13 @@ public final class GroupDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Sets or updates the presence of a given participant during a day.
+     * @param participantCodFisc The participant's id to add the presence to.
+     * @param date The date of the presence.
+     * @param entry Checks if the participant has entered the camp.
+     * @param exit Checks if the participant has exited the camp.
+     */
     public static void addOrUpdatePresence(final String participantCodFisc, final Date date,
                                            final boolean entry, final boolean exit) {
         try {

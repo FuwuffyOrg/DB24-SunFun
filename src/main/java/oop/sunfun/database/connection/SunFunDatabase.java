@@ -36,6 +36,9 @@ public final class SunFunDatabase extends DatabaseConnection {
         DATABASE_PASSWORD = dotenv.get("DATABASE_PASSWORD");
     }
 
+    /**
+     * Constructor for the database using the .env file's properties.
+     */
     private SunFunDatabase() {
         super(DATABASE_NAME, DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
     }

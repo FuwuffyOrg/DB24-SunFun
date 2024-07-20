@@ -143,7 +143,7 @@ public final class ParticipantDietPage extends GenericPage {
             );
             // Add delete event
             btnDeleteIntolerance.addActionListener(e -> {
-                FoodDAO.deleteAllergenFromParticipant(allergen.name(), this.participantData.codFisc());
+                FoodDAO.deleteIntolleranceFromParticipant(allergen.name(), this.participantData.codFisc());
                 this.switchPage(new ParticipantDietPage(CloseEvents.EXIT_PROGRAM, this.accountData,
                         this.participantData));
             });
@@ -186,7 +186,7 @@ public final class ParticipantDietPage extends GenericPage {
                 .build()
         );
         btnAddAllergen.addActionListener(e -> {
-            FoodDAO.createAllergenForParticipant((String) comboAllergen.getSelectedItem(),
+            FoodDAO.createIntolleranceForParticipant((String) comboAllergen.getSelectedItem(),
                     this.participantData.codFisc());
             this.switchPage(new ParticipantDietPage(CloseEvents.EXIT_PROGRAM, this.accountData, this.participantData));
         });

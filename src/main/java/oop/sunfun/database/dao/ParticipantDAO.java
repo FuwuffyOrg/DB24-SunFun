@@ -14,20 +14,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class ParticipantDAO extends AbstractDAO {
+    /**
+     * Logger to help diagnose sql and database errors.
+     */
     private static final Logger LOGGER = Logger.getLogger(GroupDAO.class.getName());
 
+    /**
+     * Query to fetch all the participants.
+     */
     private static final String GET_ALL_PARTICIPANTS = "SELECT * FROM `partecipante`";
 
+    /**
+     * Query to update the participant's group.
+     */
     private static final String UPDATE_PARTICIPANT_GROUP = "UPDATE `partecipante` SET `fk_gruppo`=? WHERE "
             + "`codice_fiscale`=?";
 
+    /**
+     * Query to check whether a participant was present during a date.
+     */
     private static final String CHECK_PRESENCE = "SELECT * FROM `presenza` `p` JOIN `partecipante` `pa` ON "
             + "`p`.`fk_partecipante`=? WHERE `p`.`fk_giornata`=?";
 
+    /**
+     * Query to get all dates that a present is enrolled to.
+     */
     private static final String GET_ALL_ENROLLED_DATES_FROM_PARTICIPANT = "SELECT * FROM `giornata` `g` JOIN "
             + "`modalita` `m` ON `g`.`fk_periodo_inizio` = `m`.`fk_data_inizio` AND `g`.`fk_periodo_fine` = "
             + "`m`.`fk_data_fine` WHERE `m`.`fk_partecipante`=?";
 
+    /**
+     * Method to fetch all the participants within the database.
+     * @return The participants of the database.
+     */
     public static Set<ParticipantData> getAllParticipants() {
         final Set<ParticipantData> participants = new HashSet<>();
         try {
@@ -51,6 +70,11 @@ public final class ParticipantDAO extends AbstractDAO {
         return participants;
     }
 
+    /**
+     * Updates the group of a given participant.
+     * @param participantCodFisc The code of the participant.
+     * @param groupName The name of the group to set it to.
+     */
     public static void updateParticipantGroup(final String participantCodFisc, final String groupName) {
         try {
             DB_CONNECTION.openConnection();
@@ -61,22 +85,33 @@ public final class ParticipantDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Method to fetch all the dates a participant is enrolled to from the database.
+     * @param participantCodFisc The code of the participant.
+     * @return All the dates the participant is enrolled to.
+     */
     public static Set<Date> getAllEnrolledDates(final String participantCodFisc) {
-        final Set<Date> participants = new HashSet<>();
+        final Set<Date> dates = new HashSet<>();
         try {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(
                     GET_ALL_ENROLLED_DATES_FROM_PARTICIPANT, participantCodFisc);
             for (final Map<String, Object> date : queryData) {
-                participants.add((Date) date.get("data"));
+                dates.add((Date) date.get("data"));
             }
         } catch (final SQLException err) {
-            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the participants", err);
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the enrolled dates of " + participantCodFisc, err);
             DB_CONNECTION.closeConnection();
         }
-        return participants;
+        return dates;
     }
 
+    /**
+     * Method to check if a participant was present at a given date from the database.
+     * @param participantCodFisc The code of the participant.
+     * @param date The date to check the presence at.
+     * @return A valid optional if he either entered or left the camp that day.
+     */
     public static Optional<Pair<Boolean, Boolean>> checkPresence(final String participantCodFisc, final Date date) {
         try {
             DB_CONNECTION.openConnection();
@@ -88,7 +123,8 @@ public final class ParticipantDAO extends AbstractDAO {
             return Optional.of(new Pair<>((Boolean) queryData.getFirst().get("entrata"),
                     (Boolean) queryData.getFirst().get("uscita")));
         } catch (final SQLException err) {
-            bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the participants", err);
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't check the presence of " + participantCodFisc
+                    + " during " + date, err);
             DB_CONNECTION.closeConnection();
         }
         return Optional.empty();

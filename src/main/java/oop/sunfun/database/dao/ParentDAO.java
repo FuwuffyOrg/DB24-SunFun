@@ -15,33 +15,64 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class ParentDAO extends AbstractDAO {
+    /**
+     * Logger to help diagnose sql and database errors.
+     */
     private static final Logger LOGGER = Logger.getLogger(ParentDAO.class.getName());
 
+    /**
+     * Query to fetch all the parents within the database.
+     */
     private static final String GET_ALL_PARENTS = "SELECT * FROM `parente`";
 
+    /**
+     * Query to create a new parent.
+     */
     private static final String CREATE_PARENTE = "INSERT INTO `parente`(`codice_fiscale`, `fk_account`, "
             + "`nome`, `cognome`, `cellulare`, `grado_di_parentela`) VALUES (?,?,?,?,?,?)";
 
+    /**
+     * Query to create a new participant.
+     */
     private static final String CREATE_PARTICIPANT = "INSERT INTO `partecipante`(`codice_fiscale`, `fk_account`, "
             + "`fk_dieta`, `fk_gruppo`, `nome`, `cognome`, `data_di_nascita`) VALUES (?,?,?,?,?,?,?)";
 
+    /**
+     * Query to get all participants of a given parent within the database.
+     */
     private static final String GET_ALL_PARTICIPANTS_FROM_PARENT = "SELECT p.codice_fiscale, d.email, p.fk_dieta, "
             + "p.fk_gruppo, p.nome, p.cognome, p.data_di_nascita, p.fk_account FROM partecipante p JOIN account_data d "
             + "ON p.codice_fiscale = d.codice_fiscale JOIN ritiro r ON p.codice_fiscale = r.fk_partecipante WHERE "
             + "r.fk_parente=?";
 
+    /**
+     * Query to get all parent that can pick up a given participant within the database.
+     */
     private static final String GET_ALL_PARENTS_FROM_PARTICIPANT = "SELECT * FROM `parente` `p` JOIN `ritiro` `r` ON "
             + "`r`.`fk_parente`=`p`.`codice_fiscale` WHERE `r`.`fk_partecipante`=?";
 
+    /**
+     * Query to add a pickup for a given participant within the database.
+     */
     private static final String ADD_RITIRO_PARENTE = "INSERT INTO `ritiro`(`fk_parente`, `fk_partecipante`) "
             + "VALUES (?,?)";
 
+    /**
+     * Query to remove a pickup for a given participant within the database.
+     */
     private static final String DELETE_RITIRO_PARENTE = "DELETE FROM `ritiro` WHERE `fk_parente`=? AND "
             + "`fk_partecipante`=?";
 
+    /**
+     * Query to update a participant's diet.
+     */
     private static final String UPDATE_PARTICIPANT_DIET = "UPDATE `partecipante` SET `fk_dieta`=? WHERE "
             + "`partecipante`.`codice_fiscale`=?";
 
+    /**
+     * Fetches all the parents within the database.
+     * @return All the parents in the database.
+     */
     public static Set<ParentData> getAllParents() {
         final Set<ParentData> parents = new HashSet<>();
         try {
@@ -64,6 +95,15 @@ public final class ParentDAO extends AbstractDAO {
         return parents;
     }
 
+    /**
+     *
+     * @param codiceFiscale
+     * @param accountEmail
+     * @param name
+     * @param surname
+     * @param phoneNumber
+     * @param parentType
+     */
     public static void createParent(final String codiceFiscale, final String accountEmail, final String name,
                                     final String surname, final String phoneNumber, final ParentType parentType) {
         try {
@@ -76,6 +116,10 @@ public final class ParentDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Creates a new participant with the given data.
+     * @param participant The participant's data.
+     */
     public static void createParticipant(final ParticipantData participant) {
         try {
             DB_CONNECTION.openConnection();
@@ -89,6 +133,11 @@ public final class ParentDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Fetches all the participants that a given parent can pick up.
+     * @param parentCodiceFiscale The parent's id.
+     * @return The list containing all the participants the parent can pick up.
+     */
     public static Set<ParticipantData> getAllParticipantsFromParent(final String parentCodiceFiscale) {
         final Set<ParticipantData> participants = new HashSet<>();
         try {
@@ -114,6 +163,11 @@ public final class ParentDAO extends AbstractDAO {
         return participants;
     }
 
+    /**
+     * Fetches all the parents that can pick up a given participant.
+     * @param participantCodFisc The participant's id.
+     * @return The list containing all the parents that can pick up a given participant.
+     */
     public static Set<ParentData> getAllParentsFromParticipant(final String participantCodFisc) {
         final Set<ParentData> participants = new HashSet<>();
         try {
@@ -139,6 +193,11 @@ public final class ParentDAO extends AbstractDAO {
         return participants;
     }
 
+    /**
+     * Enables a parent to pick up a given participant.
+     * @param codFiscParente The parent's id.
+     * @param codFiscPartecipante The participant's id.
+     */
     public static void addRitiroParente(final String codFiscParente, final String codFiscPartecipante) {
         try {
             DB_CONNECTION.openConnection();
@@ -150,6 +209,11 @@ public final class ParentDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Removes the ability of a parent to pick up a given participant.
+     * @param codFiscParente The parent's id.
+     * @param codFiscPartecipante The participant's id.
+     */
     public static void deleteRitiroParente(final String codFiscParente, final String codFiscPartecipante) {
         try {
             DB_CONNECTION.openConnection();
@@ -161,6 +225,11 @@ public final class ParentDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Updates a participant's diet value.
+     * @param diet The diet to change it to.
+     * @param participantData The participant to set the diet of.
+     */
     public static void updateParticipantDiet(final String diet, final ParticipantData participantData) {
         try {
             DB_CONNECTION.openConnection();

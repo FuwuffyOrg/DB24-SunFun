@@ -13,23 +13,45 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class EducatorDAO extends AbstractDAO {
+    /**
+     * Logger to help diagnose sql and database errors.
+     */
     private static final Logger LOGGER = Logger.getLogger(EducatorDAO.class.getName());
 
+    /**
+     * Query to fetch all the educators in the database.
+     */
     private static final String GET_ALL_EDUCATORS = "SELECT `e`.`codice_fiscale`, `e`.`nome`, `e`.`cognome`, "
             + "`e`.`cellulare`, `e`.`fk_account`, `e`.`fk_gruppo` FROM `educatore` `e`";
 
+    /**
+     * Query to fetch all the voluntaries in the database.
+     */
     private static final String GET_ALL_VOLUNTARY = "SELECT `v`.`codice_fiscale`, `v`.`nome`, `v`.`cognome`, "
             + "`v`.`fk_account` FROM `volontario` `v`";
 
+    /**
+     * Query to change the group an educator educates.
+     */
     private static final String UPDATE_EDUCATOR_GROUP = "UPDATE `educatore` SET `fk_gruppo`=? WHERE "
             + "`educatore`.`codice_fiscale`=?";
 
+    /**
+     * Query to create a new educator in the database.
+     */
     private static final String CREATE_EDUCATOR = "INSERT INTO `educatore`(`codice_fiscale`, `nome`, `cognome`, "
             + "`cellulare`, `fk_account`) VALUES (?,?,?,?,?)";
 
+    /**
+     * Query to create a new voluntary in the database.
+     */
     private static final String CREATE_VOLUNTARY = "INSERT INTO `volontario`(`codice_fiscale`, `fk_account`, `nome`, "
             + "`cognome`) VALUES (?,?,?,?)";
 
+    /**
+     * Fetches all the educators from the database.
+     * @return All the educators within the database.
+     */
     public static Set<EducatorData> getAllEducators() {
         final Set<EducatorData> educators = new HashSet<>();
         try {
@@ -48,6 +70,10 @@ public final class EducatorDAO extends AbstractDAO {
         return educators;
     }
 
+    /**
+     * Fetches all the voluntaries from the database.
+     * @return All the voluntaries within the database.
+     */
     public static Set<VoluntaryData> getAllVoluntary() {
         final Set<VoluntaryData> voluntaries = new HashSet<>();
         try {
@@ -65,6 +91,11 @@ public final class EducatorDAO extends AbstractDAO {
         return voluntaries;
     }
 
+    /**
+     * Changes the group of an educator.
+     * @param educatorData The educator to change the group of.
+     * @param groupName The group to change it to.
+     */
     public static void changeEducatorGroup(final EducatorData educatorData, final String groupName) {
         try {
             DB_CONNECTION.openConnection();
@@ -76,24 +107,32 @@ public final class EducatorDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Creates a new educator within the database.
+     * @param educatorData The educator to add to the database.
+     */
     public static void createEducator(final EducatorData educatorData) {
         try {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_EDUCATOR, educatorData.codFisc(), educatorData.name(),
                     educatorData.surname(), educatorData.phoneNumber(), educatorData.accountEmail());
         } catch (final SQLException err) {
-            bracedLog(LOGGER, Level.SEVERE, "Couldn't update the educator" + educatorData.codFisc(), err);
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't create the educator" + educatorData.codFisc(), err);
             DB_CONNECTION.closeConnection();
         }
     }
 
+    /**
+     * Creates a new voluntary within the database.
+     * @param voluntaryData The voluntary to add to the database.
+     */
     public static void createVoluntary(final VoluntaryData voluntaryData) {
         try {
             DB_CONNECTION.openConnection();
             DB_CONNECTION.setQueryData(CREATE_VOLUNTARY, voluntaryData.codFisc(), voluntaryData.accountEmail(),
                     voluntaryData.name(), voluntaryData.surname());
         } catch (final SQLException err) {
-            bracedLog(LOGGER, Level.SEVERE, "Couldn't update the voluntary" + voluntaryData.codFisc(), err);
+            bracedLog(LOGGER, Level.SEVERE, "Couldn't create the voluntary" + voluntaryData.codFisc(), err);
             DB_CONNECTION.closeConnection();
         }
     }

@@ -79,6 +79,13 @@ public class DatabaseConnection implements IDatabaseConnection {
         return connection != null && !this.connection.isClosed();
     }
 
+    /**
+     * Method to get a sql statement within the database.
+     * @param query The query to run within the statement.
+     * @param parameters The statement's replacement parameters.
+     * @return The prepared statement.
+     * @throws SQLException if the statement creation was unsuccessful.
+     */
     private PreparedStatement prepareStatement(final String query, final Object... parameters) throws SQLException {
         final PreparedStatement preparedStatement = this.connection.prepareStatement(query);
         for (int i = 0; i < parameters.length; ++i) {

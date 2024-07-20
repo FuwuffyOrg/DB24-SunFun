@@ -14,24 +14,46 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class ForumDAO extends AbstractDAO {
+    /**
+     * Logger to help diagnose sql and database errors.
+     */
     private static final Logger LOGGER = Logger.getLogger(ForumDAO.class.getName());
 
+    /**
+     * Query to fetch all the forum categories within the database.
+     */
     private static final String FIND_ALL_CATEGORIES = "SELECT `categoria`.`nome` FROM `categoria`";
 
+    /**
+     * Query to fetch all the posts of a category within the database.
+     */
     private static final String GET_ALL_POSTS_FROM_CATEGORY = "SELECT `d`.*, `a`.`nome`, "
             + "`a`.`cognome` FROM `discussione` `d` JOIN `account_data` `a` ON `d`.`fk_account` = `a`.`email` "
             + "WHERE `d`.`fk_categoria`=? ORDER BY `d`.`num_discussione`";
 
+    /**
+     * Query to fetch all the comments of a forum post within the database.
+     */
     private static final String GET_COMMENTS_FROM_ID = "SELECT `r`.`num_risposta`, `r`.`testo`, `a`.`nome`, "
             + "`a`.`cognome` FROM `risposta` `r` JOIN `account_data` `a` ON `r`.`fk_account` = `a`.`email` "
             + "WHERE `r`.`fk_discussione`=?";
 
+    /**
+     * Query to create a new forum post.
+     */
     private static final String CREATE_FORUM_POST = "INSERT INTO `discussione`(`titolo`, `descrizione`, "
             + "`fk_categoria`, `fk_account`) VALUES (?,?,?,?)";
 
+    /**
+     * Query to create a new comment for a forum post.
+     */
     private static final String CREATE_COMMENT_POST = "INSERT INTO `risposta`(`testo`, `fk_discussione`, "
             + "`fk_account`) VALUES (?,?,?)";
 
+    /**
+     * Fetches all the forum categories from the database.
+     * @return All the forum categories within the database.
+     */
     public static Set<CategoryData> getAllCategories() {
         final Set<CategoryData> categories = new HashSet<>();
         try {
@@ -47,6 +69,11 @@ public final class ForumDAO extends AbstractDAO {
         return categories;
     }
 
+    /**
+     * Fetches all the forum posts of a given categories from the database.
+     * @param category The category to fetch the posts from.
+     * @return All the forum posts of a given category within the database.
+     */
     public static List<DiscussionData> getAllPostsFromCategory(final CategoryData category) {
         final List<DiscussionData> categories = new ArrayList<>();
         try {
@@ -69,6 +96,11 @@ public final class ForumDAO extends AbstractDAO {
         return categories;
     }
 
+    /**
+     * Fetches all the comments of a forum post from the database.
+     * @param discussionId The id of the discussion to fetch the comments from.
+     * @return All the comments of a forum post within the database.
+     */
     public static List<CommentData> getCommentsFromDiscussion(final int discussionId) {
         final List<CommentData> comments = new ArrayList<>();
         try {
@@ -88,6 +120,13 @@ public final class ForumDAO extends AbstractDAO {
         return comments;
     }
 
+    /**
+     * Creates a new discussion in the database.
+     * @param title The title of the discussion.
+     * @param description The description of the discussion.
+     * @param category The category the discussion will be part of.
+     * @param accountEmail The email of the creator of the discussion.
+     */
     public static void addNewDiscussion(final String title, final String description,
                                         final CategoryData category, final String accountEmail) {
         try {
@@ -99,6 +138,12 @@ public final class ForumDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Creates a new comment in the database.
+     * @param accountEmail The email of the creator of the comment.
+     * @param description What the comment says.
+     * @param discussionId The discussion the comment is for.
+     */
     public static void addNewComment(final String accountEmail, final String description, final int discussionId) {
         try {
             DB_CONNECTION.openConnection();
