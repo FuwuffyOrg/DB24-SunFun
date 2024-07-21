@@ -49,20 +49,18 @@ public abstract class GenericPage extends JFrame {
      * Finalizes the window and displays it after having added all the components to it.
      */
     public final void buildWindow() {
-        final double ratio = SCREEN_DIMENSIONS.getWidth() / SCREEN_DIMENSIONS.getHeight();
-        final double scaleAmount = 1.1d * (SCREEN_DIMENSIONS.getWidth() / 1920.0d);
-        // Pack the window to little size
+        final double screenSizeMult = 0.5d;
+        final double minimumDimMult = 1.2d;
         this.pack();
         // Set the minimum size as the packed size
         final Dimension minimumDim = this.getSize();
-        minimumDim.setSize(Math.min(minimumDim.getWidth(), SCREEN_DIMENSIONS.getWidth() / 2.0d),
-                Math.min(minimumDim.getHeight(), SCREEN_DIMENSIONS.getHeight() / 2.0d));
+        minimumDim.setSize(Math.min(minimumDim.getWidth(), SCREEN_DIMENSIONS.getWidth() * screenSizeMult),
+                Math.min(minimumDim.getHeight(), SCREEN_DIMENSIONS.getHeight() * screenSizeMult));
         this.setMinimumSize(minimumDim);
         // Calculate new dimensions for the window
-        final Dimension dimensions = this.getSize();
         this.setSize(new Dimension(
-                (int) (dimensions.getWidth() * scaleAmount * ratio),
-                (int) (dimensions.getHeight() * scaleAmount))
+                (int) (minimumDim.getWidth() * minimumDimMult),
+                (int) (minimumDim.getHeight() * minimumDimMult))
         );
         // Center the window to the screen
         this.setLocationRelativeTo(null);
