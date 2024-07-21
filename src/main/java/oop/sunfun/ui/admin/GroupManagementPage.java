@@ -170,19 +170,24 @@ public class GroupManagementPage extends GenericPage {
                     .setFillAll()
                     .build()
             );
-            panel.add(comboGroup, new GridBagConstraintBuilder()
+            participant.dieta().ifPresent(d -> panel.add(new JLabel(d), new GridBagConstraintBuilder()
                     .setRow(i * 2).setColumn(2)
+                    .setFillAll()
+                    .build()
+            ));
+            panel.add(comboGroup, new GridBagConstraintBuilder()
+                    .setRow(i * 2).setColumn(3)
                     .setFillAll()
                     .build()
             );
             panel.add(btnUpdateGroup, new GridBagConstraintBuilder()
-                    .setRow(i * 2).setColumn(3)
+                    .setRow(i * 2).setColumn(4)
                     .setFillAll()
                     .build()
             );
             panel.add(new JSeparator(), new GridBagConstraintBuilder()
                     .setRow((i * 2) + 1).setColumn(0)
-                    .setWidth(4)
+                    .setWidth(5)
                     .setFillAll()
                     .build()
             );
