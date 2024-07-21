@@ -43,7 +43,7 @@ public class StatisticsDAO extends AbstractDAO {
     /**
      * Query to fetch the activity with the longest duration within the database.
      */
-    private static final String GET_LONGEST_ACTIVITY = "SELECT `a`.`nome` AS `attivita`, MAX(TIMESTAMPDIFF(MINUTE, "
+    private static final String GET_LONGEST_ACTIVITY = "SELECT `a`.`nome`, MAX(TIMESTAMPDIFF(MINUTE, "
             + "`s`.`ora_inizio`, `s`.`ora_fine`)) AS `durata_minuti` FROM `svolgimento` `s` JOIN `attivita` `a` "
             + "ON `s`.`fk_attivita` = `a`.`nome` GROUP BY `a`.`nome` ORDER BY `durata_minuti` DESC LIMIT 1;";
 
@@ -116,7 +116,7 @@ public class StatisticsDAO extends AbstractDAO {
      * Fetches the activity with the longest duration within the database.
      * @return A valid optional if the longest activity was found, with a pair like: Name, Duration.
      */
-    public static Optional<Pair<String, Integer>> getLongestActivity() {
+    public static Optional<Pair<String,Long>> getLongestActivity() {
         try {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_LONGEST_ACTIVITY);
@@ -125,7 +125,7 @@ public class StatisticsDAO extends AbstractDAO {
                 return Optional.empty();
             }
             final Map<String, Object> activity = queryData.getFirst();
-            return Optional.of(new Pair<>((String) activity.get("attivita"), (Integer) activity.get("durata_minuti")));
+            return Optional.of(new Pair<>((String) activity.get("nome"), (Long) activity.get("durata_minuti")));
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the longest activity", err);
             DB_CONNECTION.closeConnection();
