@@ -1,13 +1,15 @@
 package oop.sunfun.database.dao;
 
-import oop.sunfun.database.data.activity.ActivityData;
 import oop.sunfun.database.data.food.AllergenData;
 import oop.sunfun.database.data.food.DietData;
-import oop.sunfun.database.data.forum.DiscussionData;
 import oop.sunfun.ui.util.Pair;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,10 +22,9 @@ public class StatisticsDAO extends AbstractDAO {
     /**
      * Query to fetch the three most popular forum posts (by count of responses).
      */
-    private static final String GET_MOST_POPULAR_FORUM_POSTS = "SELECT `d`.`num_discussione`, `d`.`titolo`, "
-            + "COUNT(`r`.`num_risposta`) AS `num_risposte` FROM `discussione` `d` JOIN `risposta` `r` ON "
-            + "`d`.`num_discussione` = `r`.`fk_discussione` GROUP BY `d`.`num_discussione`, `d`.`titolo` ORDER "
-            + "BY `num_risposta` DESC LIMIT 3;";
+    private static final String GET_MOST_POPULAR_FORUM_POSTS = "SELECT `d`.`titolo`, COUNT(`r`.`num_risposta`) AS "
+            + "`num_risposte` FROM `discussione` `d` JOIN `risposta` `r` ON `d`.`num_discussione` = "
+            + "`r`.`fk_discussione` GROUP BY `d`.`num_discussione`, `d`.`titolo` ORDER BY `num_risposta` DESC LIMIT 3;";
 
     /**
      * Query to fetch the top three highest intolerance/allergenic substances within the database.
@@ -48,19 +49,16 @@ public class StatisticsDAO extends AbstractDAO {
 
     /**
      * Fetches the top three most popular posts.
-     * @return A set containing a pair of type: Post, NumberOfResponses
+     * @return A set containing a pair of type: Title, NumberOfResponses
      */
-    public static Set<Pair<DiscussionData, Integer>> getMostPopularForumPosts() {
-        final Set<Pair<DiscussionData, Integer>> discussions = new HashSet<>();
+    public static Set<Pair<String, Integer>> getMostPopularForumPosts() {
+        final Set<Pair<String, Integer>> discussions = new HashSet<>();
         try {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_MOST_POPULAR_FORUM_POSTS);
             for (final Map<String, Object> discussion : queryData) {
-                discussions.add(new Pair<>(
-                        new DiscussionData((Integer) discussion.get("num_discussione"),
-                                (String) discussion.get("titolo"), null, null, null),
-                        (Integer) discussion.get("num_risposte"))
-                );
+                discussions.add(new Pair<>( (String) discussion.get("titolo"),
+                        (Integer) discussion.get("num_risposte")));
             }
         } catch (final SQLException err) {
             bracedLog(LOGGER, Level.SEVERE, "Couldn't fetch the most popular discussions", err);
@@ -114,6 +112,10 @@ public class StatisticsDAO extends AbstractDAO {
         return diets;
     }
 
+    /**
+     * Fetches the activity with the longest duration within the database.
+     * @return A valid optional if the longest activity was found, with a pair like: Name, Duration.
+     */
     public static Optional<Pair<String, Integer>> getLongestActivity() {
         try {
             DB_CONNECTION.openConnection();
