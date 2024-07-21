@@ -55,9 +55,9 @@ public final class ActivityDAO extends AbstractDAO {
     /**
      * Query to fetch all the activities performed by a group in a specific day within the database.
      */
-    private static final String GET_ACTIVITIES_GROUP_DATE = "SELECT *, AVG(`r`.`voto`) AS media_voto FROM `svolgimento` "
-            + "`s` JOIN `attivita` `a` ON `s`.`fk_attivita` = `a`.`nome` LEFT JOIN `recensione` `r` ON "
-            + "`r`.`fk_attivita` = `a`.`nome` WHERE `s`.`fk_gruppo`=? AND `s`.`fk_giornata`=? GROUP BY "
+    private static final String GET_ACTIVITIES_GROUP_DATE = "SELECT *, AVG(`r`.`voto`) AS media_voto "
+            + "FROM `svolgimento` `s` JOIN `attivita` `a` ON `s`.`fk_attivita` = `a`.`nome` LEFT JOIN `recensione` "
+            + "`r` ON `r`.`fk_attivita` = `a`.`nome` WHERE `s`.`fk_gruppo`=? AND `s`.`fk_giornata`=? GROUP BY "
             + "`s`.`ora_inizio`, `s`.`ora_fine`;";
 
     /**

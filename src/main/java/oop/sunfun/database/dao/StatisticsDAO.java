@@ -57,7 +57,7 @@ public class StatisticsDAO extends AbstractDAO {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_MOST_POPULAR_FORUM_POSTS);
             for (final Map<String, Object> discussion : queryData) {
-                discussions.add(new Pair<>( (String) discussion.get("titolo"),
+                discussions.add(new Pair<>((String) discussion.get("titolo"),
                         (Integer) discussion.get("num_risposte")));
             }
         } catch (final SQLException err) {
