@@ -80,7 +80,8 @@ public final class ForumPostPage extends FormPage {
         commentPanel.setLayout(new GridBagLayout());
         final Component commentArea = new JScrollPane(commentPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        final List<CommentData> comments = ForumDAO.getCommentsFromDiscussion(discussion.discussionNumber());
+        final List<CommentData> comments = ForumDAO.getCommentsFromDiscussion(discussion.discussionNumber())
+                .stream().toList();
         IntStream.range(0, comments.size()).forEach(i -> {
             // Add the panel to the categories
             commentPanel.add(this.createCommentHeader(comments.get(i)), new GridBagConstraintBuilder()

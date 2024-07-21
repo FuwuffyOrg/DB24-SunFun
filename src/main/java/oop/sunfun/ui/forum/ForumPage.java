@@ -95,7 +95,7 @@ public final class ForumPage extends GenericPage {
         final Component scrollPanel = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         // Fetch all forum posts from that name
-        final List<DiscussionData> discussions = ForumDAO.getAllPostsFromCategory(category);
+        final List<DiscussionData> discussions = ForumDAO.getAllPostsFromCategory(category).stream().toList();
         IntStream.range(0, discussions.size()).forEach(i -> {
             // Add the panel to the categories
             panel.add(this.createDiscussionHeader(discussions.get(i)), new GridBagConstraintBuilder()

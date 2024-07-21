@@ -74,8 +74,8 @@ public final class ForumDAO extends AbstractDAO {
      * @param category The category to fetch the posts from.
      * @return All the forum posts of a given category within the database.
      */
-    public static List<DiscussionData> getAllPostsFromCategory(final CategoryData category) {
-        final List<DiscussionData> categories = new ArrayList<>();
+    public static Set<DiscussionData> getAllPostsFromCategory(final CategoryData category) {
+        final Set<DiscussionData> categories = new HashSet<>();
         try {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_ALL_POSTS_FROM_CATEGORY,
@@ -101,8 +101,8 @@ public final class ForumDAO extends AbstractDAO {
      * @param discussionId The id of the discussion to fetch the comments from.
      * @return All the comments of a forum post within the database.
      */
-    public static List<CommentData> getCommentsFromDiscussion(final int discussionId) {
-        final List<CommentData> comments = new ArrayList<>();
+    public static Set<CommentData> getCommentsFromDiscussion(final int discussionId) {
+        final Set<CommentData> comments = new HashSet<>();
         try {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_COMMENTS_FROM_ID, discussionId);
