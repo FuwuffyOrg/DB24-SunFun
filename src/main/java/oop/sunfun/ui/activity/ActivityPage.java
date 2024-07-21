@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
@@ -55,7 +56,7 @@ public final class ActivityPage extends FormPage {
     static {
         FORM_COMPONENTS = new LinkedHashMap<>();
         TXT_NAME = new JTextField();
-        TXT_DESCRIPTION = new JTextField();
+        TXT_DESCRIPTION = new JTextArea();
         FORM_COMPONENTS.put(new JLabel("Nome dell'Attivita:"), new Pair<>(TXT_NAME, 50));
         FORM_COMPONENTS.put(new JLabel("Descrizione:"), new Pair<>(TXT_DESCRIPTION, 10000));
     }

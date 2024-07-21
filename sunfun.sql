@@ -32,12 +32,22 @@ CREATE TABLE IF NOT EXISTS `allergene` (
   PRIMARY KEY (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `allergene` (`nome`, `descrizione`) VALUES
+('Glutine', 'Un\'intolleranza che riguarda tutto ció che contiene glutine.'),
+('Latticini', 'Un\'intolleranza che riguarda tutto ció che contiene i latticini.'),
+('Uovo', 'Intolleranza alle uova.');
+
 DROP TABLE IF EXISTS `attivita`;
 CREATE TABLE IF NOT EXISTS `attivita` (
   `nome` varchar(50) NOT NULL COMMENT 'Nome dell''attivitá da svolgere.',
   `descrizione` varchar(10000) DEFAULT NULL COMMENT 'Descrizione dell''attivitá',
   PRIMARY KEY (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `attivita` (`nome`, `descrizione`) VALUES
+('Bandiera genovese', 'Viene diviso il campo in due metà uguali e nel fondo di ciascuna metà viene posizionata \nuna bandiera (o simili). I bambini vengono divisi in due squadre, le quali si posizioneranno\nciascuna in una metà. Lo scopo del gioco consiste nel riuscire attraversare il campo avversario, \ncon l’aiuto dei compagni, senza farsi toccare dai bambini per prendere la bandiera e riportarla \nnel proprio campo. Se il giocatore in campo nemico viene toccato dall’avversario si dovrà\nimmobilizzare fino a quando un suo compagno di squadra non andrà a liberarlo.'),
+('Battle royale', 'Si prepara il campo di gioco (l’ideale è una vasta area libera da ostacoli come il prato dietro il pallone da calcio) \ne si prendono le peteche (più sono, meglio è). Vengono distribuite 5-10 peteche a bambino e un pennarello. \nI ragazzi devono posizionarsi all’interno del campo il più distanziati possibile. Al via inizieranno a correre e cercheranno di colpirsi con le peteche. \nOgni volta che si viene colpiti da una peteca si fa un segno sul braccio con il pennarello. Quando ci si segna il braccio bisogna \nmettersi in ginocchio per terra; chi è in ginocchio a terra è immune dalle peteche. Una partita dura circa 20-30 minuti, poi si chiama la fine. \nIl ragazzo/a che ha meno segni sul braccio vince.\n'),
+('Stratego', 'Si prepara il campo di gioco (l’ideale è una vasta area libera da ostacoli come il prato dietro il pallone da calcio) \ne si prendono le carte di stratego. In ogni carta c’è un’immagine e un numero: l’immagine ha una funzione puramente estetica, \nil numero rappresenta la forza del giocatore. I ragazzi vengono divisi in due squadre (se si ha il numero giusto di giocatori è possibile giocare anche con 3 o 4 squadre) \ne a ognuno viene distribuita una carta. Le squadre vengono allontanate e posizionate alle estremità del campo di gioco. Al via i ragazzi iniziano a correre e cercano di prendersi; \nogni volta che un giocatore tocca / prende un avversario entrambi vanno alla postazione degli educatori e consegnano le loro carte. Gli educatori controllano i valori e assegnano \nal giocatore con il valore maggiore la differenza di punti tra le due carte, SENZA RIVELARE AI RAGAZZI CHI HA GUADAGNATO PUNTI. Si riconsegnano le carte ai ragazzi che possono \ntornare a giocare. L’unica eccezione c’è quando il giocatore dal livello più basso (1) prende il giocatore dal livello più alto (dipende dal numero di giocatori). \nIl punteggio di questo scontro viene illustrato nella tabella sotto. Una partita dura circa 30 minuti. Finito il tempo vince la squadra con il punteggio maggiore.');
 
 DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE IF NOT EXISTS `categoria` (
@@ -57,6 +67,12 @@ CREATE TABLE IF NOT EXISTS `dieta` (
   `descrizione` varchar(255) DEFAULT NULL COMMENT 'Descrizione associata alla dieta.',
   PRIMARY KEY (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `dieta` (`nome`, `descrizione`) VALUES
+('No Carne Suina', 'Una dieta priva di carne suina.'),
+('No Pesce', 'Una dieta in cui non si mangia carne di pesce.'),
+('Vegana', 'Una dieta priva di risorse provenienti dal regno animale.'),
+('Vegetariana', 'Una dieta priva di carne e pesce.');
 
 DROP TABLE IF EXISTS `discussione`;
 CREATE TABLE IF NOT EXISTS `discussione` (
@@ -95,6 +111,92 @@ CREATE TABLE IF NOT EXISTS `giornata` (
   KEY `FK Periodo Giornata` (`fk_periodo_inizio`,`fk_periodo_fine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `giornata` (`data`, `fk_periodo_inizio`, `fk_periodo_fine`) VALUES
+('2024-06-10', '2024-06-10', '2024-06-21'),
+('2024-06-11', '2024-06-10', '2024-06-21'),
+('2024-06-12', '2024-06-10', '2024-06-21'),
+('2024-06-13', '2024-06-10', '2024-06-21'),
+('2024-06-14', '2024-06-10', '2024-06-21'),
+('2024-06-15', '2024-06-10', '2024-06-21'),
+('2024-06-16', '2024-06-10', '2024-06-21'),
+('2024-06-17', '2024-06-10', '2024-06-21'),
+('2024-06-18', '2024-06-10', '2024-06-21'),
+('2024-06-19', '2024-06-10', '2024-06-21'),
+('2024-06-20', '2024-06-10', '2024-06-21'),
+('2024-06-21', '2024-06-10', '2024-06-21'),
+('2024-06-24', '2024-06-24', '2024-07-05'),
+('2024-06-25', '2024-06-24', '2024-07-05'),
+('2024-06-26', '2024-06-24', '2024-07-05'),
+('2024-06-27', '2024-06-24', '2024-07-05'),
+('2024-06-28', '2024-06-24', '2024-07-05'),
+('2024-06-29', '2024-06-24', '2024-07-05'),
+('2024-06-30', '2024-06-24', '2024-07-05'),
+('2024-07-01', '2024-06-24', '2024-07-05'),
+('2024-07-02', '2024-06-24', '2024-07-05'),
+('2024-07-03', '2024-06-24', '2024-07-05'),
+('2024-07-04', '2024-06-24', '2024-07-05'),
+('2024-07-05', '2024-06-24', '2024-07-05'),
+('2024-07-08', '2024-07-08', '2024-07-19'),
+('2024-07-09', '2024-07-08', '2024-07-19'),
+('2024-07-10', '2024-07-08', '2024-07-19'),
+('2024-07-11', '2024-07-08', '2024-07-19'),
+('2024-07-12', '2024-07-08', '2024-07-19'),
+('2024-07-13', '2024-07-08', '2024-07-19'),
+('2024-07-14', '2024-07-08', '2024-07-19'),
+('2024-07-15', '2024-07-08', '2024-07-19'),
+('2024-07-16', '2024-07-08', '2024-07-19'),
+('2024-07-17', '2024-07-08', '2024-07-19'),
+('2024-07-18', '2024-07-08', '2024-07-19'),
+('2024-07-19', '2024-07-08', '2024-07-19'),
+('2024-07-22', '2024-07-22', '2024-08-02'),
+('2024-07-23', '2024-07-22', '2024-08-02'),
+('2024-07-24', '2024-07-22', '2024-08-02'),
+('2024-07-25', '2024-07-22', '2024-08-02'),
+('2024-07-26', '2024-07-22', '2024-08-02'),
+('2024-07-27', '2024-07-22', '2024-08-02'),
+('2024-07-28', '2024-07-22', '2024-08-02'),
+('2024-07-29', '2024-07-22', '2024-08-02'),
+('2024-07-30', '2024-07-22', '2024-08-02'),
+('2024-07-31', '2024-07-22', '2024-08-02'),
+('2024-08-01', '2024-07-22', '2024-08-02'),
+('2024-08-02', '2024-07-22', '2024-08-02'),
+('2024-08-05', '2024-08-05', '2024-08-16'),
+('2024-08-06', '2024-08-05', '2024-08-16'),
+('2024-08-07', '2024-08-05', '2024-08-16'),
+('2024-08-08', '2024-08-05', '2024-08-16'),
+('2024-08-09', '2024-08-05', '2024-08-16'),
+('2024-08-10', '2024-08-05', '2024-08-16'),
+('2024-08-11', '2024-08-05', '2024-08-16'),
+('2024-08-12', '2024-08-05', '2024-08-16'),
+('2024-08-13', '2024-08-05', '2024-08-16'),
+('2024-08-14', '2024-08-05', '2024-08-16'),
+('2024-08-15', '2024-08-05', '2024-08-16'),
+('2024-08-16', '2024-08-05', '2024-08-16'),
+('2024-08-19', '2024-08-19', '2024-08-30'),
+('2024-08-20', '2024-08-19', '2024-08-30'),
+('2024-08-21', '2024-08-19', '2024-08-30'),
+('2024-08-22', '2024-08-19', '2024-08-30'),
+('2024-08-23', '2024-08-19', '2024-08-30'),
+('2024-08-24', '2024-08-19', '2024-08-30'),
+('2024-08-25', '2024-08-19', '2024-08-30'),
+('2024-08-26', '2024-08-19', '2024-08-30'),
+('2024-08-27', '2024-08-19', '2024-08-30'),
+('2024-08-28', '2024-08-19', '2024-08-30'),
+('2024-08-29', '2024-08-19', '2024-08-30'),
+('2024-08-30', '2024-08-19', '2024-08-30'),
+('2024-09-02', '2024-09-02', '2024-09-13'),
+('2024-09-03', '2024-09-02', '2024-09-13'),
+('2024-09-04', '2024-09-02', '2024-09-13'),
+('2024-09-05', '2024-09-02', '2024-09-13'),
+('2024-09-06', '2024-09-02', '2024-09-13'),
+('2024-09-07', '2024-09-02', '2024-09-13'),
+('2024-09-08', '2024-09-02', '2024-09-13'),
+('2024-09-09', '2024-09-02', '2024-09-13'),
+('2024-09-10', '2024-09-02', '2024-09-13'),
+('2024-09-11', '2024-09-02', '2024-09-13'),
+('2024-09-12', '2024-09-02', '2024-09-13'),
+('2024-09-13', '2024-09-02', '2024-09-13');
+
 DROP TABLE IF EXISTS `gruppo`;
 CREATE TABLE IF NOT EXISTS `gruppo` (
   `nome` varchar(20) NOT NULL COMMENT 'Nome del gruppo.',
@@ -102,6 +204,12 @@ CREATE TABLE IF NOT EXISTS `gruppo` (
   `eta_max` tinyint(4) NOT NULL COMMENT 'Etá massima del range di etá del gruppo.',
   PRIMARY KEY (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `gruppo` (`nome`, `eta_min`, `eta_max`) VALUES
+('Arancia', 8, 10),
+('Cielo', 5, 6),
+('Ciliegia', 10, 11),
+('Nuvola', 7, 8);
 
 DROP TABLE IF EXISTS `intolleranza`;
 CREATE TABLE IF NOT EXISTS `intolleranza` (
@@ -157,6 +265,15 @@ CREATE TABLE IF NOT EXISTS `periodo` (
   `data_fine` date NOT NULL COMMENT 'Data di fine del periodo.',
   PRIMARY KEY (`data_inizio`,`data_fine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `periodo` (`data_inizio`, `data_fine`) VALUES
+('2024-06-10', '2024-06-21'),
+('2024-06-24', '2024-07-05'),
+('2024-07-08', '2024-07-19'),
+('2024-07-22', '2024-08-02'),
+('2024-08-05', '2024-08-16'),
+('2024-08-19', '2024-08-30'),
+('2024-09-02', '2024-09-13');
 
 DROP TABLE IF EXISTS `presenza`;
 CREATE TABLE IF NOT EXISTS `presenza` (
