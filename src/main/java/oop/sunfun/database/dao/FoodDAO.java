@@ -21,13 +21,13 @@ public final class FoodDAO extends AbstractDAO {
     /**
      * Query to get all the allergens in the database.
      */
-    private static final String GET_ALL_ALLERGENS = "SELECT * FROM `allergene`";
+    private static final String GET_ALL_ALLERGENS = "SELECT * FROM `allergene`;";
 
     /**
      * Query to get all the allergens a participant is susceptible to.
      */
-    private static final String GET_ALL_ALLERGENS_OF_PARTICIPANT = "SELECT * FROM allergene a JOIN intolleranza i ON "
-            + "i.fk_allergene=a.nome WHERE i.fk_partecipante=?";
+    private static final String GET_ALL_ALLERGENS_OF_PARTICIPANT = "SELECT * FROM `allergene` `a` JOIN "
+            + "`intolleranza` `i` ON `i`.`fk_allergene`=`a`.`nome` WHERE `i`.`fk_partecipante`=?;";
 
     /**
      * Query to get all the diets in the database.
@@ -38,39 +38,39 @@ public final class FoodDAO extends AbstractDAO {
      * Query to add an intollerance that a participant is susceptible to.
      */
     private static final String CREATE_INTOLLERANCE_FOR_PARTICIPANT = "INSERT INTO `intolleranza`(`fk_partecipante`, "
-            + "`fk_allergene`) VALUES (?,?)";
+            + "`fk_allergene`) VALUES (?,?);";
 
     /**
      * Query to create a new allergen to the database.
      */
-    private static final String CREATE_ALLERGEN = "INSERT INTO `allergene`(`nome`, `descrizione`) VALUES (?,?)";
+    private static final String CREATE_ALLERGEN = "INSERT INTO `allergene`(`nome`, `descrizione`) VALUES (?,?);";
 
     /**
      * Query to create a new diet to the database.
      */
-    private static final String CREATE_DIET = "INSERT INTO `dieta`(`nome`, `descrizione`) VALUES (?,?)";
+    private static final String CREATE_DIET = "INSERT INTO `dieta`(`nome`, `descrizione`) VALUES (?,?);";
 
     /**
      * Query to create and delete an allergen from the database.
      */
-    private static final String DELETE_ALLERGEN = "DELETE FROM `allergene` WHERE `nome`=?";
+    private static final String DELETE_ALLERGEN = "DELETE FROM `allergene` WHERE `nome`=?;";
 
     /**
      * Query to remove a participant's allergic relationship to the allergen from the database.
      */
     private static final String DELETE_ALLERGEN_FROM_PARTICIPANT = "DELETE FROM `intolleranza` WHERE "
-            + "`intolleranza`.`fk_partecipante`=? AND `intolleranza`.`fk_allergene`=?";
+            + "`intolleranza`.`fk_partecipante`=? AND `intolleranza`.`fk_allergene`=?;";
 
     /**
      * Query to create and delete a diet from the database.
      */
-    private static final String DELETE_DIET = "DELETE FROM `dieta` WHERE `nome`=?";
+    private static final String DELETE_DIET = "DELETE FROM `dieta` WHERE `nome`=?;";
 
     /**
      * Query to update a participant's diet.
      */
     private static final String UPDATE_PARTICIPANT_DIET = "UPDATE `partecipante` SET `fk_dieta`=? WHERE "
-            + "`partecipante`.`codice_fiscale`=?";
+            + "`partecipante`.`codice_fiscale`=?;";
 
     /**
      * Gets all the allergens from the database.

@@ -20,18 +20,18 @@ public final class AccountDAO extends AbstractDAO {
      * Query to get the account using that email and password.
      */
     private static final String FIND_ACCOUNT_BY_EMAIL_PASSWORD = "SELECT * FROM `account_data` WHERE `email` = ? "
-            + "AND password = PASSWORD(?)";
+            + "AND password = PASSWORD(?);";
 
     /**
      * Query to create the account with a given email and password.
      */
     private static final String CREATE_ACCOUNT_BY_EMAIL_PASSOWRD = "INSERT INTO `account`(`email`, `password`, "
-            + "`tipologia`) VALUES (?,PASSWORD(?),?)";
+            + "`tipologia`) VALUES (?,PASSWORD(?),?);";
 
     /**
      * Query to delete the account, based on the email.
      */
-    private static final String DELETE_ACCOUNT_BY_EMAIL = "DELETE `a` FROM ACCOUNT `a` WHERE `a`.`email` = ?";
+    private static final String DELETE_ACCOUNT_BY_EMAIL = "DELETE `a` FROM ACCOUNT `a` WHERE `a`.`email` = ?;";
 
     /**
      * Tries to fetch the account with password and email.

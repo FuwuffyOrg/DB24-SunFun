@@ -22,26 +22,26 @@ public final class ParticipantDAO extends AbstractDAO {
     /**
      * Query to fetch all the participants.
      */
-    private static final String GET_ALL_PARTICIPANTS = "SELECT * FROM `partecipante`";
+    private static final String GET_ALL_PARTICIPANTS = "SELECT * FROM `partecipante`;";
 
     /**
      * Query to update the participant's group.
      */
     private static final String UPDATE_PARTICIPANT_GROUP = "UPDATE `partecipante` SET `fk_gruppo`=? WHERE "
-            + "`codice_fiscale`=?";
+            + "`codice_fiscale`=?;";
 
     /**
      * Query to check whether a participant was present during a date.
      */
     private static final String CHECK_PRESENCE = "SELECT * FROM `presenza` `p` JOIN `partecipante` `pa` ON "
-            + "`p`.`fk_partecipante`=? WHERE `p`.`fk_giornata`=?";
+            + "`p`.`fk_partecipante`=? WHERE `p`.`fk_giornata`=?;";
 
     /**
      * Query to get all dates that a present is enrolled to.
      */
     private static final String GET_ALL_ENROLLED_DATES_FROM_PARTICIPANT = "SELECT * FROM `giornata` `g` JOIN "
             + "`modalita` `m` ON `g`.`fk_periodo_inizio` = `m`.`fk_data_inizio` AND `g`.`fk_periodo_fine` = "
-            + "`m`.`fk_data_fine` WHERE `m`.`fk_partecipante`=?";
+            + "`m`.`fk_data_fine` WHERE `m`.`fk_partecipante`=?;";
 
     /**
      * Method to fetch all the participants within the database.

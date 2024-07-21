@@ -22,33 +22,33 @@ public final class ForumDAO extends AbstractDAO {
     /**
      * Query to fetch all the forum categories within the database.
      */
-    private static final String FIND_ALL_CATEGORIES = "SELECT `categoria`.`nome` FROM `categoria`";
+    private static final String FIND_ALL_CATEGORIES = "SELECT `categoria`.`nome` FROM `categoria`;";
 
     /**
      * Query to fetch all the posts of a category within the database.
      */
     private static final String GET_ALL_POSTS_FROM_CATEGORY = "SELECT `d`.*, `a`.`nome`, "
             + "`a`.`cognome` FROM `discussione` `d` JOIN `account_data` `a` ON `d`.`fk_account` = `a`.`email` "
-            + "WHERE `d`.`fk_categoria`=? ORDER BY `d`.`num_discussione`";
+            + "WHERE `d`.`fk_categoria`=? ORDER BY `d`.`num_discussione`;";
 
     /**
      * Query to fetch all the comments of a forum post within the database.
      */
     private static final String GET_COMMENTS_FROM_ID = "SELECT `r`.`num_risposta`, `r`.`testo`, `a`.`nome`, "
             + "`a`.`cognome` FROM `risposta` `r` JOIN `account_data` `a` ON `r`.`fk_account` = `a`.`email` "
-            + "WHERE `r`.`fk_discussione`=?";
+            + "WHERE `r`.`fk_discussione`=?;";
 
     /**
      * Query to create a new forum post.
      */
     private static final String CREATE_FORUM_POST = "INSERT INTO `discussione`(`titolo`, `descrizione`, "
-            + "`fk_categoria`, `fk_account`) VALUES (?,?,?,?)";
+            + "`fk_categoria`, `fk_account`) VALUES (?,?,?,?);";
 
     /**
      * Query to create a new comment for a forum post.
      */
     private static final String CREATE_COMMENT_POST = "INSERT INTO `risposta`(`testo`, `fk_discussione`, "
-            + "`fk_account`) VALUES (?,?,?)";
+            + "`fk_account`) VALUES (?,?,?);";
 
     /**
      * Fetches all the forum categories from the database.

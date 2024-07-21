@@ -25,30 +25,32 @@ public final class ActivityDAO extends AbstractDAO {
     /**
      * Query to fetch all the activities within the database.
      */
-    private static final String GET_ALL_ACTIVITIES = "SELECT a.nome, a.descrizione, AVG(r.`voto`) AS media_voto FROM "
-            + "`attivita` a LEFT JOIN `recensione` r ON r.`fk_attivita` = a.`nome` GROUP BY a.nome, a.descrizione";
+    private static final String GET_ALL_ACTIVITIES = "SELECT `a`.`nome`, `a`.`descrizione`, AVG(`r`.`voto`) AS "
+            + "`media_voto` FROM `attivita` `a` LEFT JOIN `recensione` `r` ON `r`.`fk_attivita` = `a`.`nome` "
+            + "GROUP BY `a`.`nome`, `a`.`descrizione`";
 
     /**
      * Query to create a new activity in the database.
      */
-    private static final String CREATE_ACTIVITY = "INSERT INTO `attivita`(`nome`, `descrizione`) VALUES (?,?)";
+    private static final String CREATE_ACTIVITY = "INSERT INTO `attivita`(`nome`, `descrizione`) VALUES (?,?);";
 
     /**
      * Query to delete an activity within the database.
      */
-    private static final String DELETE_ACTIVITY = "DELETE FROM `attivita` WHERE `nome`=?";
+    private static final String DELETE_ACTIVITY = "DELETE FROM `attivita` WHERE `nome`=?;";
 
     /**
      * Query to fetch all the reviews of an activity within the database.
      */
-    private static final String GET_ACTIVITY_REVIEWS = "SELECT r.voto, r.descrizione, a.nome, a.cognome FROM "
-            + "recensione r JOIN account_data a ON r.fk_account = a.email WHERE r.fk_attivita=?;";
+    private static final String GET_ACTIVITY_REVIEWS = "SELECT `r`.`voto`, `r`.`descrizione`, `a`.`nome`, "
+            + "`a`.`cognome` FROM `recensione` `r` JOIN `account_data` `a` ON `r`.`fk_account` = "
+            + "`a`.`email` WHERE `r`.`fk_attivita`=?;";
 
     /**
      * Query to create a new review for an activity.
      */
     private static final String CREATE_ACTIVITY_REVIEW = "INSERT INTO `recensione`(`voto`, `descrizione`, "
-            + "`fk_attivita`, `fk_account`) VALUES (?,?,?,?)";
+            + "`fk_attivita`, `fk_account`) VALUES (?,?,?,?);";
 
     /**
      * Query to fetch all the activities performed by a group in a specific day within the database.
@@ -56,13 +58,13 @@ public final class ActivityDAO extends AbstractDAO {
     private static final String GET_ACTIVITIES_GROUP_DATE = "SELECT *, AVG(r.`voto`) AS media_voto FROM `svolgimento` "
             + "`s` JOIN `attivita` `a` ON `s`.`fk_attivita` = `a`.`nome` LEFT JOIN `recensione` `r` ON "
             + "`r`.`fk_attivita` = `a`.`nome` WHERE `s`.`fk_gruppo`=? AND `s`.`fk_giornata`=? GROUP BY "
-            + "`s`.`ora_inizio`, `s`.`ora_fine`";
+            + "`s`.`ora_inizio`, `s`.`ora_fine`;";
 
     /**
      * Query to add an activity to a group at a date.
      */
     private static final String ADD_ACTIVITY_TO_GROUP = "INSERT INTO `svolgimento`(`ora_inizio`, `ora_fine`, "
-            + "`fk_attivita`, `fk_gruppo`, `fk_giornata`) VALUES (?,?,?,?,?)";
+            + "`fk_attivita`, `fk_gruppo`, `fk_giornata`) VALUES (?,?,?,?,?);";
 
     /**
      * Method to fetch all the activities of the database.

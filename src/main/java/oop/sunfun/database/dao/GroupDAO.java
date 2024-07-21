@@ -22,39 +22,39 @@ public final class GroupDAO extends AbstractDAO {
     /**
      * Query to fetch all groups within the database.
      */
-    private static final String GET_ALL_GROUPS = "SELECT * FROM `gruppo`";
+    private static final String GET_ALL_GROUPS = "SELECT * FROM `gruppo`;";
 
     /**
      * Query to fetch all the participants in a group within the database.
      */
-    private static final String GET_PARTICIPANTS_IN_GROUP = "SELECT * FROM `partecipante` `p` WHERE `p`.`fk_gruppo`=?";
+    private static final String GET_PARTICIPANTS_IN_GROUP = "SELECT * FROM `partecipante` `p` WHERE `p`.`fk_gruppo`=?;";
 
     /**
      * Query to fetch a group from a participant.
      */
     private static final String GET_PARTICIPANT_GROUP = "SELECT `fk_gruppo` FROM `partecipante` WHERE "
-            + "`codice_fiscale`=?";
+            + "`codice_fiscale`=?;";
 
     /**
      * Query to fetch a group from an educator.
      */
-    private static final String GET_EDUCATOR_GROUP = "SELECT `fk_gruppo` FROM `educatore` WHERE `codice_fiscale`=?";
+    private static final String GET_EDUCATOR_GROUP = "SELECT `fk_gruppo` FROM `educatore` WHERE `codice_fiscale`=?;";
 
     /**
      * Query to create a new group.
      */
-    private static final String CREATE_GROUP = "INSERT INTO `gruppo`(`nome`, `eta_min`, `eta_max`) VALUES (?,?,?)";
+    private static final String CREATE_GROUP = "INSERT INTO `gruppo`(`nome`, `eta_min`, `eta_max`) VALUES (?,?,?);";
 
     /**
      * Query to delete a group.
      */
-    private static final String ERASE_GROUP = "DELETE FROM `gruppo` WHERE `nome`=?";
+    private static final String ERASE_GROUP = "DELETE FROM `gruppo` WHERE `nome`=?;";
 
     /**
      * Query to delete a presence of a participant.
      */
     private static final String ERASE_PRESENCE = "DELETE FROM `presenza` WHERE `fk_partecipante`=? AND "
-            + "`fk_giornata`=?";
+            + "`fk_giornata`=?;";
 
     /**
      * Query to add or update a presence of a participant.

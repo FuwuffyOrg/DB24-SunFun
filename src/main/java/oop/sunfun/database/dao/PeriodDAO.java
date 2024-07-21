@@ -21,28 +21,28 @@ public final class PeriodDAO extends AbstractDAO {
     /**
      * Query to fetch all the possible periods in the database.
      */
-    private static final String GET_ALL_PERIODS = "SELECT * FROM `periodo` ORDER BY `data_inizio`";
+    private static final String GET_ALL_PERIODS = "SELECT * FROM `periodo` ORDER BY `data_inizio`;";
 
     /**
      * Query to create a period given the start and end date.
      */
-    private static final String CREATE_PERIOD = "INSERT INTO `periodo`(`data_inizio`, `data_fine`) VALUES (?,?)";
+    private static final String CREATE_PERIOD = "INSERT INTO `periodo`(`data_inizio`, `data_fine`) VALUES (?,?);";
 
     /**
      * Query to delete a period given the start and end date.
      */
-    private static final String ERASE_PERIOD = "DELETE FROM `periodo` WHERE `data_inizio`=? AND `data_fine`=?";
+    private static final String ERASE_PERIOD = "DELETE FROM `periodo` WHERE `data_inizio`=? AND `data_fine`=?;";
 
     /**
      * Query to get all the dates used by the database.
      */
-    private static final String GET_ALL_DATES = "SELECT * FROM `giornata` ORDER BY `data`";
+    private static final String GET_ALL_DATES = "SELECT * FROM `giornata` ORDER BY `data`;";
 
     /**
      * Query to delete the membership of a participant.
      */
     private static final String DELETE_MEMBERSHIP = "DELETE FROM `modalita` WHERE `fk_data_inizio` = ? AND "
-            + "`fk_data_fine` = ? AND `fk_partecipante` = ?";
+            + "`fk_data_fine` = ? AND `fk_partecipante` = ?;";
 
     /**
      * Query to add or update the membership of a participant.
@@ -55,12 +55,12 @@ public final class PeriodDAO extends AbstractDAO {
      * Query to create a date used by the database.
      */
     private static final String CREATE_DATE = "INSERT INTO `giornata`(`data`, `fk_periodo_inizio`, `fk_periodo_fine`) "
-            + "VALUES (?,?,?)";
+            + "VALUES (?,?,?);";
 
     /**
      * Query to erase all the dates between two other dates.
      */
-    private static final String ERASE_DATES_BETWEEN = "DELETE FROM `giornata` WHERE `data`>=? AND `data`<=?";
+    private static final String ERASE_DATES_BETWEEN = "DELETE FROM `giornata` WHERE `data`>=? AND `data`<=?;";
 
     /**
      * Fetch all the periods from the database.

@@ -22,31 +22,31 @@ public final class EducatorDAO extends AbstractDAO {
      * Query to fetch all the educators in the database.
      */
     private static final String GET_ALL_EDUCATORS = "SELECT `e`.`codice_fiscale`, `e`.`nome`, `e`.`cognome`, "
-            + "`e`.`cellulare`, `e`.`fk_account`, `e`.`fk_gruppo` FROM `educatore` `e`";
+            + "`e`.`cellulare`, `e`.`fk_account`, `e`.`fk_gruppo` FROM `educatore` `e`;";
 
     /**
      * Query to fetch all the voluntaries in the database.
      */
     private static final String GET_ALL_VOLUNTARY = "SELECT `v`.`codice_fiscale`, `v`.`nome`, `v`.`cognome`, "
-            + "`v`.`fk_account` FROM `volontario` `v`";
+            + "`v`.`fk_account` FROM `volontario` `v`;";
 
     /**
      * Query to change the group an educator educates.
      */
     private static final String UPDATE_EDUCATOR_GROUP = "UPDATE `educatore` SET `fk_gruppo`=? WHERE "
-            + "`educatore`.`codice_fiscale`=?";
+            + "`educatore`.`codice_fiscale`=?;";
 
     /**
      * Query to create a new educator in the database.
      */
     private static final String CREATE_EDUCATOR = "INSERT INTO `educatore`(`codice_fiscale`, `nome`, `cognome`, "
-            + "`cellulare`, `fk_account`) VALUES (?,?,?,?,?)";
+            + "`cellulare`, `fk_account`) VALUES (?,?,?,?,?);";
 
     /**
      * Query to create a new voluntary in the database.
      */
     private static final String CREATE_VOLUNTARY = "INSERT INTO `volontario`(`codice_fiscale`, `fk_account`, `nome`, "
-            + "`cognome`) VALUES (?,?,?,?)";
+            + "`cognome`) VALUES (?,?,?,?);";
 
     /**
      * Fetches all the educators from the database.
