@@ -82,7 +82,7 @@ public class EducatorPage extends GenericPage {
         // Create the panel
         final JComponent tablePanel = new JPanel();
         tablePanel.setLayout(new GridBagLayout());
-        // Get the groups
+        // Get the educators
         final List<EducatorData> educators = EducatorDAO.getAllEducators().stream().toList();
         // Add the groups to the table
         IntStream.range(0, educators.size()).forEach(i -> {

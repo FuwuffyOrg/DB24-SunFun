@@ -105,7 +105,8 @@ public final class GroupRollcallPage extends FormPage {
         IntStream.range(0, participants.size()).forEach(i -> {
             final ParticipantData participant = participants.get(i);
             // Check for the current presence value
-            final Optional<Pair<Boolean, Boolean>> currentPresence = ParticipantDAO.checkPresence(participant.codFisc(), d);
+            final Optional<Pair<Boolean, Boolean>> currentPresence =
+                    ParticipantDAO.checkPresence(participant.codFisc(), d);
             // Add everything to the page
             final AbstractButton checkEntry = new JCheckBox("Entrata");
             final AbstractButton checkExit = new JCheckBox("Uscita");

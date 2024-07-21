@@ -116,7 +116,7 @@ public class StatisticsDAO extends AbstractDAO {
      * Fetches the activity with the longest duration within the database.
      * @return A valid optional if the longest activity was found, with a pair like: Name, Duration.
      */
-    public static Optional<Pair<String,Long>> getLongestActivity() {
+    public static Optional<Pair<String, Long>> getLongestActivity() {
         try {
             DB_CONNECTION.openConnection();
             final List<Map<String, Object>> queryData = DB_CONNECTION.getQueryData(GET_LONGEST_ACTIVITY);
