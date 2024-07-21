@@ -12,6 +12,7 @@ import oop.sunfun.ui.admin.EducatorPage;
 import oop.sunfun.ui.admin.GroupManagementPage;
 import oop.sunfun.ui.admin.GroupPage;
 import oop.sunfun.ui.admin.PeriodPage;
+import oop.sunfun.ui.admin.StatisticsPage;
 import oop.sunfun.ui.parent.ManageParticipantPage;
 import oop.sunfun.ui.util.behavior.CloseEvents;
 import oop.sunfun.ui.forum.ForumPage;
@@ -68,6 +69,8 @@ public class LandingPage extends GenericPage {
                     reachablePages.put("Attivita del gruppo", () -> new GroupActivityViewPage(CloseEvents.EXIT_PROGRAM,
                             this.accountData, g, Optional.empty()));
                 });
+                reachablePages.put("Statistiche", () -> new StatisticsPage(CloseEvents.EXIT_PROGRAM,
+                        this.accountData));
                 reachablePages.put("Gestione Periodi", () -> new PeriodPage(CloseEvents.EXIT_PROGRAM,
                         this.accountData));
                 reachablePages.put("Gestione Allergie", () -> new AllergiesPage(CloseEvents.EXIT_PROGRAM,
