@@ -20,7 +20,7 @@ public final class AccountDAO extends AbstractDAO {
      * Query to get the account using that email and password.
      */
     private static final String FIND_ACCOUNT_BY_EMAIL_PASSWORD = "SELECT * FROM `account_data` WHERE `email` = ? "
-            + "AND password = PASSWORD(?);";
+            + "AND `password` = PASSWORD(?);";
 
     /**
      * Query to create the account with a given email and password.
