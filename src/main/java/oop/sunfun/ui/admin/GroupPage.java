@@ -140,7 +140,7 @@ public final class GroupPage extends FormPage {
         });
         // Add the table to the panel
         return new JScrollPane(tablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     }
 
     @Override

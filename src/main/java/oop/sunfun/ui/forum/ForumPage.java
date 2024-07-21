@@ -93,7 +93,7 @@ public final class ForumPage extends GenericPage {
         final JComponent panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         final Component scrollPanel = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         // Fetch all forum posts from that name
         final List<DiscussionData> discussions = ForumDAO.getAllPostsFromCategory(category).stream().toList();
         IntStream.range(0, discussions.size()).forEach(i -> {

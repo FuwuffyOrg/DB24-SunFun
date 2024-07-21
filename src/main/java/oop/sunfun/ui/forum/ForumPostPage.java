@@ -79,7 +79,7 @@ public final class ForumPostPage extends FormPage {
         final JComponent commentPanel = new JPanel();
         commentPanel.setLayout(new GridBagLayout());
         final Component commentArea = new JScrollPane(commentPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         final List<CommentData> comments = ForumDAO.getCommentsFromDiscussion(discussion.discussionNumber())
                 .stream().toList();
         IntStream.range(0, comments.size()).forEach(i -> {

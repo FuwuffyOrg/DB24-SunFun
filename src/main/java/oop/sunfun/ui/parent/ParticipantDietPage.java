@@ -171,7 +171,7 @@ public final class ParticipantDietPage extends GenericPage {
         });
         // Create list of current allergens
         final Component currentAllergiesScroll = new JScrollPane(currentAllergyPanel,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         // Create all allergen combo box
         final Component lblAllergen = new JLabel("Allergene:");
         final List<AllergenData> allergens = FoodDAO.getAllAllergens().stream().toList();
